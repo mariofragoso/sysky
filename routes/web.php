@@ -171,3 +171,7 @@ Route::put('/asignacionaccesorios/{asignacion}', [AsignacionAccesoriosController
 
 // Ruta para eliminar una asignación de accesorio específica
 Route::delete('/asignacionaccesorios/{asignacion}', [AsignacionAccesoriosController::class, 'destroy'])->name('asignacionaccesorios.destroy');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
