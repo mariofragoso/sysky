@@ -14,10 +14,9 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body>
+<body class="bg-gradient-primary">
     <div id="app">
-        
-
+    
         <main class="py-4">
             @yield('content')
         </main>

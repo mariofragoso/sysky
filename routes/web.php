@@ -8,6 +8,8 @@ use App\Http\Controllers\AccesorioController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\AsignacionEquipoController;
 use App\Http\Controllers\AsignacionAccesoriosController;
+use App\Http\Controllers\Auth\LoginController;
+
 
 
 
@@ -33,6 +35,9 @@ Route::get('/', function () {
 Route::get('/admin', function () {
     return view('layouts.admin');   
 });
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
 // Ruta para listar empleados
 Route::get('empleados', [EmpleadoController::class, 'index'])->name('empleados.index');
