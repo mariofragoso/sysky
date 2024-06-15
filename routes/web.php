@@ -9,6 +9,8 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\AsignacionEquipoController;
 use App\Http\Controllers\AsignacionAccesoriosController;
 use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Auth;
+
 
 
 

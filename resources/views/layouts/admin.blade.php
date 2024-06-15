@@ -159,6 +159,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('libs/sbadmin/js/sb-admin-2.min.js') }}"></script>
+    
 
     <!-- Page level plugins -->
     <script src="{{ asset('libs/chart.js/Chart.min.js') }}"></script>

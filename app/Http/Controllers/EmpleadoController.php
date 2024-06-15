@@ -7,11 +7,20 @@ use App\Models\Empleado;
 
 class EmpleadoController extends Controller
 {
+
+
+
     // Mostrar una lista de empleados
-    public function index()
+    public function index(Request $request)
     {
-        $empleados = Empleado::all();
-        return view('empleados.index', compact('empleados'));
+        $search = $request->input('search');
+
+        $empleados = Empleado::when($search, function ($query, $search) {
+            return $query->where('numero_nomina', 'like', "%{$search}%")
+                ->orWhere('nombre', 'like', "%{$search}%");
+        })->paginate(10);
+
+        return view('empleados.index', compact('empleados', 'search'));
     }
 
     // Mostrar el formulario para crear un nuevo empleado
@@ -55,7 +64,7 @@ class EmpleadoController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'numero_nomina' => 'required|string|max:50|unique:empleados,numero_nomina,'.$id,
+            'numero_nomina' => 'required|string|max:50|unique:empleados,numero_nomina,' . $id,
             'nombre' => 'required|string|max:100',
             'apellidoP' => 'required|string|max:100',
             'apellidoM' => 'required|string|max:100',
@@ -78,4 +87,3 @@ class EmpleadoController extends Controller
         return redirect()->route('empleados.index')->with('success', 'Empleado eliminado exitosamente.');
     }
 }
-
