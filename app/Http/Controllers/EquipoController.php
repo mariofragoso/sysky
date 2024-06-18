@@ -7,10 +7,17 @@ use Illuminate\Http\Request;
 
 class EquipoController extends Controller
 {
-    public function index()
+    // Mostrar una lista de empleados
+    public function index(Request $request)
     {
-        $equipos = Equipo::all();
-        return view('equipos.index', compact('equipos'));
+        $search = $request->input('search');
+
+        $equipos = Equipo::when($search, function ($query, $search) {
+            return $query->where('numero_serie', 'like', "%{$search}%")
+                ->orWhere('etiqueta_skytex', 'like', "%{$search}%");
+        })->paginate(10);
+
+        return view('equipos.index', compact('equipos', 'search'));
     }
 
     public function create()
@@ -24,10 +31,23 @@ class EquipoController extends Controller
             'numero_serie' => 'required|unique:equipos',
             'marca' => 'required',
             'modelo' => 'required',
-            'etiqueta_skytex' => 'required',
+            'etiqueta_skytex' => 'required|unique:equipos,etiqueta_skytex',
             'tipo' => 'required',
             'estado' => 'required',
+        ], [
+            'numero_serie.unique' => 'El Numero de serie ya esta registrado.',
+            'etiqueta_skytex.unique' => 'La etiqueta Skytex ya está registrada.',
         ]);
+
+        $exists = Equipo::where('numero_serie', $request->numero_serie)
+                    ->orWhere('etiqueta_skytex', $request->etiqueta_skytex)
+                    ->exists();
+
+        if ($exists) {
+            return redirect()->back()
+                ->withErrors(['unique' => 'El Numero de serie o la etiqueta Skytex ya está registrada.'])
+                ->withInput();
+        }
 
         Equipo::create($request->all());
 
@@ -48,7 +68,7 @@ class EquipoController extends Controller
     public function update(Request $request, Equipo $equipo)
     {
         $request->validate([
-            'numero_serie' => 'required|unique:equipos,numero_serie,'.$equipo->id,
+            'numero_serie' => 'required|unique:equipos,numero_serie,' . $equipo->id,
             'marca' => 'required',
             'modelo' => 'required',
             'etiqueta_skytex' => 'required',

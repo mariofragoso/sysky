@@ -1,4 +1,8 @@
-    <h1>Crear Nuevo Equipo</h1>
+@extends('layouts.admin')
+
+@section('titulo', 'Crear Nuevo Equipo')
+
+@section('contenido')
 
     @if ($errors->any())
         <div>
@@ -10,29 +14,75 @@
         </div>
     @endif
 
-    <form action="{{ route('equipos.store') }}" method="POST">
-        @csrf
-        <label for="numero_serie">Número de Serie:</label>
-        <input type="text" id="numero_serie" name="numero_serie" required>
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
+        <div class="card-body">
+            <form class="row g-3 needs-validation" novalidate action="{{ route('equipos.store') }}" method="POST">
+                @csrf
 
-        <label for="marca">Marca:</label>
-        <input type="text" id="marca" name="marca" required>
 
-        <label for="modelo">Modelo:</label>
-        <input type="text" id="modelo" name="modelo" required>
+                <div class="col-md-3">
+                    <label for="numero_serie" class="form-label">Número de Serie:</label>
+                    <input type="text" class="form-control" id="numero_serie" name="numero_serie" required>
+                    <div class="valid-feedback">
+                        Good!
+                    </div>
+                </div>
 
-        <label for="etiqueta_skytex">Etiqueta Skytex:</label>
-        <input type="text" id="etiqueta_skytex" name="etiqueta_skytex" required>
+                <div class="col-md-3">
+                    <label for="marca" class="form-label">Marca:</label>
+                    <input type="text" class="form-control" id="marca" name="marca" required>
+                    <div class="valid-feedback">
+                        Good!
+                    </div>
+                </div>
 
-        <label for="tipo">Tipo:</label>
-        <input type="text" id="tipo" name="tipo" required>
+                <div class="col-md-3">
+                    <label for="modelo" class="form-label">Modelo:</label>
+                    <input type="text" class="form-control" id="modelo" name="modelo" required>
+                    <div class="valid-feedback">
+                        Good!
+                    </div>
+                </div>
 
-        <label for="estado">Estado:</label>
-        <select id="estado" name="estado" required>
-            <option value="Asignado">Asignado</option>
-            <option value="No asignado">No asignado</option>
-            <option value="Baja">Baja</option>
-        </select>
+                <div class="col-md-3">
+                    <label for="etiqueta_skytex" class="form-label">Etiqueta Skytex:</label>
+                    <input type="text" class="form-control" id="etiqueta_skytex" name="etiqueta_skytex" required>
+                    <div class="valid-feedback">
+                        Good!
+                    </div>
+                </div>
 
-        <button type="submit">Crear</button>
-    </form>
+                <div class="col-md-6">
+                    <label for="tipo" class="form-label">Tipo:</label>
+                    <select id="tipo" name="tipo" class="form-control" required>
+                        <option value="Asignado">Pc Escritorio</option>
+                        <option value="No asignado">Laptop</option>
+                        <option value="Baja">Telefono</option>
+                    </select>
+                    <div class="valid-feedback">
+                        Good!
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="estado">Estado:</label>
+                    <select id="estado" name="estado" class="form-control" required>
+                        <option value="Asignado">Asignado</option>
+                        <option value="No asignado">No asignado</option>
+                        <option value="Baja">Baja</option>
+                    </select>
+                    <div class="valid-feedback">
+                        Good!
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+@endsection

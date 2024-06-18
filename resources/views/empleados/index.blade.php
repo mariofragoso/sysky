@@ -8,7 +8,7 @@
     </div>
 
     <!-- Barra de búsqueda -->
-    <form action="{{ route('empleados.index') }}" method="GET" class="mb-4">
+    <form action="{{ route('empleados.index') }}" method="GET" class="mb-3">
         <div class="input-group">
             <input type="text" name="search" class="form-control" placeholder="Buscar por número de nómina o nombre"
                 value="{{ request('search') }}">

@@ -1,4 +1,8 @@
-    <h1>Editar Equipo</h1>
+@extends('layouts.admin')
+
+@section('titulo', 'Editar Empleado')
+
+@section('contenido')
 
     @if ($errors->any())
         <div>
@@ -38,3 +42,4 @@
 
         <button type="submit">Actualizar</button>
     </form>
+@endsection
