@@ -33,6 +33,8 @@ class EquipoController extends Controller
             'modelo' => 'required',
             'etiqueta_skytex' => 'required|unique:equipos,etiqueta_skytex',
             'tipo' => 'required',
+            'orden_compra' => 'required',
+            'requisicion' => 'required',
             'estado' => 'required',
         ], [
             'numero_serie.unique' => 'El Numero de serie ya esta registrado.',
@@ -40,8 +42,8 @@ class EquipoController extends Controller
         ]);
 
         $exists = Equipo::where('numero_serie', $request->numero_serie)
-                    ->orWhere('etiqueta_skytex', $request->etiqueta_skytex)
-                    ->exists();
+            ->orWhere('etiqueta_skytex', $request->etiqueta_skytex)
+            ->exists();
 
         if ($exists) {
             return redirect()->back()
@@ -71,10 +73,25 @@ class EquipoController extends Controller
             'numero_serie' => 'required|unique:equipos,numero_serie,' . $equipo->id,
             'marca' => 'required',
             'modelo' => 'required',
-            'etiqueta_skytex' => 'required',
+            'etiqueta_skytex' => 'required|unique:equipos,etiqueta_skytex,' . $equipo->id,
             'tipo' => 'required',
+            'orden_compra' => 'required',
+            'requisicion' => 'required',
             'estado' => 'required',
+        ], [
+            'numero_serie.unique' => 'El Numero de serie ya esta registrado.',
+            'etiqueta_skytex.unique' => 'La etiqueta Skytex ya está registrada.',
         ]);
+
+        $exists = Equipo::where('numero_serie', $request->numero_serie)
+            ->orWhere('etiqueta_skytex', $request->etiqueta_skytex)
+            ->exists();
+
+        if ($exists) {
+            return redirect()->back()
+                ->withErrors(['unique' => 'El Numero de serie o la etiqueta Skytex ya está registrada.'])
+                ->withInput();
+        }
 
         $equipo->update($request->all());
 

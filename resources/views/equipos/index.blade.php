@@ -31,6 +31,8 @@
                             <th>Modelo</th>
                             <th>Etiqueta Skytex</th>
                             <th>Tipo</th>
+                            <th>Orden De Compra</th>
+                            <th>Requisicion</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -45,6 +47,8 @@
                                 <td>{{ $equipo->modelo }}</td>
                                 <td>{{ $equipo->etiqueta_skytex }}</td>
                                 <td>{{ $equipo->tipo }}</td>
+                                <td>{{ $equipo->orden_compra }}</td>
+                                <td>{{ $equipo->requisicion }}</td>
                                 <td>{{ $equipo->estado }}</td>
                                 <td>
                                     <a
@@ -61,7 +65,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center">No se encontraron empleados</td>
+                                <td colspan="8" class="text-center">No se encontraron Equipos</td>
                             </tr>
                         @endforelse
                     </tbody>

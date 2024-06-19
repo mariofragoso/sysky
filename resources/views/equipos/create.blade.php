@@ -5,7 +5,7 @@
 @section('contenido')
 
     @if ($errors->any())
-        <div>
+        <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -18,7 +18,6 @@
         <div class="card-body">
             <form class="row g-3 needs-validation" novalidate action="{{ route('equipos.store') }}" method="POST">
                 @csrf
-
 
                 <div class="col-md-3">
                     <label for="numero_serie" class="form-label">Número de Serie:</label>
@@ -55,18 +54,33 @@
                 <div class="col-md-6">
                     <label for="tipo" class="form-label">Tipo:</label>
                     <select id="tipo" name="tipo" class="form-control" required>
-                        <option value="Asignado">Pc Escritorio</option>
-                        <option value="No asignado">Laptop</option>
-                        <option value="Baja">Telefono</option>
+                        <option value="CPU">Pc Escritorio</option>
+                        <option value="Laptop">Laptop</option>
+                        <option value="Cel">Telefono</option>
                     </select>
                     <div class="valid-feedback">
                         Good!
                     </div>
                 </div>
 
+                <div class="col-md-3">
+                    <label for="orden_compra" class="form-label">Orden De Compra:</label>
+                    <input type="text" class="form-control" id="orden_compra" name="orden_compra" required>
+                    <div class="valid-feedback">
+                        Good!
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="requisicion" class="form-label">Requisición:</label>
+                    <input type="text" class="form-control" id="requisicion" name="requisicion" required>
+                    <div class="valid-feedback">
+                        Good!
+                    </div>
+                </div>
 
                 <div class="col-md-6">
-                    <label for="estado">Estado:</label>
+                    <label for="estado" class="form-label">Estado:</label>
                     <select id="estado" name="estado" class="form-control" required>
                         <option value="Asignado">Asignado</option>
                         <option value="No asignado">No asignado</option>
