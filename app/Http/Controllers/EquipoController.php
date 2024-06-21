@@ -8,17 +8,27 @@ use Illuminate\Http\Request;
 class EquipoController extends Controller
 {
     // Mostrar una lista de empleados
-    public function index(Request $request)
-    {
-        $search = $request->input('search');
+   // En EquipoController.php
+public function index(Request $request)
+{
+    $search = $request->input('search');
+    $sortField = $request->input('sort', 'created_at');
+    $sortOrder = $request->input('order', 'desc');
 
-        $equipos = Equipo::when($search, function ($query, $search) {
-            return $query->where('numero_serie', 'like', "%{$search}%")
-                ->orWhere('etiqueta_skytex', 'like', "%{$search}%");
-        })->paginate(10);
+    $equipos = Equipo::when($search, function ($query, $search) {
+        return $query->where('numero_serie', 'like', "%{$search}%")
+            ->orWhere('marca', 'like', "%{$search}%")
+            ->orWhere('modelo', 'like', "%{$search}%")
+            ->orWhere('etiqueta_skytex', 'like', "%{$search}%")
+            ->orWhere('tipo', 'like', "%{$search}%")
+            ->orWhere('orden_compra', 'like', "%{$search}%")
+            ->orWhere('requisicion', 'like', "%{$search}%")
+            ->orWhere('estado', 'like', "%{$search}%");
+    })->orderBy($sortField, $sortOrder)->paginate(10);
 
-        return view('equipos.index', compact('equipos', 'search'));
-    }
+    return view('equipos.index', compact('equipos', 'search', 'sortField', 'sortOrder'));
+}
+
 
     public function create()
     {

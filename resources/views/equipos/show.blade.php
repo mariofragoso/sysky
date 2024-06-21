@@ -5,9 +5,7 @@
 @section('contenido')
 
 <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
-    <div class="card-body">
-        <h2>Detalles del Equipo</h2>
-        
+    <div class="card-body">        
         <table class="table table-striped">
             <tr>
                 <th>Número de Serie</th>
