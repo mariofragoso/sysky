@@ -12,11 +12,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $usuarios_count = Empleado::count();
+        $empleados_count = Empleado::count();
         $equipos_count = Equipo::count();
         $accesorios_count = Accesorio::count();
 
-        return view('home', compact('usuarios_count', 'equipos_count', 'accesorios_count'));
+        return view('home', compact('empleados_count', 'equipos_count', 'accesorios_count'));
     }
     
     /**
