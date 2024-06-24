@@ -116,4 +116,8 @@ public function index(Request $request)
         return redirect()->route('equipos.index')
             ->with('success', 'Equipo eliminado correctamente.');
     }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 }

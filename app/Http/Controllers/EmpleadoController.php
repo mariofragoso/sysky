@@ -90,4 +90,8 @@ public function index(Request $request)
 
         return redirect()->route('empleados.index')->with('success', 'Empleado eliminado exitosamente.');
     }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 }

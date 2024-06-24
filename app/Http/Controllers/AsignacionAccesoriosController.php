@@ -79,4 +79,8 @@ class AsignacionAccesoriosController extends Controller
         return redirect()->route('asignacionaccesorios.index')
             ->with('success', 'Asignación de accesorio eliminada con éxito.');
     }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 }

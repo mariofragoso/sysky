@@ -79,4 +79,8 @@ public function index(Request $request)
         return redirect()->route('accesorios.index')
             ->with('success', 'Accesorio eliminado exitosamente.');
     }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 }

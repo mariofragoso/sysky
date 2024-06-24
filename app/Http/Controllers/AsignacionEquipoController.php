@@ -82,4 +82,8 @@ class AsignacionEquipoController extends Controller
         return redirect()->route('asignacionesequipos.index')
             ->with('success', 'Asignación de equipo eliminada con éxito.');
     }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 }
