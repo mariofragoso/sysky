@@ -7,9 +7,9 @@
         <a href="{{ route('asignacionaccesorios.create') }}" class="btn btn-secondary mb-3">Crear Nueva Asignación +</a>
     </div>
 
-    <form action="{{ route('empleados.index') }}" method="GET" class="mb-3">
+    <form action="{{ route('asignacionaccesorios.index') }}" method="GET" class="mb-3">
         <div class="input-group">
-            <input type="text" name="search" class="form-control" placeholder="Buscar por número de nómina o nombre"
+            <input type="text" name="search" class="form-control" placeholder="Buscar por Empleado, Accesorio, Fecha o Ticket"
                 value="{{ request('search') }}">
             <button class="btn btn-outline-secondary" type="submit">Buscar</button>
         </div>
@@ -22,13 +22,68 @@
                 <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Empleado</th>
-                            <th>Accesorio</th>
+                            <th>
+                                <a href="{{ route('asignacionaccesorios.index', ['sort' => 'id', 'order' => $sortField === 'id' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                                    ID
+                                    @if ($sortField === 'id')
+                                        @if ($sortOrder === 'asc')
+                                            &#9650;
+                                        @else
+                                            &#9660;
+                                        @endif
+                                    @endif
+                                </a>
+                            </th>
+                            <th>
+                                <a href="{{ route('asignacionaccesorios.index', ['sort' => 'empleado_id', 'order' => $sortField === 'empleado_id' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                                    Empleado
+                                    @if ($sortField === 'empleado_id')
+                                        @if ($sortOrder === 'asc')
+                                            &#9650;
+                                        @else
+                                            &#9660;
+                                        @endif
+                                    @endif
+                                </a>
+                            </th>
+                            <th>
+                                <a href="{{ route('asignacionaccesorios.index', ['sort' => 'accesorio_id', 'order' => $sortField === 'accesorio_id' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                                    Accesorio
+                                    @if ($sortField === 'accesorio_id')
+                                        @if ($sortOrder === 'asc')
+                                            &#9650;
+                                        @else
+                                            &#9660;
+                                        @endif
+                                    @endif
+                                </a>
+                            </th>
                             <th>Cantidad Asignada</th>
-                            <th>Fecha de Asignación</th>
+                            <th>
+                                <a href="{{ route('asignacionaccesorios.index', ['sort' => 'fecha_asignacion', 'order' => $sortField === 'fecha_asignacion' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                                    Fecha de Asignación
+                                    @if ($sortField === 'fecha_asignacion')
+                                        @if ($sortOrder === 'asc')
+                                            &#9650;
+                                        @else
+                                            &#9660;
+                                        @endif
+                                    @endif
+                                </a>
+                            </th>
                             <th>Usuario Responsable</th>
-                            <th>Ticket</th>
+                            <th>
+                                <a href="{{ route('asignacionaccesorios.index', ['sort' => 'ticket', 'order' => $sortField === 'ticket' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                                    Ticket
+                                    @if ($sortField === 'ticket')
+                                        @if ($sortOrder === 'asc')
+                                            &#9650;
+                                        @else
+                                            &#9660;
+                                        @endif
+                                    @endif
+                                </a>
+                            </th>
                             <th>Nota Descriptiva</th>
                             <th>Acciones</th>
                         </tr>
@@ -62,6 +117,7 @@
     </div>
 
     <!-- Paginación -->
-    
-    
+    <div class="d-flex justify-content-center">
+        {{ $asignacionesaccesorios->appends(['search' => $search, 'sort' => $sortField, 'order' => $sortOrder])->links() }}
+    </div>
 @endsection

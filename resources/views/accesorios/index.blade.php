@@ -90,14 +90,14 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                        @endforeach
+                    </tbody>
+                </table>
 
-            <!-- Paginación -->
-            {{ $accesorios->appends(['search' => $search, 'sort' => $sortField, 'order' => $sortOrder])->links() }}
+                <!-- Paginación -->
+                <div class="d-flex justify-content-center">
+                    {{ $accesorios->appends(['search' => $search, 'sort' => $sortField, 'order' => $sortOrder])->links() }}
+                </div>
+            </div>
         </div>
-    </div>
-@endsection
-
-
+    @endsection
