@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\AsignacionEquipo;
 use App\Models\Empleado;
 use App\Models\Equipo;
-use App\Models\User; // Cambio aquí
+use App\Models\User;
 use App\Models\Empresa;
 use Illuminate\Http\Request;
 
@@ -24,13 +23,14 @@ class AsignacionEquipoController extends Controller
                 })->orWhereHas('equipo', function ($q) use ($search) {
                     $q->where('numero_serie', 'like', "%{$search}%");
                 })->orWhere('fecha_asignacion', 'like', "%{$search}%")
-                    ->orWhere('ticket', 'like', "%{$search}%");
+                ->orWhere('ticket', 'like', "%{$search}%");
             })
             ->orderBy($sortField, $sortOrder)
             ->paginate(10);
 
         return view('asignacionesequipos.index', compact('asignacionesequipos', 'search', 'sortField', 'sortOrder'));
     }
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -40,7 +40,7 @@ class AsignacionEquipoController extends Controller
     {
         $empleados = Empleado::all();
         $equipos = Equipo::all();
-        $usuarios = User::all(); // Cambio aquí
+        $usuarios = User::all();
         $empresas = Empresa::all();
         return view('asignacionesequipos.create', compact('empleados', 'equipos', 'usuarios', 'empresas'));
     }
@@ -51,7 +51,7 @@ class AsignacionEquipoController extends Controller
             'empleado_id' => 'required|exists:empleados,id',
             'equipo_id' => 'required|exists:equipos,id',
             'fecha_asignacion' => 'required|date',
-            'usuario_responsable' => 'required|exists:users,id', // Cambio aquí
+            'usuario_responsable' => 'required|exists:users,id',
             'ticket' => 'required|integer',
             'nota_descriptiva' => 'nullable|string|max:100',
             'empresa_id' => 'required|exists:empresas,id',
@@ -68,22 +68,22 @@ class AsignacionEquipoController extends Controller
         return view('asignacionesequipos.show', compact('asignacion'));
     }
 
-    public function edit(AsignacionEquipo $asignacion)
-    {
-        $empleados = Empleado::all();
-        $equipos = Equipo::all();
-        $usuarios = User::all(); // Cambio aquí
-        $empresas = Empresa::all();
-        return view('asignacionesequipos.edit', compact('asignacion', 'empleados', 'equipos', 'usuarios', 'empresas'));
-    }
-
+    public function edit($id)
+{
+    $asignacion = AsignacionEquipo::findOrFail($id);
+    $empleados = Empleado::all();
+    $equipos = Equipo::all();
+    $usuarios = User::all(); // Obtener todos los usuarios
+    $empresas = Empresa::all(); // Obtener todas las empresas
+    return view('asignacionesequipos.edit', compact('asignacion', 'empleados', 'equipos', 'usuarios', 'empresas'));
+}
     public function update(Request $request, AsignacionEquipo $asignacion)
     {
         $request->validate([
             'empleado_id' => 'required|exists:empleados,id',
             'equipo_id' => 'required|exists:equipos,id',
             'fecha_asignacion' => 'required|date',
-            'usuario_responsable' => 'required|exists:users,id', // Cambio aquí
+            'usuario_responsable' => 'required|exists:users,id',
             'ticket' => 'required|integer',
             'nota_descriptiva' => 'nullable|string|max:100',
             'empresa_id' => 'required|exists:empresas,id',

@@ -29,12 +29,14 @@
         <label for="fecha_asignacion">Fecha de Asignación:</label>
         <input type="date" id="fecha_asignacion" name="fecha_asignacion" required>
 
-        <label for="usuario_responsable">Usuario Responsable:</label>
-        <select id="usuario_responsable" name="usuario_responsable" required>
-            @foreach ($usuarios as $usuario)
-                <option value="{{ $usuario->id }}">{{ $usuario->usuario }}</option>
-            @endforeach
-        </select>
+        
+            <label for="usuario_responsable" class="form-label">Usuario Responsable:</label>
+            <select id="usuario_responsable" name="usuario_responsable" class="form-control" required>
+                @foreach ($usuarios as $usuario)
+                    <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
+                @endforeach
+            </select>
+        
 
         <label for="ticket">Ticket:</label>
         <input type="number" id="ticket" name="ticket" required>

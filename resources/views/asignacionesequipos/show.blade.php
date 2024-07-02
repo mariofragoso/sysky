@@ -7,7 +7,7 @@
     <p>Empleado: {{ $asignacion->empleado->nombre }}</p>
     <p>Equipo: {{ $asignacion->equipo->numero_serie }}</p>
     <p>Fecha de Asignación: {{ $asignacion->fecha_asignacion }}</p>
-    <p>Usuario Responsable: {{ $asignacion->usuario->usuario }}</p>
+    <p>Usuario Responsable: {{ $asignacion->usuario->name }}</p> <!-- Aquí asegúrate de que 'name' es el campo correcto -->
     <p>Ticket: {{ $asignacion->ticket }}</p>
     <p>Nota Descriptiva: {{ $asignacion->nota_descriptiva }}</p>
     <p>Empresa: {{ $asignacion->empresa->nombre }}</p>

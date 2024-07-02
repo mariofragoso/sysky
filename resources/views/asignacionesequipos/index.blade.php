@@ -7,12 +7,6 @@
         <a href="{{ route('asignacionesequipos.create') }}" class="btn btn-secondary mb-3">Crear Nueva Asignación +</a>
     </div>
 
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            {{ $message }}
-        </div>
-    @endif
-
     <!-- Barra de búsqueda -->
     <form method="GET" action="{{ route('asignacionesequipos.index') }}">
         <div class="input-group mb-3">

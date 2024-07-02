@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class AsignacionEquipo extends Model
 {
     use HasFactory;
+
+    protected $table = 'asignaciones_equipos'; // Asegúrate de que el nombre de la tabla sea correcto
 
     protected $fillable = [
         'empleado_id',
@@ -31,7 +32,7 @@ class AsignacionEquipo extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'usuario_responsable'); 
+        return $this->belongsTo(User::class, 'usuario_responsable');
     }
 
     public function empresa()
