@@ -93,15 +93,6 @@ public function index(Request $request)
             'etiqueta_skytex.unique' => 'La etiqueta Skytex ya está registrada.',
         ]);
 
-        $exists = Equipo::where('numero_serie', $request->numero_serie)
-            ->orWhere('etiqueta_skytex', $request->etiqueta_skytex)
-            ->exists();
-
-        if ($exists) {
-            return redirect()->back()
-                ->withErrors(['unique' => 'El Numero de serie o la etiqueta Skytex ya está registrada.'])
-                ->withInput();
-        }
 
         $equipo->update($request->all());
 

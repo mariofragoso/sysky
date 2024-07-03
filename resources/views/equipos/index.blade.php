@@ -3,6 +3,8 @@
 @section('titulo', 'Lista de Equipos')
 
 @section('contenido')
+
+
     <div>
         <a href="{{ route('equipos.create') }}" class="btn btn-secondary mb-3">Crear Nuevo Equipo +</a>
     </div>
@@ -133,7 +135,7 @@
                                 <td>{{ $equipo->tipo }}</td>
                                 <td>{{ $equipo->orden_compra }}</td>
                                 <td>{{ $equipo->requisicion }}</td>
-                                <td>{{ $equipo->estado }}</td>
+                                <td><span class="label label-default">{{ $equipo->estado }}</span></td>
                                 <td>
                                     <a href="{{ route('equipos.show', $equipo->id) }}" class="btn btn-info btn-sm">Ver</a>
                                     <a href="{{ route('equipos.edit', $equipo->id) }}" class="btn btn-warning btn-sm">Editar</a>
