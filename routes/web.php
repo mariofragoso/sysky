@@ -12,6 +12,8 @@ use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PrestamoController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 
 /*
@@ -172,10 +174,7 @@ Route::put('/asignacionaccesorios/{asignacion}', [AsignacionAccesoriosController
 // Ruta para eliminar una asignación de accesorio específica
 Route::delete('/asignacionaccesorios/{asignacion}', [AsignacionAccesoriosController::class, 'destroy'])->name('asignacionaccesorios.destroy');
 
-
-
 Route::resource('prestamos', PrestamoController::class);
 
 Auth::routes();
-
 
