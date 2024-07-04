@@ -78,6 +78,14 @@
                 </a>
             </li>
 
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ route('prestamos.index') }}" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class='fas fa-keyboard'></i>
+                    <span>Prestamos</span>
+                </a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 

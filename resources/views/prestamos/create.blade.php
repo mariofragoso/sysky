@@ -1,0 +1,67 @@
+@extends('layouts.admin')
+
+@section('titulo', 'Crear Nuevo Préstamo')
+
+@section('contenido')
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
+        <div class="card-body">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form action="{{ route('prestamos.store') }}" method="POST">
+                @csrf
+
+                <div class="form-group">
+                    <label for="empleado_id">Empleado:</label>
+                    <select id="empleado_id" name="empleado_id" class="form-control" required>
+                        @foreach ($empleados as $empleado)
+                            <option value="{{ $empleado->id }}">{{ $empleado->nombre }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="equipo_id">Equipo:</label>
+                    <select id="equipo_id" name="equipo_id" class="form-control" required>
+                        @foreach ($equipos as $equipo)
+                            <option value="{{ $equipo->id }}">{{ $equipo->numero_serie }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fecha_prestamo">Fecha de Préstamo:</label>
+                    <input type="date" id="fecha_prestamo" name="fecha_prestamo" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fecha_regreso">Fecha de Regreso:</label>
+                    <input type="date" id="fecha_regreso" name="fecha_regreso" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="usuario_responsable_id" class="form-label">Usuario Responsable:</label>
+                    <select id="usuario_responsable_id" name="usuario_responsable_id" class="form-control" required>
+                        @foreach ($usuarios as $usuario)
+                            <option value="{{ $usuario->id }}"
+                                {{ old('usuario_responsable_id', $prestamo->usuario_responsable_id ?? '') == $usuario->id ? 'selected' : '' }}>
+                                {{ $usuario->name }}</option>
+                        @endforeach
+                    </select>
+                    <div class="valid-feedback">
+                        Good!
+                    </div>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </form>
+        </div>
+    </div>
+@endsection

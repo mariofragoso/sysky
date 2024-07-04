@@ -79,17 +79,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <label for="estado" class="form-label">Estado:</label>
-                    <select id="estado" name="estado" class="form-control" required>
-                        <option value="Asignado">Asignado</option>
-                        <option value="No asignado">No asignado</option>
-                        <option value="Baja">Baja</option>
-                    </select>
-                    <div class="valid-feedback">
-                        Good!
-                    </div>
-                </div>
+                <!-- Campo oculto para el estado por defecto -->
+                <input type="hidden" name="estado" value="No asignado">
 
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Crear</button>
