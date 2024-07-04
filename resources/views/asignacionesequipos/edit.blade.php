@@ -91,6 +91,19 @@
                     </div>
                 </div>
 
+                <div class="col-md-3">
+                    <label for="estado" class="form-label">Estado:</label>
+                    <select id="estado" name="estado" class="form-control" required>
+                        <option value="asignado" {{ $asignacion->estado == 'asignado' ? 'selected' : '' }}>Asignado</option>
+                        <option value="no asignado" {{ $asignacion->estado == 'no asignado' ? 'selected' : '' }}>No Asignado</option>
+                        <option value="prestamo" {{ $asignacion->estado == 'prestamo' ? 'selected' : '' }}>Préstamo</option>
+                        <option value="baja" {{ $asignacion->estado == 'baja' ? 'selected' : '' }}>Baja</option>
+                    </select>
+                    <div class="valid-feedback">
+                        Good!
+                    </div>
+                </div>
+
                 <div class="col-12 mt-3">
                     <button type="submit" class="btn btn-primary">Actualizar</button>
                 </div>

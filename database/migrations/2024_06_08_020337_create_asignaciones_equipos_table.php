@@ -11,15 +11,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('asignaciones_equipos', function (Blueprint $table) {
-            $table->id()->unique(); // id INT AUTO_INCREMENT PRIMARY KEY
-            $table->unsignedBigInteger('empleado_id')->nullable(); // empleado_id INT
-            $table->unsignedBigInteger('equipo_id')->nullable(); // equipo_id INT
-            $table->date('fecha_asignacion')->nullable(); // fecha_asignacion DATE NOT NULL
-            $table->unsignedBigInteger('usuario_responsable')->nullable(); // usuario_responsable INT
-            $table->integer('ticket')->nullable(); // ticket INT
-            $table->string('nota_descriptiva', 100)->nullable(); // nota_descriptiva VARCHAR(100)
-            $table->unsignedBigInteger('empresa_id')->nullable(); // empresa_id INT
-            $table->timestamps(); // Agrega created_at y updated_at
+            $table->id()->unique(); 
+            $table->unsignedBigInteger('empleado_id')->nullable(); 
+            $table->unsignedBigInteger('equipo_id')->nullable(); 
+            $table->date('fecha_asignacion')->nullable(); 
+            $table->unsignedBigInteger('usuario_responsable')->nullable(); 
+            $table->integer('ticket')->nullable(); 
+            $table->string('nota_descriptiva', 100)->nullable();
+            $table->unsignedBigInteger('empresa_id')->nullable(); 
+            $table->string('estado', 50)->nullable(); // Nueva columna estado
+            $table->timestamps(); 
 
             // Definición de las claves foráneas
             $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('cascade');
@@ -34,7 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Eliminar la restricción de clave foránea primero
         Schema::table('asignaciones_equipos', function (Blueprint $table) {
             $table->dropForeign(['empleado_id']);
             $table->dropForeign(['equipo_id']);
@@ -42,7 +42,6 @@ return new class extends Migration
             $table->dropForeign(['empresa_id']);
         });
 
-        // Luego, eliminar la tabla
         Schema::dropIfExists('asignaciones_equipos');
     }
 };

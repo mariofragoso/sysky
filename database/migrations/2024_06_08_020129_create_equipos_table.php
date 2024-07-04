@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('tipo', 100)->nullable(); // tipo VARCHAR(100) NOT NULL
             $table->string('orden_compra', 50)->nullable(); // orden_compra VARCHAR(50)
             $table->string('requisicion', 50)->nullable(); // requisicion VARCHAR(50)
-            $table->string('estado', 50)->nullable(); // estado VARCHAR(50) NOT NULL
+            $table->string('estado', 50)->nullable()->default('no asignado'); // estado VARCHAR(50) NOT NULL
             $table->timestamps(); // Agrega created_at y updated_at
         });
     }

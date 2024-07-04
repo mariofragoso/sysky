@@ -10,7 +10,7 @@
     <!-- Barra de búsqueda -->
     <form method="GET" action="{{ route('asignacionesequipos.index') }}">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" name="search" value="{{ request()->search }}" placeholder="Buscar por empleado, equipo, fecha o ticket">
+            <input type="text" class="form-control" name="search" value="{{ request()->search }}" placeholder="Buscar por empleado, equipo, fecha, ticket o estado">
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="submit">Buscar</button>
             </div>
@@ -31,6 +31,7 @@
                             <th><a href="{{ route('asignacionesequipos.index', ['sort' => 'ticket', 'order' => $sortField === 'ticket' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Ticket</a></th>
                             <th>Nota Descriptiva</th>
                             <th>Empresa</th>
+                            <th><a href="{{ route('asignacionesequipos.index', ['sort' => 'estado', 'order' => $sortField === 'estado' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Estado</a></th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -44,6 +45,7 @@
                                 <td>{{ $asignacion->ticket }}</td>
                                 <td>{{ $asignacion->nota_descriptiva }}</td>
                                 <td>{{ $asignacion->empresa->nombre ?? 'N/A' }}</td>
+                                <td>{{ $asignacion->estado }}</td>
                                 <td>
                                     <a href="{{ route('asignacionesequipos.show', $asignacion->id) }}" class="btn btn-info btn-sm">Ver</a>
                                     <a href="{{ route('asignacionesequipos.edit', $asignacion->id) }}" class="btn btn-warning btn-sm">Editar</a>
@@ -63,6 +65,6 @@
 
     <!-- Paginación -->
     <div class="d-flex justify-content-center">
-        {{ $asignacionesequipos->appends(['search' => $search, 'sort' => $sortField, 'order' => $sortOrder])->links() }}
+        {{ $asignacionesequipos->appends(['search' => request()->search, 'sort' => request()->sort, 'order' => request()->order])->links() }}
     </div>
 @endsection

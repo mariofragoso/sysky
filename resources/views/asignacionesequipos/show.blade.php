@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('titulo', 'Detalle de la asignación de equipo')
+@section('titulo', 'Detalle de la Asignación de Equipo')
 
 @section('contenido')
 
@@ -13,11 +13,11 @@
                 </tr>
                 <tr>
                     <th>Empleado:</th>
-                    <td>{{ $asignacion->empleado->nombre }}</td>
+                    <td>{{ $asignacion->empleado->nombre ?? 'N/A' }}</td>
                 </tr>
                 <tr>
                     <th>Equipo:</th>
-                    <td>{{ $asignacion->equipo->numero_serie }}</td>
+                    <td>{{ $asignacion->equipo->numero_serie ?? 'N/A' }}</td>
                 </tr>
                 <tr>
                     <th>Fecha de Asignación:</th>
@@ -25,7 +25,7 @@
                 </tr>
                 <tr>
                     <th>Usuario Responsable:</th>
-                    <td>{{ $asignacion->usuario->name }}</td>
+                    <td>{{ $asignacion->usuario->name ?? 'N/A' }}</td>
                 </tr>
                 <tr>
                     <th>Ticket:</th>
@@ -37,7 +37,11 @@
                 </tr>
                 <tr>
                     <th>Empresa:</th>
-                    <td>{{ $asignacion->empresa->nombre }}</td>
+                    <td>{{ $asignacion->empresa->nombre ?? 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <th>Estado:</th>
+                    <td>{{ $asignacion->estado }}</td>
                 </tr>
             </table>
 

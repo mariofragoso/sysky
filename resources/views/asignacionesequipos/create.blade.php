@@ -91,6 +91,19 @@
                             Good!
                         </div>
                     </div>
+
+                    <div class="col-md-3">
+                        <label for="estado" class="form-label">Estado:</label>
+                        <select id="estado" name="estado" class="form-control" required>
+                            <option value="asignado">Asignado</option>
+                            <option value="no asignado">No Asignado</option>
+                            <option value="prestamo">Préstamo</option>
+                            <option value="baja">Baja</option>
+                        </select>
+                        <div class="valid-feedback">
+                            Good!
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-12 mt-3">

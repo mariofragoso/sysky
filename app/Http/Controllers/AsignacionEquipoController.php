@@ -45,6 +45,49 @@ class AsignacionEquipoController extends Controller
         return view('asignacionesequipos.create', compact('empleados', 'equipos', 'usuarios', 'empresas'));
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $asignacion = AsignacionEquipo::findOrFail($id);
+        $empleados = Empleado::all();
+        $equipos = Equipo::all();
+        $usuarios = User::all();
+        $empresas = Empresa::all();
+
+        return view('asignacionesequipos.edit', compact('asignacion', 'empleados', 'equipos', 'usuarios', 'empresas'));
+    }
+
+    // Método para actualizar una asignación de equipo
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'empleado_id' => 'required|exists:empleados,id',
+            'equipo_id' => 'required|exists:equipos,id',
+            'fecha_asignacion' => 'required|date',
+            'usuario_responsable' => 'required|exists:users,id',
+            'ticket' => 'required|integer',
+            'nota_descriptiva' => 'nullable|string|max:100',
+            'empresa_id' => 'required|exists:empresas,id',
+            'estado' => 'required|string|max:50',
+        ]);
+
+        $asignacion = AsignacionEquipo::findOrFail($id);
+        $asignacion->update($request->all());
+
+        // Actualizar el estado del equipo
+        $equipo = Equipo::findOrFail($request->equipo_id);
+        $equipo->update(['estado' => $request->estado]);
+
+        return redirect()->route('asignacionesequipos.index')
+            ->with('success', 'Asignación de equipo actualizada correctamente');
+    }
+
+    // Método para crear una nueva asignación de equipo
     public function store(Request $request)
     {
         $request->validate([
@@ -55,50 +98,38 @@ class AsignacionEquipoController extends Controller
             'ticket' => 'required|integer',
             'nota_descriptiva' => 'nullable|string|max:100',
             'empresa_id' => 'required|exists:empresas,id',
+            'estado' => 'required|string|max:50',
         ]);
 
-        AsignacionEquipo::create($request->all());
+        $asignacion = AsignacionEquipo::create($request->all());
+
+        // Actualizar el estado del equipo
+        $equipo = Equipo::findOrFail($request->equipo_id);
+        $equipo->update(['estado' => $request->estado]);
 
         return redirect()->route('asignacionesequipos.index')
-            ->with('success', 'Asignación de equipo creada con éxito.');
+            ->with('success', 'Asignación de equipo creada correctamente');
     }
-
-    public function show(AsignacionEquipo $asignacion)
+    
+    public function show($id)
     {
+        $asignacion = AsignacionEquipo::with(['empleado', 'equipo', 'usuario', 'empresa'])->findOrFail($id);
         return view('asignacionesequipos.show', compact('asignacion'));
     }
 
-    public function edit($id)
-{
-    $asignacion = AsignacionEquipo::findOrFail($id);
-    $empleados = Empleado::all();
-    $equipos = Equipo::all();
-    $usuarios = User::all(); // Obtener todos los usuarios
-    $empresas = Empresa::all(); // Obtener todas las empresas
-    return view('asignacionesequipos.edit', compact('asignacion', 'empleados', 'equipos', 'usuarios', 'empresas'));
-}
-    public function update(Request $request, AsignacionEquipo $asignacion)
+
+    // Método para eliminar una asignación de equipo
+    public function destroy($id)
     {
-        $request->validate([
-            'empleado_id' => 'required|exists:empleados,id',
-            'equipo_id' => 'required|exists:equipos,id',
-            'fecha_asignacion' => 'required|date',
-            'usuario_responsable' => 'required|exists:users,id',
-            'ticket' => 'required|integer',
-            'nota_descriptiva' => 'nullable|string|max:100',
-            'empresa_id' => 'required|exists:empresas,id',
-        ]);
-
-        $asignacion->update($request->all());
-
-        return redirect()->route('asignacionesequipos.index')
-            ->with('success', 'Asignación de equipo actualizada con éxito.');
-    }
-
-    public function destroy(AsignacionEquipo $asignacion)
-    {
+        $asignacion = AsignacionEquipo::findOrFail($id);
+        $equipo_id = $asignacion->equipo_id;
         $asignacion->delete();
+
+        // Actualizar el estado del equipo a 'No asignado' cuando se elimina la asignación
+        $equipo = Equipo::findOrFail($equipo_id);
+        $equipo->update(['estado' => 'No asignado']);
+
         return redirect()->route('asignacionesequipos.index')
-            ->with('success', 'Asignación de equipo eliminada con éxito.');
+            ->with('success', 'Asignación de equipo eliminada correctamente');
     }
 }
