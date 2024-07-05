@@ -161,6 +161,9 @@
     <!-- Page level plugins -->
     <script src="{{ asset('libs/chart.js/Chart.min.js') }}"></script>
 
+    <!-- Core plugin JavaScript-->
+    <script src="{{ asset('libs/jquery-easing/jquery.easing.min.js') }}"></script>
+
 
 
 </body>
