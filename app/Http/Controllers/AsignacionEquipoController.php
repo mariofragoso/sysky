@@ -7,6 +7,8 @@ use App\Models\Equipo;
 use App\Models\User;
 use App\Models\Empresa;
 use Illuminate\Http\Request;
+use PDF;
+
 
 class AsignacionEquipoController extends Controller
 {
@@ -115,6 +117,14 @@ class AsignacionEquipoController extends Controller
     {
         $asignacion = AsignacionEquipo::with(['empleado', 'equipo', 'usuario', 'empresa'])->findOrFail($id);
         return view('asignacionesequipos.show', compact('asignacion'));
+    }
+
+    public function generatePdf($id)
+    {
+        $asignacion = AsignacionEquipo::with(['empleado', 'equipo', 'usuario', 'empresa'])->findOrFail($id);
+
+        $pdf = PDF::loadView('asignaciones.pdf', compact('asignacion'));
+        return $pdf->download('asignacion_' . $asignacion->id . '.pdf');
     }
 
 

@@ -6,6 +6,7 @@
 
     <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
         <div class="card-body">
+          
             <table class="table table-striped">
                 <tr>
                     <th>ID:</th>
@@ -48,11 +49,16 @@
             <a href="{{ route('asignacionesequipos.index') }}" class="btn btn-secondary">Volver a la lista</a>
             <a href="{{ route('asignacionesequipos.edit', $asignacion->id) }}" class="btn btn-primary">Editar</a>
 
-            <form action="{{ route('asignacionesequipos.destroy', $asignacion->id) }}" method="POST" style="display: inline-block;">
+            <form action="{{ route('asignacionesequipos.destroy', $asignacion->id) }}" method="POST"
+                style="display: inline-block;">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar esta asignación?')">Eliminar</button>
+                <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('¿Está seguro de que desea eliminar esta asignación?')">Eliminar</button>
             </form>
+            
+                <a href="{{ route('asignacionesequipos.pdf', $asignacion->id) }}" class="btn btn-success">Generar PDF</a>
+            
         </div>
     </div>
 @endsection

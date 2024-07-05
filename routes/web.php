@@ -176,5 +176,8 @@ Route::delete('/asignacionaccesorios/{asignacion}', [AsignacionAccesoriosControl
 
 Route::resource('prestamos', PrestamoController::class);
 
+Route::get('/asignacionesequipos/{id}/pdf', [AsignacionEquipoController::class, 'generatePdf'])->name('asignacionesequipos.pdf');
+
+
 Auth::routes();
 
