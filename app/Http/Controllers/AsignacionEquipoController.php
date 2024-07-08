@@ -125,6 +125,8 @@ class AsignacionEquipoController extends Controller
 
         $pdf = PDF::loadView('asignaciones.pdf', compact('asignacion'));
         return $pdf->download('asignacion_' . $asignacion->id . '.pdf');
+
+
     }
 
 
