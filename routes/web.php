@@ -29,9 +29,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 
 
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 

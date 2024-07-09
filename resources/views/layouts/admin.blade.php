@@ -13,25 +13,25 @@
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('libs/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('libs/sbadmin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
 
 </head>
 
 <body id="page-top">
 
- 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         @include('layouts.partials.sidebar')
+
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
             <div id="content">
 
                 <!-- Topbar -->
@@ -44,7 +44,6 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
 
                         <!-- Authentication Links -->
                         @guest
@@ -68,7 +67,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                        {{ __('Logout') }}
+                                        {{ __('Cerrar Sesion') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -88,7 +87,9 @@
             </div>
             <!-- End of Main Content -->
 
+
             @include('layouts.partials.footer')
+
 
         </div>
         <!-- End of Content Wrapper -->
@@ -101,10 +102,8 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-
-
-       <!-- Modal Editar crear eliminar-->
-       <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <!-- Modal Editar crear eliminar-->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -117,7 +116,7 @@
                     @endif
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -129,12 +128,13 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">¿Listo para salir?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Seleccione "salir" a continuación si está listo para finalizar su sesión
+                    actual.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="{{ route('logout') }}"
@@ -146,8 +146,6 @@
         </div>
     </div>
 
-
-
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('libs/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -156,15 +154,12 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('libs/sbadmin/js/sb-admin-2.min.js') }}"></script>
-    
 
     <!-- Page level plugins -->
     <script src="{{ asset('libs/chart.js/Chart.min.js') }}"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="{{ asset('libs/jquery-easing/jquery.easing.min.js') }}"></script>
-
-
 
 </body>
 
