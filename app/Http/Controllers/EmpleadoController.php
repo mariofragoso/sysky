@@ -50,12 +50,15 @@ public function index(Request $request)
         return redirect()->route('empleados.index')->with('success', 'Empleado creado exitosamente.');
     }
 
-    // Mostrar un empleado específico
     public function show($id)
     {
-        $empleado = Empleado::find($id);
+        $empleado = Empleado::with(['asignacionesequipos.equipo', 'asignacionesaccesorios.accesorio', 'prestamos.equipo'])->findOrFail($id);
         return view('empleados.show', compact('empleado'));
     }
+
+
+
+
 
     // Mostrar el formulario para editar un empleado existente
     public function edit($id)
