@@ -50,3 +50,110 @@
   2024-07-10 03:15:01 Running ['artisan' prestamos:notificar] ..... 167ms DONE
   ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
 
+
+  2024-07-10 03:16:02 Running ['artisan' prestamos:notificar] ..... 159ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2024-07-10 03:18:01 Running ['artisan' prestamos:notificar] ..... 185ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-10 03:19:02 Running ['artisan' prestamos:notificar] ..... 188ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-10 03:20:01 Running ['artisan' prestamos:notificar] ..... 190ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-10 03:21:01 Running ['artisan' prestamos:notificar] ..... 165ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-10 03:22:01 Running ['artisan' prestamos:notificar] ..... 204ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-10 03:24:01 Running ['artisan' prestamos:notificar] ..... 229ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-10 03:25:02 Running ['artisan' prestamos:notificar] ..... 156ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-10 03:26:01 Running ['artisan' prestamos:notificar] ..... 156ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-10 03:27:01 Running ['artisan' prestamos:notificar] ..... 181ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:28:01 Running ['artisan' prestamos:notificar] ..... 178ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:29:01 Running ['artisan' prestamos:notificar] ..... 154ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:30:02 Running ['artisan' prestamos:notificar] ..... 160ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:31:01 Running ['artisan' prestamos:notificar] ..... 179ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:32:01 Running ['artisan' prestamos:notificar] ..... 162ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:33:02 Running ['artisan' prestamos:notificar] ..... 155ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:34:01 Running ['artisan' prestamos:notificar] ..... 173ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:35:01 Running ['artisan' prestamos:notificar] ..... 163ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:36:01 Running ['artisan' prestamos:notificar] ..... 152ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:37:01 Running ['artisan' prestamos:notificar] ..... 171ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:38:01 Running ['artisan' prestamos:notificar] ..... 156ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:39:01 Running ['artisan' prestamos:notificar] ..... 157ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:40:01 Running ['artisan' prestamos:notificar] ..... 157ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:41:01 Running ['artisan' prestamos:notificar] ..... 161ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:42:01 Running ['artisan' prestamos:notificar] ..... 162ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+
+
+  2024-07-09 21:43:01 Running ['artisan' prestamos:notificar] ..... 158ms DONE
+  ⇂ '/usr/bin/php8.1' 'artisan' prestamos:notificar > '/dev/null' 2>&1  
+

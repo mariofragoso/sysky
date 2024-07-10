@@ -15,7 +15,7 @@ class Prestamo extends Model
         'empleado_id',
         'fecha_prestamo',
         'fecha_regreso',
-        'usuario_responsable',
+        'usuario_responsable_id',
     ];
 
     public function equipo()
@@ -30,7 +30,7 @@ class Prestamo extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'usuario_responsable');
+        return $this->belongsTo(User::class, 'usuario_responsable_id');
     }
 
     public static function enviarNotificaciones()
@@ -42,4 +42,3 @@ class Prestamo extends Model
         }
     }
 }
-

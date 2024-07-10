@@ -1,6 +1,4 @@
 <?php
-// app/Console/Commands/NotificarPrestamos.php
-
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -29,10 +27,11 @@ class NotificarPrestamos extends Command
                 $usuario->notify(new PrestamoEntregaNotification($prestamo));
                 $this->info("Notificación enviada a: " . $usuario->email);
             } else {
-                $this->info("No se encontró un usuario responsable para el préstamo ID: " . $prestamo->id);
+                $this->error("No se encontró un usuario responsable para el préstamo ID: " . $prestamo->id);
             }
         }
 
         $this->info('Notificaciones de préstamos enviadas correctamente.');
     }
 }
+
