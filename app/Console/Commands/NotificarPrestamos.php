@@ -24,10 +24,12 @@ class NotificarPrestamos extends Command
         $prestamos = Prestamo::where('fecha_regreso', $hoy)->get();
 
         foreach ($prestamos as $prestamo) {
-            $usuario = $prestamo->usuarioResponsable;
+            $usuario = $prestamo->usuario;
             if ($usuario) {
                 $usuario->notify(new PrestamoEntregaNotification($prestamo));
                 $this->info("Notificación enviada a: " . $usuario->email);
+            } else {
+                $this->info("No se encontró un usuario responsable para el préstamo ID: " . $prestamo->id);
             }
         }
 

@@ -38,9 +38,25 @@
                 </table>
             </div>
 
-            <h3>Equipos Asignados</h3>
+
+            <a href="{{ route('empleados.index') }}" class="btn btn-secondary">Volver a la lista</a>
+            <a href="{{ route('empleados.edit', $empleado->id) }}" class="btn btn-primary">Editar</a>
+
+            <form action="{{ route('empleados.destroy', $empleado->id) }}" method="POST" style="display: inline-block;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('¿Está seguro de que desea eliminar este empleado?')">Eliminar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
+        <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped">
+                    <h3>Equipos Asignados</h3>
+
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -63,7 +79,10 @@
                     </tbody>
                 </table>
             </div>
-
+        </div>
+    </div>
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
+        <div class="card-body">
             <h3>Accesorios Asignados</h3>
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -89,7 +108,10 @@
                     </tbody>
                 </table>
             </div>
-
+        </div>
+    </div>
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
+        <div class="card-body">
             <h3>Préstamos Realizados</h3>
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -113,15 +135,7 @@
                     </tbody>
                 </table>
             </div>
-
-            <a href="{{ route('empleados.index') }}" class="btn btn-secondary">Volver a la lista</a>
-            <a href="{{ route('empleados.edit', $empleado->id) }}" class="btn btn-primary">Editar</a>
-
-            <form action="{{ route('empleados.destroy', $empleado->id) }}" method="POST" style="display: inline-block;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este empleado?')">Eliminar</button>
-            </form>
         </div>
     </div>
+
 @endsection

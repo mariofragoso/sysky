@@ -1,10 +1,10 @@
 <?php
-// app/Models/Prestamo.php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Notifications\PrestamoEntregaNotification;
+use Illuminate\Support\Facades\Notification;
 
 class Prestamo extends Model
 {
@@ -15,22 +15,31 @@ class Prestamo extends Model
         'empleado_id',
         'fecha_prestamo',
         'fecha_regreso',
-        'usuario_responsable_id',
+        'usuario_responsable',
     ];
-
-    public function empleado()
-    {
-        return $this->belongsTo(Empleado::class);
-    }
 
     public function equipo()
     {
         return $this->belongsTo(Equipo::class);
     }
 
-    public function usuarioResponsable()
+    public function empleado()
     {
-        return $this->belongsTo(User::class, 'usuario_responsable_id');
+        return $this->belongsTo(Empleado::class);
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'usuario_responsable');
+    }
+
+    public static function enviarNotificaciones()
+    {
+        $prestamos = self::whereDate('fecha_regreso', now()->toDateString())->get();
+
+        foreach ($prestamos as $prestamo) {
+            Notification::send($prestamo->usuario, new PrestamoEntregaNotification($prestamo));
+        }
     }
 }
 

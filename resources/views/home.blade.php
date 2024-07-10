@@ -55,11 +55,14 @@
             </div>
 
             <!-- Gráfica -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="chart-container" style="position: relative; height:40vh; width:80vw">
-                        <canvas id="equiposChart"></canvas>
-                    </div>
+
+        </div>
+    </div>
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
+        <div class="card-body">
+            <div class="col-lg-12">
+                <div class="chart-container" style="position: relative; height:85vh; width:80vw">
+                    <canvas id="equiposChart"></canvas>
                 </div>
             </div>
         </div>
@@ -74,7 +77,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             var ctx = document.getElementById('equiposChart').getContext('2d');
             var equiposChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'doughnut',
                 data: {
                     labels: ['Asignados', 'No Asignados', 'Bajas'],
                     datasets: [{

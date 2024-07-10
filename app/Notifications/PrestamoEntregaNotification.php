@@ -32,6 +32,7 @@ class PrestamoEntregaNotification extends Notification
             ->line('Equipo: ' . $this->prestamo->equipo->numero_serie)
             ->line('Fecha de Préstamo: ' . $this->prestamo->fecha_prestamo)
             ->line('Fecha de Regreso: ' . $this->prestamo->fecha_regreso)
+            ->action('Ver Préstamo', url('/prestamos/' . $this->prestamo->id))
             ->line('Gracias.');
     }
 
