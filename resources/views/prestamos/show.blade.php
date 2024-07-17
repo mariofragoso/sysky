@@ -12,11 +12,11 @@
                 </tr>
                 <tr>
                     <th>Empleado:</th>
-                    <td>{{ $prestamo->empleado->nombre }}</td>
+                    <td>{{ $prestamo->empleado->nombre ?? 'N/A' }}</td>
                 </tr>
                 <tr>
                     <th>Equipo:</th>
-                    <td>{{ $prestamo->equipo->numero_serie }}</td>
+                    <td>{{ $prestamo->equipo->numero_serie ?? 'N/A' }}</td>
                 </tr>
                 <tr>
                     <th>Fecha de Préstamo:</th>
@@ -25,6 +25,14 @@
                 <tr>
                     <th>Fecha de Regreso:</th>
                     <td>{{ $prestamo->fecha_regreso }}</td>
+                </tr>
+                <tr>
+                    <th>Usuario Responsable:</th>
+                    <td>{{ $prestamo->usuario_responsable->name ?? 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <th>Devuelto:</th>
+                    <td>{{ $prestamo->devuelto ? 'Sí' : 'No' }}</td>
                 </tr>
             </table>
             <a href="{{ route('prestamos.index') }}" class="btn btn-secondary">Volver a la lista</a>

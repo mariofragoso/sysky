@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Acciones;
 use App\Models\AsignacionEquipo;
 use App\Models\Empleado;
 use App\Models\Equipo;
@@ -62,6 +63,7 @@ class AsignacionEquipoController extends Controller
         $empresas = Empresa::all();
 
         return view('asignacionesequipos.edit', compact('asignacion', 'empleados', 'equipos', 'usuarios', 'empresas'));
+        
     }
 
     // Método para actualizar una asignación de equipo

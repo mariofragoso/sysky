@@ -7,7 +7,9 @@ use App\Models\Equipo;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use App\Models\Acciones;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class PrestamoController extends Controller
 {
@@ -26,7 +28,6 @@ class PrestamoController extends Controller
         return view('prestamos.create', compact('equipos', 'empleados', 'usuarios'));
     }
 
-
     public function store(Request $request)
     {
         $request->validate([
@@ -35,29 +36,30 @@ class PrestamoController extends Controller
             'fecha_prestamo' => 'required|date',
             'fecha_regreso' => 'required|date|after_or_equal:fecha_prestamo',
             'usuario_responsable_id' => 'required|exists:users,id',
-
         ]);
 
-        Prestamo::create($request->all());
+        $prestamo = Prestamo::create($request->all());
 
-        // Aquí puedes agregar la lógica para notificar el día de entrega
+        
 
         return redirect()->route('prestamos.index')->with('success', 'Préstamo creado exitosamente.');
     }
 
-    public function show(Prestamo $prestamo)
+    public function show($id)
     {
+        $prestamo = Prestamo::with(['empleado', 'equipo', 'usuario'])->findOrFail($id);
         return view('prestamos.show', compact('prestamo'));
     }
 
-    public function edit(Prestamo $prestamo)
+    public function edit($id)
     {
-        $equipos = Equipo::all();
+        $prestamo = Prestamo::with(['empleado', 'equipo', 'usuario'])->findOrFail($id);
         $empleados = Empleado::all();
+        $equipos = Equipo::all();
         $usuarios = User::all();
-
-        return view('prestamos.edit', compact('prestamo', 'equipos', 'empleados', 'usuarios'));
+        return view('prestamos.edit', compact('prestamo', 'empleados', 'equipos', 'usuarios'));
     }
+
 
     public function update(Request $request, Prestamo $prestamo)
     {
@@ -67,19 +69,21 @@ class PrestamoController extends Controller
             'fecha_prestamo' => 'required|date',
             'fecha_regreso' => 'required|date|after_or_equal:fecha_prestamo',
             'usuario_responsable_id' => 'required|exists:users,id',
-
+            'devuelto' => 'boolean',
         ]);
 
         $prestamo->update($request->all());
 
-        // Aquí puedes agregar la lógica para notificar el día de entrega
-
+       
         return redirect()->route('prestamos.index')->with('success', 'Préstamo actualizado exitosamente.');
     }
 
     public function destroy(Prestamo $prestamo)
     {
         $prestamo->delete();
+
+        
+
         return redirect()->route('prestamos.index')->with('success', 'Préstamo eliminado exitosamente.');
     }
 }

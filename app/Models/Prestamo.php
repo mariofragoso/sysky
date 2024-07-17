@@ -16,6 +16,8 @@ class Prestamo extends Model
         'fecha_prestamo',
         'fecha_regreso',
         'usuario_responsable_id',
+        'devuelto',
+
     ];
 
     public function equipo()

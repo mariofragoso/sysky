@@ -49,16 +49,10 @@
                     <label for="usuario_responsable_id" class="form-label">Usuario Responsable:</label>
                     <select id="usuario_responsable_id" name="usuario_responsable_id" class="form-control" required>
                         @foreach ($usuarios as $usuario)
-                            <option value="{{ $usuario->id }}"
-                                {{ old('usuario_responsable_id', $prestamo->usuario_responsable_id ?? '') == $usuario->id ? 'selected' : '' }}>
-                                {{ $usuario->name }}</option>
+                            <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
                         @endforeach
                     </select>
-                    <div class="valid-feedback">
-                        Good!
-                    </div>
                 </div>
-
 
                 <button type="submit" class="btn btn-primary">Crear</button>
             </form>

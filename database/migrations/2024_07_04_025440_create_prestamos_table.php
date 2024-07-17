@@ -15,18 +15,17 @@ class CreatePrestamosTable extends Migration
             $table->date('fecha_prestamo');
             $table->date('fecha_regreso');
             $table->unsignedBigInteger('usuario_responsable_id')->nullable();
+            $table->boolean('devuelto')->default(false);
             $table->timestamps();
 
             $table->foreign('equipo_id')->references('id')->on('equipos')->onDelete('cascade');
             $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('cascade');
             $table->foreign('usuario_responsable_id')->references('id')->on('users')->onDelete('cascade');
-
         });
     }
 
     public function down()
     {
         Schema::dropIfExists('prestamos');
-        
     }
 }

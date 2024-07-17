@@ -10,7 +10,7 @@ class Kernel extends ConsoleKernel
 {
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('prestamos:notificar')->dailyAt('22:30');
+        $schedule->command('prestamos:notificar')->dailyAt('21:10');
     }
 
     protected function commands()

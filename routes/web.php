@@ -14,6 +14,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\AccionesController;
+
 
 
 /*
@@ -173,6 +175,9 @@ Route::put('/asignacionaccesorios/{asignacion}', [AsignacionAccesoriosController
 Route::delete('/asignacionaccesorios/{asignacion}', [AsignacionAccesoriosController::class, 'destroy'])->name('asignacionaccesorios.destroy');
 
 Route::resource('prestamos', PrestamoController::class);
+
+Route::get('/acciones', [AccionesController::class, 'index'])->name('acciones.index');
+
 
 Route::get('/asignacionesequipos/{id}/pdf', [AsignacionEquipoController::class, 'generatePdf'])->name('asignacionesequipos.pdf');
 
