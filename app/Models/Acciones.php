@@ -14,6 +14,7 @@ class Acciones extends Model
         'descripcion',
         'usuario_responsable_id',
         'created_at',
+
     ];
 
     public function usuario()

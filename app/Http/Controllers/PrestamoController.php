@@ -40,6 +40,14 @@ class PrestamoController extends Controller
 
         $prestamo = Prestamo::create($request->all());
 
+        // Registrar la acción
+        $accion = new Acciones();
+        $accion->modulo = "Préstamo";
+        $accion->descripcion = "Se creo el préstamo para el equipo con numero de serie: " . $prestamo->equipo->numero_serie;
+        $accion->usuario_responsable_id = Auth::user()->id;
+        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+        $accion->save();
+
         
 
         return redirect()->route('prestamos.index')->with('success', 'Préstamo creado exitosamente.');
@@ -74,6 +82,14 @@ class PrestamoController extends Controller
 
         $prestamo->update($request->all());
 
+         // Registrar la acción
+         $accion = new Acciones();
+         $accion->modulo = "Préstamo";
+         $accion->descripcion = "Se actualizó el préstamo del equipo con numero de serie: " . $prestamo->equipo->numero_serie;
+         $accion->usuario_responsable_id = Auth::user()->id;
+         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+         $accion->save();
+
        
         return redirect()->route('prestamos.index')->with('success', 'Préstamo actualizado exitosamente.');
     }
@@ -81,6 +97,14 @@ class PrestamoController extends Controller
     public function destroy(Prestamo $prestamo)
     {
         $prestamo->delete();
+
+        // Registrar la acción
+        $accion = new Acciones();
+        $accion->modulo = "Préstamo";
+        $accion->descripcion = "Se elimino el préstamo de el equipo con numero de serie: " . $prestamo->equipo->numero_serie;
+        $accion->usuario_responsable_id = Auth::user()->id;
+        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+        $accion->save();
 
         
 

@@ -4,6 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Accesorio;
 use Illuminate\Http\Request;
+use App\Models\Acciones;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
+
+
+
 
 class AccesorioController extends Controller
 {
@@ -39,7 +46,15 @@ public function index(Request $request)
             'requisicion' => 'required|integer',
         ]);
 
-        Accesorio::create($request->all());
+        $accesorio = Accesorio::create($request->all());
+
+        // Registrar la acción
+        $accion = new Acciones();
+        $accion->modulo = "Accesorios";
+        $accion->descripcion = "Se creo el accesorio: " . $accesorio->marca;
+        $accion->usuario_responsable_id = Auth::user()->id;
+        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+        $accion->save();
 
         return redirect()->route('accesorios.index')
             ->with('success', 'Accesorio creado exitosamente.');

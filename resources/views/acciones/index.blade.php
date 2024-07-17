@@ -9,7 +9,6 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Módulo</th>
                         <th>Descripción</th>
                         <th>Usuario Responsable</th>
@@ -19,11 +18,11 @@
                 <tbody>
                     @foreach ($acciones as $accion)
                         <tr>
-                            <td>{{ $accion->id }}</td>
                             <td>{{ $accion->modulo }}</td>
                             <td>{{ $accion->descripcion }}</td>
                             <td>{{ $accion->usuario->name ?? 'N/A' }}</td>
-                            <td>{{ $accion->fechahora }}</td>
+                            <td>{{ $accion->created_at }}</td>
+                           
                         </tr>
                     @endforeach
                 </tbody>
