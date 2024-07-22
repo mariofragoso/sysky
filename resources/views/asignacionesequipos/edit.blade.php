@@ -23,8 +23,7 @@
                     <label for="empleado_id" class="form-label">Empleado:</label>
                     <select id="empleado_id" name="empleado_id" class="form-control" required>
                         @foreach ($empleados as $empleado)
-                            <option value="{{ $empleado->id }}" {{ $asignacion->empleado_id == $empleado->id ? 'selected' : '' }}>{{ $empleado->nombre }}</option>
-                        @endforeach
+                        <option value="{{ $empleado->id }}">{{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM }}</option>                        @endforeach
                     </select>
                     <div class="valid-feedback">
                         Good!
@@ -35,7 +34,7 @@
                     <label for="equipo_id" class="form-label">Equipo:</label>
                     <select id="equipo_id" name="equipo_id" class="form-control" required>
                         @foreach ($equipos as $equipo)
-                            <option value="{{ $equipo->id }}" {{ $asignacion->equipo_id == $equipo->id ? 'selected' : '' }}>{{ $equipo->numero_serie }}</option>
+                            <option value="{{ $equipo->id }}" {{ $asignacion->equipo_id == $equipo->id ? 'selected' : '' }}>{{ $equipo->etiqueta_skytex }}</option>
                         @endforeach
                     </select>
                     <div class="valid-feedback">
@@ -46,18 +45,6 @@
                 <div class="col-md-3">
                     <label for="fecha_asignacion" class="form-label">Fecha de Asignación:</label>
                     <input type="date" id="fecha_asignacion" name="fecha_asignacion" class="form-control" value="{{ $asignacion->fecha_asignacion }}" required>
-                    <div class="valid-feedback">
-                        Good!
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <label for="usuario_responsable" class="form-label">Usuario Responsable:</label>
-                    <select id="usuario_responsable" name="usuario_responsable" class="form-control" required>
-                        @foreach ($usuarios as $usuario)
-                            <option value="{{ $usuario->id }}" {{ $asignacion->usuario_responsable == $usuario->id ? 'selected' : '' }}>{{ $usuario->name }}</option>
-                        @endforeach
-                    </select>
                     <div class="valid-feedback">
                         Good!
                     </div>

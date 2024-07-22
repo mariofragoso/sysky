@@ -20,12 +20,14 @@ class EmpleadosSeeder extends Seeder
                 RH_PUESTO.NOM_PUESTO as Puesto, 
                 RH_DEPTO.NOM_DEPTO as Area
             FROM RH_TRAB
+            
             INNER JOIN RH_PUESTO 
                 ON RH_TRAB.CLA_EMPRESA = RH_PUESTO.CLA_EMPRESA 
                 AND RH_TRAB.CLA_PUESTO = RH_PUESTO.CLA_PUESTO 
             INNER JOIN RH_DEPTO 
                 ON RH_TRAB.CLA_DEPTO = RH_DEPTO.CLA_DEPTO 
                 AND RH_TRAB.CLA_EMPRESA = RH_DEPTO.CLA_EMPRESA
+                WHERE RH_TRAB.STATUS_TRAB = "A"
             ORDER BY Nomina ASC;
         ');
 

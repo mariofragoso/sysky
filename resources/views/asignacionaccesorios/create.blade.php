@@ -23,7 +23,7 @@
                         <label for="empleado_id">Empleado:</label>
                         <select name="empleado_id" id="empleado_id" class="form-control">
                             @foreach ($empleados as $empleado)
-                                <option value="{{ $empleado->id }}">{{ $empleado->nombre }}</option>
+                            <option value="{{ $empleado->id }}">{{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM }}</option>
                             @endforeach
                         </select>
                         <div class="valid-feedback">

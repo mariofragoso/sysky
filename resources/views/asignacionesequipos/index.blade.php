@@ -39,7 +39,7 @@
                         @foreach ($asignacionesequipos as $asignacion)
                             <tr>
                                 <td>{{ $asignacion->empleado->nombre ?? 'N/A' }} {{ $asignacion->empleado->apellidoP ?? 'N/A' }} {{ $asignacion->empleado->apellidoM ?? 'N/A' }}</td>
-                                <td>{{ $asignacion->equipo->numero_serie ?? 'N/A' }}</td>
+                                <td>{{ $asignacion->equipo->etiqueta_skytex ?? 'N/A' }}</td>
                                 <td>{{ $asignacion->fecha_asignacion }}</td>
                                 <td>{{ $asignacion->usuario->name ?? 'N/A' }}</td>
                                 <td>{{ $asignacion->ticket }}</td>
@@ -49,10 +49,10 @@
                                 <td>
                                     <a href="{{ route('asignacionesequipos.show', $asignacion->id) }}" class="btn btn-info btn-sm">Ver</a>
                                     <a href="{{ route('asignacionesequipos.edit', $asignacion->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                                    <form action="{{ route('asignacionesequipos.destroy', $asignacion->id) }}" method="POST" style="display:inline">
+                                    <form type action="{{ route('asignacionesequipos.destroy', $asignacion->id) }}" method="POST" style="display:inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta asignación?')">Eliminar</button>
+                                        <button  type="hidden" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta asignación?')">Eliminar</button>
                                     </form>
                                 </td>
                             </tr>

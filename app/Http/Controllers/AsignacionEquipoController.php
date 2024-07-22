@@ -8,8 +8,8 @@ use App\Models\Equipo;
 use App\Models\User;
 use App\Models\Empresa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PDF;
-
 
 class AsignacionEquipoController extends Controller
 {
@@ -44,68 +44,59 @@ class AsignacionEquipoController extends Controller
     {
         $empleados = Empleado::all();
         $equipos = Equipo::all();
-        $usuarios = User::all();
         $empresas = Empresa::all();
-        return view('asignacionesequipos.create', compact('empleados', 'equipos', 'usuarios', 'empresas'));
+        
+        return view('asignacionesequipos.create', compact('empleados', 'equipos', 'empresas'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $asignacion = AsignacionEquipo::findOrFail($id);
         $empleados = Empleado::all();
         $equipos = Equipo::all();
-        $usuarios = User::all();
         $empresas = Empresa::all();
 
-        return view('asignacionesequipos.edit', compact('asignacion', 'empleados', 'equipos', 'usuarios', 'empresas'));
-        
+        return view('asignacionesequipos.edit', compact('asignacion', 'empleados', 'equipos', 'empresas'));
     }
 
-    // Método para actualizar una asignación de equipo
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'empleado_id' => 'required|exists:empleados,id',
-            'equipo_id' => 'required|exists:equipos,id',
-            'fecha_asignacion' => 'required|date',
-            'usuario_responsable' => 'required|exists:users,id',
-            'ticket' => 'required|integer',
-            'nota_descriptiva' => 'nullable|string|max:100',
-            'empresa_id' => 'required|exists:empresas,id',
-            'estado' => 'required|string|max:50',
-        ]);
+{
+    $request->validate([
+        'empleado_id' => 'required|exists:empleados,id',
+        'equipo_id' => 'required|exists:equipos,id',
+        'fecha_asignacion' => 'required|date',
+        'ticket' => 'required|integer',
+        'nota_descriptiva' => 'nullable|string|max:100',
+        'empresa_id' => 'required|exists:empresas,id',
+        'estado' => 'required|string|max:50',
+    ]);
 
-        $asignacion = AsignacionEquipo::findOrFail($id);
-        $asignacion->update($request->all());
+    $asignacion = AsignacionEquipo::findOrFail($id);
+    $request['usuario_responsable'] = Auth::id(); // Establecer el usuario autenticado
+    $asignacion->update($request->all());
 
-        // Actualizar el estado del equipo
-        $equipo = Equipo::findOrFail($request->equipo_id);
-        $equipo->update(['estado' => $request->estado]);
+    // Actualizar el estado del equipo
+    $equipo = Equipo::findOrFail($request->equipo_id);
+    $equipo->update(['estado' => $request->estado]);
 
-        return redirect()->route('asignacionesequipos.index')
-            ->with('success', 'Asignación de equipo actualizada correctamente');
-    }
+    return redirect()->route('asignacionesequipos.index')
+        ->with('success', 'Asignación de equipo actualizada correctamente');
+}
 
-    // Método para crear una nueva asignación de equipo
+
     public function store(Request $request)
     {
         $request->validate([
             'empleado_id' => 'required|exists:empleados,id',
             'equipo_id' => 'required|exists:equipos,id',
             'fecha_asignacion' => 'required|date',
-            'usuario_responsable' => 'required|exists:users,id',
             'ticket' => 'required|integer',
             'nota_descriptiva' => 'nullable|string|max:100',
             'empresa_id' => 'required|exists:empresas,id',
             'estado' => 'required|string|max:50',
         ]);
 
+        $request['usuario_responsable'] = Auth::id(); // Establecer el usuario autenticado
         $asignacion = AsignacionEquipo::create($request->all());
 
         // Actualizar el estado del equipo
@@ -128,12 +119,8 @@ class AsignacionEquipoController extends Controller
 
         $pdf = PDF::loadView('asignaciones.pdf', compact('asignacion'));
         return $pdf->download('asignacion_' . $asignacion->id . '.pdf');
-
-
     }
 
-
-    // Método para eliminar una asignación de equipo
     public function destroy($id)
     {
         $asignacion = AsignacionEquipo::findOrFail($id);

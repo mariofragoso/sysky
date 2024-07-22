@@ -14,7 +14,8 @@
                 </tr>
                 <tr>
                     <th>Empleado:</th>
-                    <td>{{ $asignacion->empleado->nombre ?? 'N/A' }}</td>
+                    <td>{{ $asignacion->empleado->nombre }}
+                        {{ $asignacion->empleado->apellidoP }} {{ $asignacion->empleado->apellidoM }}</td>
                 </tr>
                 <tr>
                     <th>Equipo:</th>

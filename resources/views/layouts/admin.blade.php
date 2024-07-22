@@ -20,6 +20,11 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('libs/sbadmin/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
+    <!-- Scripts -->
+
 
 </head>
 
@@ -161,6 +166,19 @@
     <!-- Core plugin JavaScript-->
     <script src="{{ asset('libs/jquery-easing/jquery.easing.min.js') }}"></script>
 
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+
+
+
+
+
+
 </body>
 
 </html>
@@ -198,3 +216,45 @@
         @endif
     });
 </script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#empleado_id').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Seleccione un empleado',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
+                'style',
+            allowClear: true
+        });
+    });
+    $(document).ready(function() {
+        $('#equipo_id').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Seleccione un equipo',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
+                'style',
+            allowClear: true
+        });
+    });
+    $(document).ready(function() {
+        $('#marca').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Seleccione una marca',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
+                'style',
+            allowClear: true
+        });
+    });
+    $(document).ready(function() {
+        $('#tipo').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Seleccione un tipo de equipo',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
+                'style',
+            allowClear: true
+        });
+    });
+</script>
+
+
