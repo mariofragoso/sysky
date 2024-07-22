@@ -92,7 +92,7 @@
                         @foreach ($asignacionesaccesorios as $asignacion)
                             <tr>
                                 <td>{{ $asignacion->id }}</td>
-                                <td>{{ $asignacion->empleado->nombre }}</td>
+                                <td>{{ $asignacion->empleado->nombre }} {{ $asignacion->empleado->apellidoP }} {{ $asignacion->empleado->apellidoM }}</td>
                                 <td>{{ $asignacion->accesorio->descripcion }}</td>
                                 <td>{{ $asignacion->cantidad_asignada }}</td>
                                 <td>{{ $asignacion->fecha_asignacion }}</td>

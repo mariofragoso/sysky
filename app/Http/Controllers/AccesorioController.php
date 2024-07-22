@@ -83,6 +83,14 @@ public function index(Request $request)
 
         $accesorio->update($request->all());
 
+         // Registrar la acción
+         $accion = new Acciones();
+         $accion->modulo = "Accesorios";
+         $accion->descripcion = "Se Edito el accesorio: " . $accesorio->marca;
+         $accion->usuario_responsable_id = Auth::user()->id;
+         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+         $accion->save();
+
         return redirect()->route('accesorios.index')
             ->with('success', 'Accesorio actualizado exitosamente.');
     }
@@ -90,6 +98,14 @@ public function index(Request $request)
     public function destroy(Accesorio $accesorio)
     {
         $accesorio->delete();
+
+        // Registrar la acción
+        $accion = new Acciones();
+        $accion->modulo = "Accesorios";
+        $accion->descripcion = "Se Elimino el accesorio: " . $accesorio->marca;
+        $accion->usuario_responsable_id = Auth::user()->id;
+        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+        $accion->save();
 
         return redirect()->route('accesorios.index')
             ->with('success', 'Accesorio eliminado exitosamente.');

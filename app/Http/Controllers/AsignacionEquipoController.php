@@ -18,21 +18,22 @@ class AsignacionEquipoController extends Controller
         $search = $request->input('search');
         $sortField = $request->input('sort', 'fecha_asignacion');
         $sortOrder = $request->input('order', 'desc');
-
+    
         $asignacionesequipos = AsignacionEquipo::with(['empleado', 'equipo', 'usuario', 'empresa'])
             ->when($search, function ($query, $search) {
                 return $query->whereHas('empleado', function ($q) use ($search) {
-                    $q->where('nombre', 'like', "%{$search}%");
+                    $q->whereRaw("CONCAT(nombre, ' ', apellidoP, ' ', apellidoM) LIKE ?", ["%{$search}%"]);
                 })->orWhereHas('equipo', function ($q) use ($search) {
                     $q->where('numero_serie', 'like', "%{$search}%");
                 })->orWhere('fecha_asignacion', 'like', "%{$search}%")
-                ->orWhere('ticket', 'like', "%{$search}%");
+                  ->orWhere('ticket', 'like', "%{$search}%");
             })
             ->orderBy($sortField, $sortOrder)
             ->paginate(10);
-
+    
         return view('asignacionesequipos.index', compact('asignacionesequipos', 'search', 'sortField', 'sortOrder'));
     }
+    
 
     public function __construct()
     {

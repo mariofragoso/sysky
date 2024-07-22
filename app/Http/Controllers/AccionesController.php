@@ -14,4 +14,8 @@ class AccionesController extends Controller
         $acciones = Acciones::with('usuario')->get();
         return view('acciones.index', compact('acciones'));
     }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 }

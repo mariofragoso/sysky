@@ -42,7 +42,7 @@ class PrestamoController extends Controller
 
         // Registrar la acción
         $accion = new Acciones();
-        $accion->modulo = "Préstamo";
+        $accion->modulo = "Préstamos";
         $accion->descripcion = "Se creo el préstamo para el equipo con numero de serie: " . $prestamo->equipo->numero_serie;
         $accion->usuario_responsable_id = Auth::user()->id;
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
@@ -84,7 +84,7 @@ class PrestamoController extends Controller
 
          // Registrar la acción
          $accion = new Acciones();
-         $accion->modulo = "Préstamo";
+         $accion->modulo = "Préstamos";
          $accion->descripcion = "Se actualizó el préstamo del equipo con numero de serie: " . $prestamo->equipo->numero_serie;
          $accion->usuario_responsable_id = Auth::user()->id;
          $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
@@ -100,7 +100,7 @@ class PrestamoController extends Controller
 
         // Registrar la acción
         $accion = new Acciones();
-        $accion->modulo = "Préstamo";
+        $accion->modulo = "Préstamos";
         $accion->descripcion = "Se elimino el préstamo de el equipo con numero de serie: " . $prestamo->equipo->numero_serie;
         $accion->usuario_responsable_id = Auth::user()->id;
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();

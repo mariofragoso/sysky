@@ -83,7 +83,7 @@
                         @forelse ($empleados as $empleado)
                             <tr>
                                 <td>{{ $empleado->numero_nomina }}</td>
-                                <td>{{ $empleado->nombre }}</td>
+                                <td>{{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM }}</td>
                                 <td>{{ $empleado->puesto }}</td>
                                 <td>{{ $empleado->area }}</td>
                                 <td>

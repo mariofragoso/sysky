@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\AsignacionesAccesorios;
 use App\Models\Empleado;
 use App\Models\Accesorio;
+use App\Models\Acciones;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AsignacionAccesoriosController extends Controller
 {
@@ -72,6 +75,16 @@ class AsignacionAccesoriosController extends Controller
         // Disminuir la cantidad de accesorios disponibles
         $accesorio->cantidad -= $request->input('cantidad_asignada');
         $accesorio->save();
+
+        // Registrar la acción
+        $accion = new Acciones();
+        $accion->modulo = "Accesorios";
+        $accion->descripcion = "Se creo la asignacion del accesorio: " . $asignacion->accesorio->descripcion . " Para el empleado: " . $asignacion->empleado->nombre;
+        $accion->usuario_responsable_id = Auth::user()->id;
+        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+        $accion->save();
+
+
 
         return redirect()->route('asignacionaccesorios.index')
             ->with('success', 'Asignación de accesorio creada con éxito.');

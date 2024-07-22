@@ -38,7 +38,7 @@
                     <tbody>
                         @foreach ($asignacionesequipos as $asignacion)
                             <tr>
-                                <td>{{ $asignacion->empleado->nombre ?? 'N/A' }}</td>
+                                <td>{{ $asignacion->empleado->nombre ?? 'N/A' }} {{ $asignacion->empleado->apellidoP ?? 'N/A' }} {{ $asignacion->empleado->apellidoM ?? 'N/A' }}</td>
                                 <td>{{ $asignacion->equipo->numero_serie ?? 'N/A' }}</td>
                                 <td>{{ $asignacion->fecha_asignacion }}</td>
                                 <td>{{ $asignacion->usuario->name ?? 'N/A' }}</td>
