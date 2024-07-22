@@ -18,7 +18,8 @@ class EmpleadoController extends Controller
         $sortOrder = $request->input('order', 'desc');
     
         $empleados = Empleado::when($search, function ($query, $search) {
-            return $query->whereRaw("CONCAT(nombre, ' ', apellidoP, ' ', apellidoM) LIKE ?", ["%{$search}%"]);
+            return $query->whereRaw("CONCAT(nombre, ' ', apellidoP, ' ', apellidoM) LIKE ?", ["%{$search}%"])
+            ->orWhere('numero_nomina', 'like', "%{$search}%");
         })->orderBy($sortField, $sortOrder)->paginate(10);
     
         return view('empleados.index', compact('empleados', 'search', 'sortField', 'sortOrder'));
