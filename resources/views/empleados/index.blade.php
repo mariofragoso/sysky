@@ -75,6 +75,7 @@
                                     @endif
                                 </a>
                             </th>
+                            <th>Estatus<th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -86,6 +87,7 @@
                                 <td>{{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM }}</td>
                                 <td>{{ $empleado->puesto }}</td>
                                 <td>{{ $empleado->area }}</td>
+                                <td>{{ $empleado->status }}<td>
                                 <td>
                                     <a href="{{ route('empleados.show', $empleado->id) }}"
                                         class="btn btn-info btn-sm">Ver</a>

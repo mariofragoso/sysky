@@ -15,6 +15,7 @@ class Empleado extends Model
         'apellidoM',
         'puesto',
         'area',
+        'status'
     ];
 
     public function equipos()
