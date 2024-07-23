@@ -7,6 +7,7 @@ use App\Models\Empleado;
 use App\Models\Equipo;
 use App\Models\User;
 use App\Models\Empresa;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
@@ -117,7 +118,7 @@ class AsignacionEquipoController extends Controller
     {
         $asignacion = AsignacionEquipo::with(['empleado', 'equipo', 'usuario', 'empresa'])->findOrFail($id);
 
-        $pdf = PDF::loadView('asignaciones.pdf', compact('asignacion'));
+        $pdf = FacadePdf::loadView('asignaciones.pdf', compact('asignacion'));
         return $pdf->download('asignacion_' . $asignacion->id . '.pdf');
     }
 

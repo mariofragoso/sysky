@@ -30,7 +30,12 @@
 
                 <div class="col-md-3">
                     <label for="marca" class="form-label">Marca:</label>
-                    <input type="text" class="form-control" id="marca" name="marca" required>
+                    <select id="marca" name="marca" class="form-control" required>
+                        <option value="">Seleccione una Marca</option>
+                        <option value="Dell"> Dell</option>
+                        <option value="HP"> HP</option>
+                    </select>
+
                     <div class="valid-feedback">
                         Good!
                     </div>

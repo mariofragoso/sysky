@@ -27,11 +27,11 @@
                     @foreach ($prestamos as $prestamo)
                         <tr>
                             <td>{{ $prestamo->id }}</td>
+                            <td>{{ $prestamo->empleado->nombre ?? 'N/A' }} {{ $prestamo->empleado->apellidoP ?? 'N/A' }} {{ $prestamo->empleado->apellidoM ?? 'N/A' }}</td>
                             <td>{{ $prestamo->equipo->numero_serie }}</td>
-                            <td>{{ $prestamo->empleado->nombre }}</td>
                             <td>{{ $prestamo->fecha_prestamo }}</td>
                             <td>{{ $prestamo->fecha_regreso }}</td>
-                            <td>{{ $prestamo->usuario_responsable_id }}</td>
+                            <td>{{ $prestamo->usuario->name }}</td>
                             <td>{{ $prestamo->devuelto ? 'Sí' : 'No' }}</td>
                             <td>
                                 <a href="{{ route('prestamos.show', $prestamo->id) }}" class="btn btn-info">Ver</a>

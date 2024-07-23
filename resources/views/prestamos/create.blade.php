@@ -21,7 +21,8 @@
                     <label for="empleado_id">Empleado:</label>
                     <select id="empleado_id" name="empleado_id" class="form-control" required>
                         @foreach ($empleados as $empleado)
-                            <option value="{{ $empleado->id }}">{{ $empleado->nombre }}</option>
+                            <option value="{{ $empleado->id }}">{{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM}}</option>
+
                         @endforeach
                     </select>
                 </div>
@@ -43,15 +44,6 @@
                 <div class="form-group">
                     <label for="fecha_regreso">Fecha de Regreso:</label>
                     <input type="date" id="fecha_regreso" name="fecha_regreso" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="usuario_responsable_id" class="form-label">Usuario Responsable:</label>
-                    <select id="usuario_responsable_id" name="usuario_responsable_id" class="form-control" required>
-                        @foreach ($usuarios as $usuario)
-                            <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
-                        @endforeach
-                    </select>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Crear</button>

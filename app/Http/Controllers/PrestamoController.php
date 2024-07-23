@@ -15,7 +15,7 @@ class PrestamoController extends Controller
 {
     public function index()
     {
-        $prestamos = Prestamo::with(['equipo', 'empleado'])->paginate(10);
+        $prestamos = Prestamo::with(['equipo', 'empleado', 'usuario'])->paginate(10);
         return view('prestamos.index', compact('prestamos'));
     }
 
@@ -35,20 +35,23 @@ class PrestamoController extends Controller
             'empleado_id' => 'required|exists:empleados,id',
             'fecha_prestamo' => 'required|date',
             'fecha_regreso' => 'required|date|after_or_equal:fecha_prestamo',
-            'usuario_responsable_id' => 'required|exists:users,id',
         ]);
 
-        $prestamo = Prestamo::create($request->all());
+        $prestamo = Prestamo::create([
+            'equipo_id' => $request->equipo_id,
+            'empleado_id' => $request->empleado_id,
+            'fecha_prestamo' => $request->fecha_prestamo,
+            'fecha_regreso' => $request->fecha_regreso,
+            'usuario_responsable_id' => Auth::user()->id,
+        ]);
 
         // Registrar la acción
         $accion = new Acciones();
         $accion->modulo = "Préstamos";
-        $accion->descripcion = "Se creo el préstamo para el equipo con numero de serie: " . $prestamo->equipo->numero_serie;
+        $accion->descripcion = "Se creó el préstamo para el equipo con número de serie: " . $prestamo->equipo->numero_serie;
         $accion->usuario_responsable_id = Auth::user()->id;
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();
-
-        
 
         return redirect()->route('prestamos.index')->with('success', 'Préstamo creado exitosamente.');
     }
@@ -68,7 +71,6 @@ class PrestamoController extends Controller
         return view('prestamos.edit', compact('prestamo', 'empleados', 'equipos', 'usuarios'));
     }
 
-
     public function update(Request $request, Prestamo $prestamo)
     {
         $request->validate([
@@ -76,21 +78,26 @@ class PrestamoController extends Controller
             'empleado_id' => 'required|exists:empleados,id',
             'fecha_prestamo' => 'required|date',
             'fecha_regreso' => 'required|date|after_or_equal:fecha_prestamo',
-            'usuario_responsable_id' => 'required|exists:users,id',
             'devuelto' => 'boolean',
         ]);
 
-        $prestamo->update($request->all());
+        $prestamo->update([
+            'equipo_id' => $request->equipo_id,
+            'empleado_id' => $request->empleado_id,
+            'fecha_prestamo' => $request->fecha_prestamo,
+            'fecha_regreso' => $request->fecha_regreso,
+            'usuario_responsable_id' => Auth::user()->id,
+            'devuelto' => $request->devuelto,
+        ]);
 
-         // Registrar la acción
-         $accion = new Acciones();
-         $accion->modulo = "Préstamos";
-         $accion->descripcion = "Se actualizó el préstamo del equipo con numero de serie: " . $prestamo->equipo->numero_serie;
-         $accion->usuario_responsable_id = Auth::user()->id;
-         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
-         $accion->save();
+        // Registrar la acción
+        $accion = new Acciones();
+        $accion->modulo = "Préstamos";
+        $accion->descripcion = "Se actualizó el préstamo del equipo con número de serie: " . $prestamo->equipo->numero_serie;
+        $accion->usuario_responsable_id = Auth::user()->id;
+        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+        $accion->save();
 
-       
         return redirect()->route('prestamos.index')->with('success', 'Préstamo actualizado exitosamente.');
     }
 
@@ -101,12 +108,10 @@ class PrestamoController extends Controller
         // Registrar la acción
         $accion = new Acciones();
         $accion->modulo = "Préstamos";
-        $accion->descripcion = "Se elimino el préstamo de el equipo con numero de serie: " . $prestamo->equipo->numero_serie;
+        $accion->descripcion = "Se eliminó el préstamo del equipo con número de serie: " . $prestamo->equipo->numero_serie;
         $accion->usuario_responsable_id = Auth::user()->id;
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();
-
-        
 
         return redirect()->route('prestamos.index')->with('success', 'Préstamo eliminado exitosamente.');
     }

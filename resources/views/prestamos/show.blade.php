@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                     <th>Usuario Responsable:</th>
-                    <td>{{ $prestamo->usuario_responsable->name ?? 'N/A' }}</td>
+                    <td>{{ $prestamo->usuario->name }}</td>
                 </tr>
                 <tr>
                     <th>Devuelto:</th>

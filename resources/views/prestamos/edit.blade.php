@@ -47,15 +47,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="usuario_responsable_id" class="form-label">Usuario Responsable:</label>
-                    <select id="usuario_responsable_id" name="usuario_responsable_id" class="form-control" required>
-                        @foreach ($usuarios as $usuario)
-                            <option value="{{ $usuario->id }}" {{ $prestamo->usuario_responsable_id == $usuario->id ? 'selected' : '' }}>{{ $usuario->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="form-group">
                     <label for="devuelto">Devuelto:</label>
                     <select id="devuelto" name="devuelto" class="form-control" required>
                         <option value="1" {{ $prestamo->devuelto == 1 ? 'selected' : '' }}>Sí</option>

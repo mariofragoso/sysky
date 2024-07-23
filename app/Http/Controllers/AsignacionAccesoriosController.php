@@ -33,6 +33,7 @@ class AsignacionAccesoriosController extends Controller
 
         return view('asignacionaccesorios.index', compact('asignacionesaccesorios', 'search', 'sortField', 'sortOrder'));
     }
+
     public function create()
     {
         $empleados = Empleado::all();
@@ -48,7 +49,6 @@ class AsignacionAccesoriosController extends Controller
             'accesorio_id' => 'required|exists:accesorios,id',
             'cantidad_asignada' => 'required|integer|min:1',
             'fecha_asignacion' => 'required|date',
-            'usuario_responsable' => 'required|exists:users,id',
             'ticket' => 'required|integer',
             'nota_descriptiva' => 'nullable|string|max:100',
         ]);
@@ -66,7 +66,7 @@ class AsignacionAccesoriosController extends Controller
         $asignacion->empleado_id = $request->input('empleado_id');
         $asignacion->cantidad_asignada = $request->input('cantidad_asignada');
         $asignacion->fecha_asignacion = $request->input('fecha_asignacion');
-        $asignacion->usuario_responsable = $request->input('usuario_responsable');
+        $asignacion->usuario_responsable = Auth::id(); // Establecer el usuario autenticado
         $asignacion->ticket = $request->input('ticket');
         $asignacion->nota_descriptiva = $request->input('nota_descriptiva');
 
@@ -79,12 +79,10 @@ class AsignacionAccesoriosController extends Controller
         // Registrar la acción
         $accion = new Acciones();
         $accion->modulo = "Accesorios";
-        $accion->descripcion = "Se creo la asignacion del accesorio: " . $asignacion->accesorio->descripcion . " Para el empleado: " . $asignacion->empleado->nombre;
-        $accion->usuario_responsable_id = Auth::user()->id;
+        $accion->descripcion = "Se creó la asignación del accesorio: " . $asignacion->accesorio->descripcion . " para el empleado: " . $asignacion->empleado->nombre;
+        $accion->usuario_responsable_id = Auth::id();
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();
-
-
 
         return redirect()->route('asignacionaccesorios.index')
             ->with('success', 'Asignación de accesorio creada con éxito.');
@@ -110,11 +108,11 @@ class AsignacionAccesoriosController extends Controller
             'accesorio_id' => 'required|exists:accesorios,id',
             'cantidad_asignada' => 'required|integer',
             'fecha_asignacion' => 'required|date',
-            'usuario_responsable' => 'required|exists:users,id',
             'ticket' => 'required|integer',
             'nota_descriptiva' => 'nullable|string|max:100',
         ]);
 
+        $request['usuario_responsable'] = Auth::id(); // Establecer el usuario autenticado
         $asignacion->update($request->all());
 
         return redirect()->route('asignacionaccesorios.index')

@@ -28,7 +28,7 @@ class PrestamoEntregaNotification extends Notification
             ->subject('Recordatorio de entrega de equipo')
             ->line('Este es un recordatorio de que el equipo prestado debe ser entregado hoy.')
             ->line('Detalles del préstamo:')
-            ->line('Empleado: ' . $this->prestamo->empleado->nombre)
+            ->line('Empleado: ' . $this->prestamo->empleado->nombre . ' ' . $this->prestamo->empleado->apellidoP . ' ' . $this->prestamo->empleado->apellidoM)
             ->line('Equipo: ' . $this->prestamo->equipo->numero_serie)
             ->line('Fecha de Préstamo: ' . $this->prestamo->fecha_prestamo)
             ->line('Fecha de Regreso: ' . $this->prestamo->fecha_regreso)
