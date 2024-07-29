@@ -15,8 +15,9 @@ use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AccionesController;
-
-
+use App\Models\AsignacionEquipo;
+use App\Models\Empleado;
+use App\Models\Equipo;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,12 @@ Route::put('/equipos/{equipo}', [EquipoController::class, 'update'])->name('equi
 
 // Ruta para eliminar un equipo específico
 Route::delete('/equipos/{equipo}', [EquipoController::class, 'destroy'])->name('equipos.destroy');
+
+Route::get('/api/equipos/{id}/estado', function ($id) {
+    $equipo = Equipo::findOrFail($id);
+    return response()->json(['estado' => $equipo->estado]);
+});
+
 
 //-------------------------------------------------------------------------------------------------------------------------------------//
 
@@ -183,4 +190,3 @@ Route::get('/asignacionesequipos/{id}/pdf', [AsignacionEquipoController::class, 
 
 
 Auth::routes();
-

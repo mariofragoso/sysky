@@ -33,9 +33,9 @@ class EmpleadosSeeder extends Seeder
 
         foreach ($empleados as $empleado) {
             // Verificar si el empleado ya existe
-            //$existingEmpleado = DB::table('empleados')->where('numero_nomina', $empleado->Nomina)->first();
+            $existingEmpleado = DB::table('empleados')->where('numero_nomina', $empleado->Nomina)->first();
             
-            //if (!$existingEmpleado) {
+            if (!$existingEmpleado) {
                 DB::table('empleados')->insert([
                     'numero_nomina' => $empleado->Nomina,
                     'nombre' => $empleado->Nombre,
@@ -47,7 +47,7 @@ class EmpleadosSeeder extends Seeder
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
-            //}
+            }
         }
     }
 }

@@ -20,66 +20,18 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-striped table-bordered table-hover text-justify barang-table"
+                style="width: 100%">
                     <thead>
                         <tr>
-                            <th>
-                                <a
-                                    href="{{ route('empleados.index', ['sort' => 'numero_nomina', 'order' => $sortField === 'numero_nomina' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
-                                    Número de Nómina
-                                    @if ($sortField === 'numero_nomina')
-                                        @if ($sortOrder === 'asc')
-                                            &#9650;
-                                        @else
-                                            &#9660;
-                                        @endif
-                                    @endif
-                                </a>
-                            </th>
-                            <th>
-                                <a
-                                    href="{{ route('empleados.index', ['sort' => 'nombre', 'order' => $sortField === 'nombre' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
-                                    Nombre
-                                    @if ($sortField === 'nombre')
-                                        @if ($sortOrder === 'asc')
-                                            &#9650;
-                                        @else
-                                            &#9660;
-                                        @endif
-                                    @endif
-                                </a>
-                            </th>
-                            <th>
-                                <a
-                                    href="{{ route('empleados.index', ['sort' => 'puesto', 'order' => $sortField === 'puesto' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
-                                    Puesto
-                                    @if ($sortField === 'puesto')
-                                        @if ($sortOrder === 'asc')
-                                            &#9650;
-                                        @else
-                                            &#9660;
-                                        @endif
-                                    @endif
-                                </a>
-                            </th>
-                            <th>
-                                <a
-                                    href="{{ route('empleados.index', ['sort' => 'area', 'order' => $sortField === 'area' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
-                                    Área
-                                    @if ($sortField === 'area')
-                                        @if ($sortOrder === 'asc')
-                                            &#9650;
-                                        @else
-                                            &#9660;
-                                        @endif
-                                    @endif
-                                </a>
-                            </th>
-                            <th>Estatus<th>
+                            <th>Número de Nómina</th>
+                            <th>Nombre</th>
+                            <th>Puesto</th>
+                            <th>Área</th>
+                            <th>Estatus</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         @forelse ($empleados as $empleado)
                             <tr>
@@ -87,7 +39,7 @@
                                 <td>{{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM }}</td>
                                 <td>{{ $empleado->puesto }}</td>
                                 <td>{{ $empleado->area }}</td>
-                                <td>{{ $empleado->status }}<td>
+                                <td>{{ $empleado->status }}</td>
                                 <td>
                                     <a href="{{ route('empleados.show', $empleado->id) }}"
                                         class="btn btn-info btn-sm">Ver</a>
@@ -99,13 +51,12 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm"
                                             onclick="return confirm('¿Estás seguro de eliminar este empleado?')">Eliminar</button>
-
                                     </form>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center">No se encontraron empleados</td>
+                                <td colspan="6" class="text-center">No se encontraron empleados</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -119,3 +70,4 @@
         {{ $empleados->appends(['search' => request('search'), 'sort' => $sortField, 'order' => $sortOrder])->links() }}
     </div>
 @endsection
+

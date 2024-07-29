@@ -45,8 +45,8 @@
             <div class="col-lg-3 col-6">
                 <div class="card-counter primary">
                     <i class="fas fa-keyboard"></i>
-                    <span class="count-numbers">{{ $accesorios_count }}</span>
-                    <span class="count-name">Accesorios</span>
+                    <span class="count-numbers">{{ $equiposNoAsignados }}</span>
+                    <span class="count-name">Equipos no asignados</span>
                     <div class="info-footer">
                         <a href="{{ route('accesorios.index') }}" class="small-box-footer">Más info <div
                                 class="fas fa-arrow-circle-right"></div></a>

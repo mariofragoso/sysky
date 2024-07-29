@@ -42,9 +42,9 @@ class SyncEmpleados extends Command
 
         foreach ($empleados as $empleado) {
             // Verificar si el empleado ya existe
-            //$existingEmpleado = DB::table('empleados')->where('numero_nomina', $empleado->Nomina)->first();
+            $existingEmpleado = DB::table('empleados')->where('numero_nomina', $empleado->Nomina)->first();
             
-            //if (!$existingEmpleado) {
+            if (!$existingEmpleado) {
                 DB::table('empleados')->insert([
                     'numero_nomina' => $empleado->Nomina,
                     'nombre' => $empleado->Nombre,
@@ -56,7 +56,7 @@ class SyncEmpleados extends Command
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
-            //}
+            }
         }
         $this->info('Sincronización de empleados completada.');
     }

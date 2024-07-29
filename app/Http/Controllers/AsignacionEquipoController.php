@@ -85,29 +85,33 @@ class AsignacionEquipoController extends Controller
 }
 
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'empleado_id' => 'required|exists:empleados,id',
-            'equipo_id' => 'required|exists:equipos,id',
-            'fecha_asignacion' => 'required|date',
-            'ticket' => 'required|integer',
-            'nota_descriptiva' => 'nullable|string|max:100',
-            'empresa_id' => 'required|exists:empresas,id',
-            'estado' => 'required|string|max:50',
-        ]);
+public function store(Request $request)
+{
+    $request->validate([
+        'asignaciones' => 'required|json',
+    ]);
 
-        $request['usuario_responsable'] = Auth::id(); // Establecer el usuario autenticado
-        $asignacion = AsignacionEquipo::create($request->all());
+    $asignaciones = json_decode($request->asignaciones, true);
+
+    foreach ($asignaciones as $asignacionData) {
+        // Verificar si el equipo ya está asignado o dado de baja
+        $equipo = Equipo::findOrFail($asignacionData['equipo_id']);
+        if ($equipo->estado == 'asignado' || $equipo->estado == 'baja') {
+            return redirect()->back()->withErrors(['El equipo ' . $equipo->etiqueta_skytex . ' ya está asignado o dado de baja.']);
+        }
+
+        $asignacionData['usuario_responsable'] = Auth::id(); // Establecer el usuario autenticado
+        AsignacionEquipo::create($asignacionData);
 
         // Actualizar el estado del equipo
-        $equipo = Equipo::findOrFail($request->equipo_id);
-        $equipo->update(['estado' => $request->estado]);
-
-        return redirect()->route('asignacionesequipos.index')
-            ->with('success', 'Asignación de equipo creada correctamente');
+        $equipo->update(['estado' => $asignacionData['estado']]);
     }
-    
+
+    return redirect()->route('asignacionesequipos.index')->with('success', 'Las asignaciones de equipos se han creado correctamente.');
+}
+
+
+
     public function show($id)
     {
         $asignacion = AsignacionEquipo::with(['empleado', 'equipo', 'usuario', 'empresa'])->findOrFail($id);
