@@ -72,11 +72,11 @@ public function index(Request $request)
         return view('equipos.show', compact('equipo'));
     }
 
-    public function edit(Equipo $equipo)
-    {
-        return view('equipos.edit', compact('equipo'));
-    }
-
+    public function edit($id)
+{
+    $equipo = Equipo::findOrFail($id);
+    return view('equipos.edit', compact('equipo'));
+}
     public function update(Request $request, Equipo $equipo)
     {
         $request->validate([
