@@ -36,7 +36,6 @@
                     </div>
                 </div>
 
-
                 <div class="col-md-3">
                     <label for="modelo" class="form-label">Modelo</label>
                     <input type="text" class="form-control" id="modelo" name="modelo" value="{{ $accesorio->modelo }}" required>
@@ -61,7 +60,6 @@
                     </div>
                 </div>
 
-
                 <div class="col-md-3">
                     <label for="requisicion" class="form-label">Requisición:</label>
                     <input type="text" class="form-control" id="requisicion" name="requisicion" value="{{ $accesorio->requisicion }}" required>
@@ -69,13 +67,20 @@
                         Good!
                     </div>
                 </div>
-                <div class="col-12">
 
-                <button type="submit" class="btn btn-primary">Actualizar</button>
-            </div>
+                <div class="col-md-3">
+                    <label for="cantidad_minima" class="form-label">Cantidad Mínima:</label>
+                    <input type="text" class="form-control" id="cantidad_minima" name="cantidad_minima" value="{{ $accesorio->cantidad_minima }}" required>
+                    <div class="valid-feedback">
+                        Good!
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </div>
 
             </form>
         </div>
-
     </div>
 @endsection

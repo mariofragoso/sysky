@@ -27,7 +27,6 @@
                     </div>
                 </div>
 
-
                 <div class="col-md-3">
                     <label for="marca" class="form-label">Marca:</label>
                     <select id="marca" name="marca" class="form-control" required>
@@ -35,7 +34,6 @@
                         <option value="Dell"> Dell</option>
                         <option value="HP"> HP</option>
                     </select>
-
                     <div class="valid-feedback">
                         Good!
                     </div>
@@ -72,6 +70,15 @@
                         Good!
                     </div>
                 </div>
+
+                <div class="col-md-3">
+                    <label for="cantidad_minima" class="form-label">Cantidad Mínima:</label>
+                    <input type="text" class="form-control" id="cantidad_minima" name="cantidad_minima" required>
+                    <div class="valid-feedback">
+                        Good!
+                    </div>
+                </div>
+
 
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Crear</button>

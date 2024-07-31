@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('cantidad')->nullable(); // cantidad INT
             $table->string('orden_compra_acc', 50)->nullable(); // orden_compra_acc VARCHAR(50)
             $table->string('requisicion', 50)->nullable(); // requisicion VARCHAR(50)
+            $table->integer('cantidad_minima')->default(1);
             $table->unsignedBigInteger('empleado_id')->nullable(); // empleado_id BIGINT
             $table->timestamps(); // Agrega created_at y updated_at
             

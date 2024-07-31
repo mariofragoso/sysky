@@ -10,6 +10,10 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\LowStockNotification;
+use Illuminate\Support\Facades\Notification;
+
+
 
 class AsignacionAccesoriosController extends Controller
 {
@@ -76,6 +80,11 @@ class AsignacionAccesoriosController extends Controller
         $accesorio->cantidad -= $request->input('cantidad_asignada');
         $accesorio->save();
 
+        // Comprobar si la cantidad es menor a la cantidad mínima y enviar notificación si es necesario
+        if ($accesorio->cantidad <= $accesorio->cantidad_minima) {
+            $this->sendLowStockNotification($accesorio);
+        }
+
         // Registrar la acción
         $accion = new Acciones();
         $accion->modulo = "Accesorios";
@@ -102,22 +111,57 @@ class AsignacionAccesoriosController extends Controller
     }
 
     public function update(Request $request, AsignacionesAccesorios $asignacion)
-    {
-        $request->validate([
-            'empleado_id' => 'required|exists:empleados,id',
-            'accesorio_id' => 'required|exists:accesorios,id',
-            'cantidad_asignada' => 'required|integer',
-            'fecha_asignacion' => 'required|date',
-            'ticket' => 'required|integer',
-            'nota_descriptiva' => 'nullable|string|max:100',
-        ]);
+{
+    $request->validate([
+        'empleado_id' => 'required|exists:empleados,id',
+        'accesorio_id' => 'required|exists:accesorios,id',
+        'cantidad_asignada' => 'required|integer|min:1',
+        'fecha_asignacion' => 'required|date',
+        'ticket' => 'required|integer',
+        'nota_descriptiva' => 'nullable|string|max:100',
+    ]);
 
-        $request['usuario_responsable'] = Auth::id(); // Establecer el usuario autenticado
-        $asignacion->update($request->all());
+    $accesorio = Accesorio::find($request->input('accesorio_id'));
 
-        return redirect()->route('asignacionaccesorios.index')
-            ->with('success', 'Asignación de accesorio actualizada con éxito.');
+    // Calcular la diferencia de cantidad asignada
+    $diferenciaCantidad = $request->input('cantidad_asignada') - $asignacion->cantidad_asignada;
+
+    // Verificar si hay suficientes accesorios disponibles si la cantidad asignada ha aumentado
+    if ($diferenciaCantidad > 0 && $accesorio->cantidad < $diferenciaCantidad) {
+        return redirect()->back()->withErrors(['cantidad_asignada' => 'No hay suficientes accesorios disponibles.']);
     }
+
+    // Actualizar la cantidad de accesorios disponibles
+    $accesorio->cantidad -= $diferenciaCantidad;
+    $accesorio->save();
+
+    // Actualizar la asignación de accesorio
+    $asignacion->accesorio_id = $request->input('accesorio_id');
+    $asignacion->empleado_id = $request->input('empleado_id');
+    $asignacion->cantidad_asignada = $request->input('cantidad_asignada');
+    $asignacion->fecha_asignacion = $request->input('fecha_asignacion');
+    $asignacion->usuario_responsable = Auth::id(); // Establecer el usuario autenticado
+    $asignacion->ticket = $request->input('ticket');
+    $asignacion->nota_descriptiva = $request->input('nota_descriptiva');
+
+    $asignacion->save();
+
+    // Comprobar si la cantidad es menor a la cantidad mínima y enviar notificación si es necesario
+    if ($accesorio->cantidad <= $accesorio->cantidad_minima) {
+        $this->sendLowStockNotification($accesorio);
+    }
+
+    // Registrar la acción
+    $accion = new Acciones();
+    $accion->modulo = "Accesorios";
+    $accion->descripcion = "Se actualizó la asignación del accesorio: " . $asignacion->accesorio->descripcion . " para el empleado: " . $asignacion->empleado->nombre;
+    $accion->usuario_responsable_id = Auth::id();
+    $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+    $accion->save();
+
+    return redirect()->route('asignacionaccesorios.index')
+        ->with('success', 'Asignación de accesorio actualizada con éxito.');
+}
 
     public function destroy(AsignacionesAccesorios $asignacion)
     {
@@ -129,5 +173,14 @@ class AsignacionAccesoriosController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function sendLowStockNotification($accesorio)
+    {
+        // Define el correo específico al que deseas enviar la notificación
+        $toEmail = 'soporte.hw3@skytex.com.mx';
+
+        // Enviar la notificación por correo
+        Notification::route('mail', $toEmail)->notify(new LowStockNotification($accesorio));
     }
 }

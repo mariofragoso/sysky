@@ -16,7 +16,7 @@ class Accesorio extends Model
         'cantidad',
         'orden_compra_acc',
         'requisicion',
-        'empleado_id',
+        'cantidad_minima',
     ];
 
     public function empleado()

@@ -20,8 +20,9 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <label for="empleado_id">Empleado:</label>
-                        <select name="empleado_id" id="empleado_id" class="form-control" required>
+                        <label for="empleado_id" class="form-label">Empleado:</label>
+                        <select id="empleado_id" name="empleado_id" class="form-control" required>
+                            <option value="">Seleccione un empleado</option>
                             @foreach ($empleados as $empleado)
                                 <option value="{{ $empleado->id }}">{{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM }}</option>
                             @endforeach
@@ -31,6 +32,7 @@
                     <div class="col-md-3">
                         <label for="accesorio_id" class="form-label">Accesorio:</label>
                         <select name="accesorio_id" id="accesorio_id" class="form-control" required>
+                            <option value="">Seleccione un Accesorio</option>
                             @foreach ($accesorios as $accesorio)
                                 <option value="{{ $accesorio->id }}">{{ $accesorio->descripcion }}</option>
                             @endforeach
@@ -44,7 +46,7 @@
 
                     <div class="col-md-3">
                         <label for="fecha_asignacion" class="form-label">Fecha de Asignación:</label>
-                        <input type="date" class="form-control" id="fecha_asignacion" name="fecha_asignacion" required>
+                        <input type="date" class="form-control" id="datepicker" name="fecha_asignacion" required>
                     </div>
 
                     <div class="col-md-3">

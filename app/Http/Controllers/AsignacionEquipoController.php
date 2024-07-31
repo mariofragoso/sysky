@@ -8,6 +8,7 @@ use App\Models\Equipo;
 use App\Models\User;
 use App\Models\Empresa;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
@@ -105,6 +106,14 @@ public function store(Request $request)
 
         // Actualizar el estado del equipo
         $equipo->update(['estado' => $asignacionData['estado']]);
+
+        // Registrar la acción
+        $accion = new Acciones();
+        $accion->modulo = "Asignacion de Equipo";
+        $accion->descripcion = "Se creó la asignación del Equipo: " . $equipo->etiqueta_skytex;
+        $accion->usuario_responsable_id = Auth::id();
+        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+        $accion->save();
     }
 
     return redirect()->route('asignacionesequipos.index')->with('success', 'Las asignaciones de equipos se han creado correctamente.');
