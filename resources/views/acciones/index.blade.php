@@ -5,7 +5,6 @@
 @section('contenido')
     <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
         <div class="card-body">
-            <h5 class="card-title">Acciones Registradas</h5>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -27,6 +26,9 @@
                     @endforeach
                 </tbody>
             </table>
+               <!-- Enlaces de paginación -->
+        {{ $acciones->links() }}
         </div>
     </div>
 @endsection
+

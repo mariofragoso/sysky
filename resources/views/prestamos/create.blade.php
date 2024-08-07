@@ -20,6 +20,7 @@
                 <div class="form-group">
                     <label for="empleado_id">Empleado:</label>
                     <select id="empleado_id" name="empleado_id" class="form-control" required>
+                        <option value="">Seleccione un empleado</option>
                         @foreach ($empleados as $empleado)
                             <option value="{{ $empleado->id }}">{{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM}}</option>
 
@@ -30,8 +31,9 @@
                 <div class="form-group">
                     <label for="equipo_id">Equipo:</label>
                     <select id="equipo_id" name="equipo_id" class="form-control" required>
+                        <option value="">Seleccione un equipo</option>
                         @foreach ($equipos as $equipo)
-                            <option value="{{ $equipo->id }}">{{ $equipo->numero_serie }}</option>
+                            <option value="{{ $equipo->id }}">{{ $equipo->etiqueta_skytex }}</option>
                         @endforeach
                     </select>
                 </div>

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ env('APP_NAME') }}</title>
+    <title>{{ env('APP_NAME') }}  - @yield('titulo')</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('/libs/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -227,6 +227,16 @@
     });
 
     $(document).ready(function() {
+        $('#equipo_id').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Seleccione un equipo',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
+                'style',
+            allowClear: true
+        });
+    });
+
+    $(document).ready(function() {
         $('#accesorio_id').select2({
             theme: "bootstrap-5",
             placeholder: 'Seleccione un accesorio',
@@ -237,17 +247,8 @@
     });
 
     $('#datepicker').datepicker({ uiLibrary: 'bootstrap5', iconsLibrary: 'fontawesome' });
+    $('#fecha_asignacion').datepicker({ uiLibrary: 'bootstrap5', iconsLibrary: 'fontawesome' });
 
-
-    $(document).ready(function() {
-        $('#equipo_id').select2({
-            theme: "bootstrap-5",
-            placeholder: 'Seleccione un equipo',
-            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
-                'style',
-            allowClear: true
-        });
-    });
     $(document).ready(function() {
         $('#marca').select2({
             theme: "bootstrap-5",

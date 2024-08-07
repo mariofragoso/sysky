@@ -88,7 +88,7 @@ class AsignacionAccesoriosController extends Controller
         // Registrar la acción
         $accion = new Acciones();
         $accion->modulo = "Accesorios";
-        $accion->descripcion = "Se creó la asignación del accesorio: " . $asignacion->accesorio->descripcion . " para el empleado: " . $asignacion->empleado->nombre;
+        $accion->descripcion = "Se creó la asignación del accesorio: " . $asignacion->accesorio->descripcion . " para el empleado: " . $asignacion->empleado->nombre . " " . $asignacion->empleado-> apellidoP . " " .$asignacion->empleado-> apellidoM;
         $accion->usuario_responsable_id = Auth::id();
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();
@@ -154,7 +154,7 @@ class AsignacionAccesoriosController extends Controller
     // Registrar la acción
     $accion = new Acciones();
     $accion->modulo = "Accesorios";
-    $accion->descripcion = "Se actualizó la asignación del accesorio: " . $asignacion->accesorio->descripcion . " para el empleado: " . $asignacion->empleado->nombre;
+    $accion->descripcion = "Se actualizó la asignación del accesorio: " . $asignacion->accesorio->descripcion . " para el empleado: " . $asignacion->empleado->nombre . " " . $asignacion->empleado-> apellidoP . " " .$asignacion->empleado-> apellidoM;
     $accion->usuario_responsable_id = Auth::id();
     $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
     $accion->save();

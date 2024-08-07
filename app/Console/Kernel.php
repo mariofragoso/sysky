@@ -10,7 +10,7 @@ class Kernel extends ConsoleKernel
 {
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('prestamos:notificar')->dailyAt('21:45');
+        $schedule->command('prestamos:notificar')->dailyAt('19:24');
         // Programa la sincronización para que se ejecute cada hora
         $schedule->command('sync:empleados')->hourly();
     }

@@ -81,6 +81,14 @@ class AsignacionEquipoController extends Controller
     $equipo = Equipo::findOrFail($request->equipo_id);
     $equipo->update(['estado' => $request->estado]);
 
+    // Registrar la acción
+    $accion = new Acciones();
+    $accion->modulo = "Asignacion de Equipo";
+    $accion->descripcion = "Se actualizó la asignación de equipo: " . $equipo->etiqueta_skytex . " para el empleado: " . $asignacion->empleado->nombre . " " . $asignacion->empleado-> apellidoP . " " .$asignacion->empleado-> apellidoM;
+    $accion->usuario_responsable_id = Auth::id();
+    $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+    $accion->save();
+
     return redirect()->route('asignacionesequipos.index')
         ->with('success', 'Asignación de equipo actualizada correctamente');
 }

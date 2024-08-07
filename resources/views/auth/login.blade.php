@@ -4,13 +4,10 @@
 
 <!-- Custom fonts for this template-->
 <link href="{{ asset('libs/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css">
-<link
-    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
 <!-- Custom styles for this template-->
 <link href="{{ asset('libs/sbadmin/css/sb-admin-2.min.css') }}" rel="stylesheet">
-
 
 <div class="container" class="bg-gradient-primary">
     <div class="row justify-content-center">
@@ -19,7 +16,11 @@
                 <div class="card-body p-0">
                     <!-- Nested Row within Card Body -->
                     <div class="row">
-                        <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                        <!-- Image Column -->
+                        <div class="col-lg-6 d-none d-lg-block">
+                            <img src="{{ asset('libs/img/pngegg.png') }}" alt="Login Image" class="img-fluid">
+                        </div>
+                        <!-- Form Column -->
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
@@ -52,7 +53,6 @@
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
                                         {{ __('Login') }}
                                     </button>
-                                    
                                 </form>
                                 <hr>
                                 <div class="text-center">
@@ -72,17 +72,14 @@
     </div>
 </div>
 
- <!-- Bootstrap core JavaScript-->
- <script src="{{ asset('libs/jquery/jquery.min.js') }}"></script>
- <script src="{{ asset('libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="{{ asset('libs/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
- <!-- Core plugin JavaScript-->
+<!-- Core plugin JavaScript-->
+<script src="{{ asset('libs/sbadmin/js/sb-admin-2.min.js') }}"></script>
 
- <!-- Custom scripts for all pages-->
- <script src="{{ asset('libs/sbadmin/js/sb-admin-2.min.js') }}"></script>
-
- <!-- Page level plugins -->
- <script src="{{ asset('libs/chart.js/Chart.min.js') }}"></script>
+<!-- Page level plugins -->
+<script src="{{ asset('libs/chart.js/Chart.min.js') }}"></script>
 
 @endsection
-

@@ -49,7 +49,7 @@
 
                 <div class="col-md-3">
                     <label for="cantidad" class="form-label">Cantidad:</label>
-                    <input type="text" class="form-control" id="cantidad" name="cantidad" required>
+                    <input type="number" min="1" pattern="^[0-9]+" class="form-control" id="cantidad" name="cantidad" required>
                     <div class="valid-feedback">
                         Good!
                     </div>
@@ -57,7 +57,7 @@
 
                 <div class="col-md-3">
                     <label for="orden_compra_acc" class="form-label">Orden De Compra:</label>
-                    <input type="text" class="form-control" id="orden_compra_acc" name="orden_compra_acc" required>
+                    <input type="number" min="1" pattern="^[0-9]+" class="form-control" id="orden_compra_acc" name="orden_compra_acc" required>
                     <div class="valid-feedback">
                         Good!
                     </div>
@@ -65,7 +65,7 @@
 
                 <div class="col-md-3">
                     <label for="requisicion" class="form-label">Requisición:</label>
-                    <input type="text" class="form-control" id="requisicion" name="requisicion" required>
+                    <input type="number" min="1" pattern="^[0-9]+" class="form-control" id="requisicion" name="requisicion" required>
                     <div class="valid-feedback">
                         Good!
                     </div>
@@ -73,7 +73,7 @@
 
                 <div class="col-md-3">
                     <label for="cantidad_minima" class="form-label">Cantidad Mínima:</label>
-                    <input type="text" class="form-control" id="cantidad_minima" name="cantidad_minima" required>
+                    <input type="number" min="1" pattern="^[0-9]+" class="form-control" id="cantidad_minima" name="cantidad_minima" required>
                     <div class="valid-feedback">
                         Good!
                     </div>

@@ -60,7 +60,7 @@
     </div>
     <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
         <div class="card-body">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <div class="chart-container" style="position: relative; height:85vh; width:80vw">
                     <canvas id="equiposChart"></canvas>
                 </div>
@@ -86,16 +86,16 @@
                             {{ $equiposBaja }}
                         ],
                         backgroundColor: [
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(255, 206, 86, 1)'
+                            'rgba(26, 188, 156, 1)',
+                            'rgba(255, 195, 0, 1)',
+                            'rgba(255, 87, 51, 1)'
                         ],
                         borderColor: [
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(255, 206, 86, 1)'
+                            'rgba(26, 188, 156, 1)',
+                            'rgba(255, 195, 0, 1)',
+                            'rgba(255, 87, 51, 1)'
                         ],
-                        borderWidth: 1
+                        borderWidth: 0
                     }]
                 },
                 options: {

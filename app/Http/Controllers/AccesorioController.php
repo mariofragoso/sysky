@@ -49,7 +49,7 @@ class AccesorioController extends Controller
         // Registrar la acción
         $accion = new Acciones();
         $accion->modulo = "Accesorios";
-        $accion->descripcion = "Se creó el accesorio: " . $accesorio->marca;
+        $accion->descripcion = "Se creó el accesorio: " . $accesorio->descripcion;
         $accion->usuario_responsable_id = Auth::user()->id;
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();
@@ -87,7 +87,7 @@ class AccesorioController extends Controller
         // Registrar la acción
         $accion = new Acciones();
         $accion->modulo = "Accesorios";
-        $accion->descripcion = "Se editó el accesorio: " . $accesorio->marca;
+        $accion->descripcion = "Se editó el accesorio: " . $accesorio->descripcio;
         $accion->usuario_responsable_id = Auth::user()->id;
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();

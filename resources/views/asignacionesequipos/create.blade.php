@@ -44,7 +44,7 @@
 
                             <div class="col-md-3">
                                 <label for="fecha_asignacion" class="form-label">Fecha de Asignación:</label>
-                                <input type="datetime-local" id="fecha_asignacion" class="form-control" required>
+                                <input type="date" id="fecha_asignacion" class="form-control" required>
                             </div>
 
                             <div class="col-md-3">
@@ -78,7 +78,7 @@
                         </div>
 
                         <div class="col-12 mt-3">
-                            <button type="button" class="btn btn-secondary" onclick="addAsignacion()">Agregar otra asignación</button>
+                            <button type="button" class="btn btn-secondary" onclick="addAsignacion()">Agregar</button>
                         </div>
                     </form>
                 </div>
@@ -178,13 +178,7 @@
             `;
 
             // Limpiar los campos del formulario después de añadir la asignación
-            document.getElementById('empleado_id').value = '';
             document.getElementById('equipo_id').value = '';
-            document.getElementById('fecha_asignacion').value = '';
-            document.getElementById('ticket').value = '';
-            document.getElementById('nota_descriptiva').value = '';
-            document.getElementById('empresa_id').value = '';
-            document.getElementById('estado').value = '';
         }
 
         function removeAsignacion(index) {

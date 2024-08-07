@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Acciones;
 use App\Models\Equipo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EquipoController extends Controller
 {
@@ -61,7 +64,16 @@ public function index(Request $request)
                 ->withInput();
         }
 
-        Equipo::create($request->all());
+        $equipo = Equipo::create($request->all());
+
+        // Registrar la acción
+        $accion = new Acciones();
+        $accion->modulo = "Equipo";
+        $accion->descripcion = "Se Creo el equipo: " . $equipo->etiqueta_skytex;
+        $accion->usuario_responsable_id = Auth::user()->id;
+        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+        $accion->save();
+
 
         return redirect()->route('equipos.index')
             ->with('success', 'Equipo creado correctamente.');
@@ -95,6 +107,14 @@ public function index(Request $request)
 
 
         $equipo->update($request->all());
+
+          // Registrar la acción
+          $accion = new Acciones();
+          $accion->modulo = "Equipo";
+          $accion->descripcion = "Se Edito el equipo: " . $equipo->etiqueta_skytex;
+          $accion->usuario_responsable_id = Auth::user()->id;
+          $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+          $accion->save();
 
         return redirect()->route('equipos.index')
             ->with('success', 'Equipo actualizado correctamente.');
