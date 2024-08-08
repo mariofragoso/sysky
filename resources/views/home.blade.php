@@ -48,27 +48,69 @@
                     <span class="count-numbers">{{ $equiposNoAsignados }}</span>
                     <span class="count-name">Equipos no asignados</span>
                     <div class="info-footer">
-                        <a href="{{ route('accesorios.index') }}" class="small-box-footer">Más info <div
+                        <a href="{{ route('equipos.index') }}" class="small-box-footer">Más info <div
                                 class="fas fa-arrow-circle-right"></div></a>
                     </div>
                 </div>
             </div>
-
-            <!-- Gráfica -->
-
         </div>
     </div>
+
     <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
-        <div class="card-body">
+        <div class="card-body row">
             <div class="col-lg-6">
-                <div class="chart-container" style="position: relative; height:85vh; width:80vw">
+                <div class="chart-container" style="position: relative; height:35vh; width:30vw">
                     <canvas id="equiposChart"></canvas>
                 </div>
+            </div>
+            <div class="col-lg-6">
+                <h4>Últimas 10 Asignaciones de Equipos</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Empleado</th>
+                            <th>Equipo</th>
+                            <th>Fecha Asignación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($ultimasAsignaciones as $asignacion)
+                            <tr>
+                                <td>{{ $asignacion->empleado->nombre }} {{ $asignacion->empleado->apellidoP }} {{ $asignacion->empleado->apellidoM }}</td>
+                                <td>{{ $asignacion->equipo->etiqueta_skytex }}</td>
+                                <td>{{ $asignacion->fecha_asignacion }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
+        <div class="card-body">
+            <h4>Accesorios con Cantidad Baja</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Accesorio</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($accesoriosCantidadBaja as $accesorio)
+                        <tr>
+                            <td>{{ $accesorio->descripcion }}</td>
+                            <td>{{ $accesorio->cantidad }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 @endsection
+
 <div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
         integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw=="
@@ -77,7 +119,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             var ctx = document.getElementById('equiposChart').getContext('2d');
             var equiposChart = new Chart(ctx, {
-                type: 'doughnut',
+                type: 'polarArea',
                 data: {
                     labels: ['Asignados', 'No Asignados', 'Bajas'],
                     datasets: [{

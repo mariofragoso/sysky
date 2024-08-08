@@ -268,3 +268,19 @@
         });
     });
 </script>
+<style>
+    .badge-asignado {
+        background-color: green;
+        color: white;
+    }
+
+    .badge-baja {
+        background-color: red;
+        color: white;
+    }
+
+    .badge-default {
+        background-color: gray;
+        color: white;
+    }
+</style>
