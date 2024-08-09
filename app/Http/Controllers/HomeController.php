@@ -24,7 +24,7 @@ class HomeController extends Controller
         // dd($empleados_count, $equipos_count, $accesorios_count, $equiposAsignados, $equiposNoAsignados, $equiposBaja);
         $ultimasAsignaciones = AsignacionEquipo::with(['empleado', 'equipo'])
             ->orderBy('fecha_asignacion', 'desc')
-            ->take(10)
+            ->take(5)
             ->get();
 
         // Obtener accesorios con cantidad baja

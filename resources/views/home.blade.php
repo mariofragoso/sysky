@@ -59,12 +59,12 @@
     <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
         <div class="card-body row">
             <div class="col-lg-6">
-                <div class="chart-container" style="position: relative; height:35vh; width:30vw">
+                <div class="chart-container" style="position: relative; height:40vh; width:40vw">
                     <canvas id="equiposChart"></canvas>
                 </div>
             </div>
             <div class="col-lg-6">
-                <h4>Últimas 10 Asignaciones de Equipos</h4>
+                <h4>Últimas Asignaciones de Equipos</h4>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -119,7 +119,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             var ctx = document.getElementById('equiposChart').getContext('2d');
             var equiposChart = new Chart(ctx, {
-                type: 'polarArea',
+                type: 'bar',
                 data: {
                     labels: ['Asignados', 'No Asignados', 'Bajas'],
                     datasets: [{

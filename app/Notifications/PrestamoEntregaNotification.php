@@ -29,7 +29,7 @@ class PrestamoEntregaNotification extends Notification
             ->line('Este es un recordatorio de que el equipo prestado debe ser entregado hoy.')
             ->line('Detalles del préstamo:')
             ->line('Empleado: ' . $this->prestamo->empleado->nombre . ' ' . $this->prestamo->empleado->apellidoP . ' ' . $this->prestamo->empleado->apellidoM)
-            ->line('Equipo: ' . $this->prestamo->equipo->numero_serie)
+            ->line('Equipo: ' . $this->prestamo->equipo->tipo . ' ' . 'marca' . ' ' . $this->prestamo->equipo->marca . ' ' . 'con etiqueta' . ' ' . $this->prestamo->equipo->etiqueta_skytex)
             ->line('Fecha de Préstamo: ' . $this->prestamo->fecha_prestamo)
             ->line('Fecha de Regreso: ' . $this->prestamo->fecha_regreso)
             ->action('Ver Préstamo', url('/prestamos/' . $this->prestamo->id))

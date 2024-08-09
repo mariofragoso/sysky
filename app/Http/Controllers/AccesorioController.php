@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Carbon\Carbon;
+use Illuminate\Support\MessageBag;
+
 
 class AccesorioController extends Controller
 {
@@ -35,13 +37,13 @@ class AccesorioController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'descripcion' => 'required|max:150',
+            'descripcion' => 'required|max:100',
             'marca' => 'required|max:50',
             'modelo' => 'required|max:50',
-            'cantidad' => 'required|integer',
-            'orden_compra_acc' => 'required|integer',
-            'requisicion' => 'required|integer',
-            'cantidad_minima' => 'required|integer',
+            'cantidad' => 'required|integer|min:1',
+            'orden_compra_acc' => 'required|integer|min:1',
+            'requisicion' => 'required|integer|min:1',
+            'cantidad_minima' => 'required|integer|min:1',
         ]);
 
         $accesorio = Accesorio::create($request->all());

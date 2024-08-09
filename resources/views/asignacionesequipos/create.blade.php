@@ -49,7 +49,7 @@
 
                             <div class="col-md-3">
                                 <label for="ticket" class="form-label">Ticket:</label>
-                                <input type="number" id="ticket" class="form-control" required>
+                                <input type="number" id="ticket" class="form-control" min="1" pattern="^[0-9]+-" onpaste="return false;" onDrop="return false;" autocomplete=off required>
                             </div>
 
                             <div class="col-md-3">
@@ -200,6 +200,7 @@
             }
             document.getElementById('asignaciones-input').value = JSON.stringify(asignaciones);
         });
+        
     </script>
 @endsection
 

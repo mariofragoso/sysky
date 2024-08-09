@@ -8,7 +8,6 @@
     </div>
     <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
         <div class="card-body">
-
             <!-- Barra de búsqueda -->
             <form method="GET" action="{{ route('accesorios.index') }}">
                 <div class="input-group mb-3">

@@ -12,11 +12,11 @@
                 </tr>
                 <tr>
                     <th>Empleado:</th>
-                    <td>{{ $prestamo->empleado->nombre ?? 'N/A' }}</td>
+                    <td>{{ $prestamo->empleado->nombre ?? 'N/A' }} {{ $prestamo->empleado->apellidoP ?? 'N/A' }} {{ $prestamo->empleado->apellidoM ?? 'N/A' }}</td>
                 </tr>
                 <tr>
                     <th>Equipo:</th>
-                    <td>{{ $prestamo->equipo->numero_serie ?? 'N/A' }}</td>
+                    <td>{{ $prestamo->equipo->tipo ?? 'N/A' }} marca {{ $prestamo->equipo->marca ?? 'N/A' }} Con etiqueta {{ $prestamo->equipo->etiqueta_skytex ?? 'N/A' }}</td>
                 </tr>
                 <tr>
                     <th>Fecha de Préstamo:</th>
