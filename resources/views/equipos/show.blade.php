@@ -44,7 +44,7 @@
         <a href="{{ route('equipos.index') }}" class="btn btn-secondary">Volver a la lista</a>
         <a href="{{ route('equipos.edit', $equipo->id) }}" class="btn btn-primary">Editar</a>
 
-        <form action="{{ route('equipos.destroy', $equipo->id) }}" method="POST" style="display: inline-block;">
+        <form hidden action="{{ route('equipos.destroy', $equipo->id) }}" method="POST" style="display: inline-block;">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este equipo?')">Eliminar</button>

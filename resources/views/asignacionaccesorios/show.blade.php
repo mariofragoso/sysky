@@ -44,7 +44,7 @@
             <a href="{{ route('asignacionaccesorios.index') }}" class="btn btn-secondary">Volver a la lista</a>
             <a href="{{ route('asignacionaccesorios.edit', $asignacion->id) }}" class="btn btn-primary">Editar</a>
 
-            <form action="{{ route('asignacionaccesorios.destroy', $asignacion->id) }}" method="POST"
+            <form hidden action="{{ route('asignacionaccesorios.destroy', $asignacion->id) }}" method="POST"
                 style="display: inline-block;">
                 @csrf
                 @method('DELETE')

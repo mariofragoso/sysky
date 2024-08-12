@@ -80,7 +80,7 @@
                             <td>
                                 <a href="{{ route('accesorios.show', $accesorio->id) }}" class="btn btn-info">Ver</a>
                                 <a href="{{ route('accesorios.edit', $accesorio->id) }}" class="btn btn-warning">Editar</a>
-                                <form action="{{ route('accesorios.destroy', $accesorio->id) }}" method="POST"
+                                <form hidden action="{{ route('accesorios.destroy', $accesorio->id) }}" method="POST"
                                     style="display:inline;">
                                     @csrf
                                     @method('DELETE')

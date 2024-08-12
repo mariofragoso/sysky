@@ -23,7 +23,7 @@
                     <td>
                         <a href="{{ route('empresas.show', $empresa->id) }}">Ver</a>
                         <a href="{{ route('empresas.edit', $empresa->id) }}">Editar</a>
-                        <form action="{{ route('empresas.destroy', $empresa->id) }}" method="POST" style="display:inline">
+                        <form hidden action="{{ route('empresas.destroy', $empresa->id) }}" method="POST" style="display:inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Eliminar</button>

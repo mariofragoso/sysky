@@ -50,7 +50,7 @@
             <a href="{{ route('asignacionesequipos.index') }}" class="btn btn-secondary">Volver a la lista</a>
             <a href="{{ route('asignacionesequipos.edit', $asignacion->id) }}" class="btn btn-primary">Editar</a>
 
-            <form action="{{ route('asignacionesequipos.destroy', $asignacion->id) }}" method="POST"
+            <form hidden action="{{ route('asignacionesequipos.destroy', $asignacion->id) }}" method="POST"
                 style="display: inline-block;">
                 @csrf
                 @method('DELETE')

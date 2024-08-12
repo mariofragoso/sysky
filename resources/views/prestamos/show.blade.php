@@ -37,7 +37,7 @@
             </table>
             <a href="{{ route('prestamos.index') }}" class="btn btn-secondary">Volver a la lista</a>
             <a href="{{ route('prestamos.edit', $prestamo->id) }}" class="btn btn-primary">Editar</a>
-            <form action="{{ route('prestamos.destroy', $prestamo->id) }}" method="POST" style="display:inline-block;">
+            <form hidden action="{{ route('prestamos.destroy', $prestamo->id) }}" method="POST" style="display:inline-block;">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este préstamo?')">Eliminar</button>

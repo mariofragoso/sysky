@@ -40,7 +40,7 @@
         <a href="{{ route('accesorios.index') }}" class="btn btn-secondary">Volver a la lista</a>
         <a href="{{ route('accesorios.edit', $accesorio->id) }}" class="btn btn-primary">Editar</a>
 
-        <form action="{{ route('accesorios.destroy', $accesorio->id) }}" method="POST" style="display: inline-block;">
+        <form hidden action="{{ route('accesorios.destroy', $accesorio->id) }}" method="POST" style="display: inline-block;">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este accesorio?')">Eliminar</button>

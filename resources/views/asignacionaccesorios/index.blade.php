@@ -102,7 +102,7 @@
                                 <td>
                                     <a href="{{ route('asignacionaccesorios.show', $asignacion->id) }}" class="btn btn-info btn-sm">Ver</a>
                                     <a href="{{ route('asignacionaccesorios.edit', $asignacion->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                                    <form action="{{ route('asignacionaccesorios.destroy', $asignacion->id) }}" method="POST" style="display:inline">
+                                    <form hidden action="{{ route('asignacionaccesorios.destroy', $asignacion->id) }}" method="POST" style="display:inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta asignación?')">Eliminar</button>

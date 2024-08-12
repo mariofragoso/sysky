@@ -42,7 +42,7 @@
             <a href="{{ route('empleados.index') }}" class="btn btn-secondary">Volver a la lista</a>
             <a href="{{ route('empleados.edit', $empleado->id) }}" class="btn btn-primary">Editar</a>
 
-            <form action="{{ route('empleados.destroy', $empleado->id) }}" method="POST" style="display: inline-block;">
+            <form hidden action="{{ route('empleados.destroy', $empleado->id) }}" method="POST" style="display: inline-block;">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger"

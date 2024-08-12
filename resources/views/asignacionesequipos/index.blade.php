@@ -49,7 +49,7 @@
                                 <td>
                                     <a href="{{ route('asignacionesequipos.show', $asignacion->id) }}" class="btn btn-info btn-sm">Ver</a>
                                     <a href="{{ route('asignacionesequipos.edit', $asignacion->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                                    <form type action="{{ route('asignacionesequipos.destroy', $asignacion->id) }}" method="POST" style="display:inline">
+                                    <form hidden type action="{{ route('asignacionesequipos.destroy', $asignacion->id) }}" method="POST" style="display:inline">
                                         @csrf
                                         @method('DELETE')
                                         <button  type="hidden" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta asignación?')">Eliminar</button>

@@ -157,7 +157,7 @@
                                     <a href="{{ route('equipos.show', $equipo->id) }}" class="btn btn-info btn-sm">Ver</a>
                                     <a href="{{ route('equipos.edit', $equipo->id) }}"
                                         class="btn btn-warning btn-sm">Editar</a>
-                                    <form action="{{ route('equipos.destroy', $equipo->id) }}" method="POST"
+                                    <form hidden action="{{ route('equipos.destroy', $equipo->id) }}" method="POST"
                                         style="display:inline">
                                         @csrf
                                         @method('DELETE')

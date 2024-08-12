@@ -28,7 +28,7 @@
                         <tr>
                             <td>{{ $prestamo->id }}</td>
                             <td>{{ $prestamo->empleado->nombre ?? 'N/A' }} {{ $prestamo->empleado->apellidoP ?? 'N/A' }} {{ $prestamo->empleado->apellidoM ?? 'N/A' }}</td>
-                            <td>{{ $prestamo->equipo->numero_serie }}</td>
+                            <td>{{ $prestamo->equipo->etiqueta_skytex }}</td>
                             <td>{{ $prestamo->fecha_prestamo }}</td>
                             <td>{{ $prestamo->fecha_regreso }}</td>
                             <td>{{ $prestamo->usuario->name }}</td>
@@ -36,7 +36,7 @@
                             <td>
                                 <a href="{{ route('prestamos.show', $prestamo->id) }}" class="btn btn-info">Ver</a>
                                 <a href="{{ route('prestamos.edit', $prestamo->id) }}" class="btn btn-warning">Editar</a>
-                                <form action="{{ route('prestamos.destroy', $prestamo->id) }}" method="POST"
+                                <form hidden action="{{ route('prestamos.destroy', $prestamo->id) }}" method="POST"
                                     style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')

@@ -28,7 +28,7 @@ class LowStockNotification extends Notification
         return (new MailMessage)
             ->subject('Alerta de Bajo Stock de Accesorio')
             ->line('El accesorio ' . $this->accesorio->descripcion . ' tiene un stock bajo.')
-            ->line('Cantidad actual: ' . $this->accesorio->cantidad_minima)
+            ->line('Cantidad actual: ' . $this->accesorio->cantidad)
             ->action('Ver Accesorio', url('/accesorios/' . $this->accesorio->id))
             ->line('Por favor, tome las medidas necesarias.');
             }
