@@ -31,6 +31,10 @@ use App\Models\Equipo;
 */
 
 
+Route::get('/', function () {
+    return redirect('/login');
+});
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 

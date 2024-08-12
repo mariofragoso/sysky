@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Acciones;
@@ -7,6 +8,7 @@ use App\Models\Empleado;
 use App\Models\Equipo;
 use App\Models\User;
 use App\Models\Empresa;
+use App\Models\Prestamo;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,7 +22,7 @@ class AsignacionEquipoController extends Controller
         $search = $request->input('search');
         $sortField = $request->input('sort', 'fecha_asignacion');
         $sortOrder = $request->input('order', 'desc');
-    
+
         $asignacionesequipos = AsignacionEquipo::with(['empleado', 'equipo', 'usuario', 'empresa'])
             ->when($search, function ($query, $search) {
                 return $query->whereHas('empleado', function ($q) use ($search) {
@@ -28,14 +30,14 @@ class AsignacionEquipoController extends Controller
                 })->orWhereHas('equipo', function ($q) use ($search) {
                     $q->where('numero_serie', 'like', "%{$search}%");
                 })->orWhere('fecha_asignacion', 'like', "%{$search}%")
-                  ->orWhere('ticket', 'like', "%{$search}%");
+                    ->orWhere('ticket', 'like', "%{$search}%");
             })
             ->orderBy($sortField, $sortOrder)
             ->paginate(10);
-    
+
         return view('asignacionesequipos.index', compact('asignacionesequipos', 'search', 'sortField', 'sortOrder'));
     }
-    
+
 
     public function __construct()
     {
@@ -47,7 +49,7 @@ class AsignacionEquipoController extends Controller
         $empleados = Empleado::all();
         $equipos = Equipo::all();
         $empresas = Empresa::all();
-        
+
         return view('asignacionesequipos.create', compact('empleados', 'equipos', 'empresas'));
     }
 
@@ -62,70 +64,88 @@ class AsignacionEquipoController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $request->validate([
-        'empleado_id' => 'required|exists:empleados,id',
-        'equipo_id' => 'required|exists:equipos,id',
-        'fecha_asignacion' => 'required|date',
-        'ticket' => 'required|integer',
-        'nota_descriptiva' => 'nullable|string|max:100',
-        'empresa_id' => 'required|exists:empresas,id',
-        'estado' => 'required|string|max:50',
-    ]);
-
-    $asignacion = AsignacionEquipo::findOrFail($id);
-    $request['usuario_responsable'] = Auth::id(); // Establecer el usuario autenticado
-    $asignacion->update($request->all());
-
-    // Actualizar el estado del equipo
-    $equipo = Equipo::findOrFail($request->equipo_id);
-    $equipo->update(['estado' => $request->estado]);
-
-    // Registrar la acción
-    $accion = new Acciones();
-    $accion->modulo = "Asignacion de Equipo";
-    $accion->descripcion = "Se actualizó la asignación de equipo: " . $equipo->etiqueta_skytex . " para el empleado: " . $asignacion->empleado->nombre . " " . $asignacion->empleado-> apellidoP . " " .$asignacion->empleado-> apellidoM;
-    $accion->usuario_responsable_id = Auth::id();
-    $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
-    $accion->save();
-
-    return redirect()->route('asignacionesequipos.index')
-        ->with('success', 'Asignación de equipo actualizada correctamente');
-}
+    {
+        $request->validate([
+            'empleado_id' => 'required|exists:empleados,id',
+            'equipo_id' => 'required|exists:equipos,id',
+            'fecha_asignacion' => 'required|date',
+            'ticket' => 'required|integer',
+            'nota_descriptiva' => 'nullable|string|max:100',
+            'empresa_id' => 'required|exists:empresas,id',
+            'estado' => 'required|string|max:50',
+            //'fecha_regreso' => $request->estado == 'prestamo' ? 'required|date|after_or_equal:fecha_prestamo' : 'nullable',
 
 
-public function store(Request $request)
-{
-    $request->validate([
-        'asignaciones' => 'required|json',
-    ]);
+        ]);
 
-    $asignaciones = json_decode($request->asignaciones, true);
+        $asignacion = AsignacionEquipo::findOrFail($id);
+        $request['usuario_responsable'] = Auth::id(); // Establecer el usuario autenticado
+        $asignacion->update($request->all());
 
-    foreach ($asignaciones as $asignacionData) {
-        // Verificar si el equipo ya está asignado o dado de baja
-        $equipo = Equipo::findOrFail($asignacionData['equipo_id']);
-        if ($equipo->estado == 'asignado' || $equipo->estado == 'baja') {
-            return redirect()->back()->withErrors(['El equipo ' . $equipo->etiqueta_skytex . ' ya está asignado o dado de baja.']);
-        }
-
-        $asignacionData['usuario_responsable'] = Auth::id(); // Establecer el usuario autenticado
-        AsignacionEquipo::create($asignacionData);
+        // Actualizar o crear préstamo según sea necesario
+       /* if ($request->estado == 'prestamo') {
+            Prestamo::updateOrCreate(
+                ['equipo_id' => $asignacion->equipo_id],
+                [
+                    'empleado_id' => $asignacion->empleado_id,
+                    'fecha_prestamo' => now(),
+                    'fecha_regreso' => $request->fecha_regreso,
+                    'usuario_responsable_id' => Auth::user()->id,
+                    'devuelto' => false,
+                ]
+            );
+        }*/
 
         // Actualizar el estado del equipo
-        $equipo->update(['estado' => $asignacionData['estado']]);
+        $equipo = Equipo::findOrFail($request->equipo_id);
+        $equipo->update(['estado' => $request->estado]);
+
 
         // Registrar la acción
         $accion = new Acciones();
         $accion->modulo = "Asignacion de Equipo";
-        $accion->descripcion = "Se creó la asignación del Equipo: " . $equipo->etiqueta_skytex;
+        $accion->descripcion = "Se actualizó la asignación de equipo: " . $equipo->etiqueta_skytex . " para el empleado: " . $asignacion->empleado->nombre . " " . $asignacion->empleado->apellidoP . " " . $asignacion->empleado->apellidoM;
         $accion->usuario_responsable_id = Auth::id();
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();
+
+        return redirect()->route('asignacionesequipos.index')
+            ->with('success', 'Asignación de equipo actualizada correctamente');
     }
 
-    return redirect()->route('asignacionesequipos.index')->with('success', 'Las asignaciones de equipos se han creado correctamente.');
-}
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'asignaciones' => 'required|json',
+        ]);
+
+        $asignaciones = json_decode($request->asignaciones, true);
+
+        foreach ($asignaciones as $asignacionData) {
+            // Verificar si el equipo ya está asignado o dado de baja
+            $equipo = Equipo::findOrFail($asignacionData['equipo_id']);
+            if ($equipo->estado == 'asignado' || $equipo->estado == 'baja') {
+                return redirect()->back()->withErrors(['El equipo ' . $equipo->etiqueta_skytex . ' ya está asignado o dado de baja.']);
+            }
+
+            $asignacionData['usuario_responsable'] = Auth::id(); // Establecer el usuario autenticado
+            AsignacionEquipo::create($asignacionData);
+
+            // Actualizar el estado del equipo
+            $equipo->update(['estado' => $asignacionData['estado']]);
+
+            // Registrar la acción
+            $accion = new Acciones();
+            $accion->modulo = "Asignacion de Equipo";
+            $accion->descripcion = "Se creó la asignación del Equipo: " . $equipo->etiqueta_skytex;
+            $accion->usuario_responsable_id = Auth::id();
+            $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+            $accion->save();
+        }
+
+        return redirect()->route('asignacionesequipos.index')->with('success', 'Las asignaciones de equipos se han creado correctamente.');
+    }
 
 
 

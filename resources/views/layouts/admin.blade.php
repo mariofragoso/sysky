@@ -268,6 +268,26 @@
         });
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var today = new Date();
+        var day = ("0" + today.getDate()).slice(-2); // Agrega un cero delante si es necesario
+        var month = ("0" + (today.getMonth() + 1)).slice(-2); // Los meses empiezan desde 0
+        var year = today.getFullYear();
+        
+        var formattedDate = year + "-" + month + "-" + day;
+        document.getElementById('datepicker').value = formattedDate;
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        var today = new Date();
+        var day = ("0" + today.getDate()).slice(-2); // Agrega un cero delante si es necesario
+        var month = ("0" + (today.getMonth() + 1)).slice(-2); // Los meses empiezan desde 0
+        var year = today.getFullYear();
+        
+        var formattedDate = year + "-" + month + "-" + day;
+        document.getElementById('fecha_asignacion').value = formattedDate;
+    });
+</script>
 <style>
     .badge-asignado {
         background-color: green;

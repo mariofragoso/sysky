@@ -119,7 +119,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             var ctx = document.getElementById('equiposChart').getContext('2d');
             var equiposChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'pie',
                 data: {
                     labels: ['Asignados', 'No Asignados', 'Bajas'],
                     datasets: [{

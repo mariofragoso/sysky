@@ -68,12 +68,8 @@
 
                             <div class="col-md-3">
                                 <label for="estado" class="form-label">Estado:</label>
-                                <select id="estado" class="form-control" required>
-                                    <option value="asignado">Asignado</option>
-                                    <option value="no asignado">No Asignado</option>
-                                    <option value="prestamo">Préstamo</option>
-                                    <option value="baja">Baja</option>
-                                </select>
+                                <input type="text" id="estado" class="form-control" value="Asignado" disabled>
+                                <input type="hidden" name="estado" value="asignado">
                             </div>
                         </div>
 

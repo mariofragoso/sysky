@@ -46,7 +46,7 @@
 
                     <div class="col-md-3">
                         <label for="fecha_asignacion" class="form-label">Fecha de Asignación:</label>
-                        <input type="date" class="form-control" id="datepicker" name="fecha_asignacion" required>
+                        <input type="date" class="form-control" id="datepicker" name="fecha_asignacion" required min="1995-01-01" max="2050-12-31" />
                     </div>
 
                     <div class="col-md-3">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 mt-3">
+                <div class="col-12 mt-4">
                     <button type="submit" class="btn btn-primary">Crear</button>
                 </div>
             </form>
