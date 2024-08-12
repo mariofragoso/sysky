@@ -37,7 +37,7 @@
                                 <select id="equipo_id" class="form-control" required>
                                     <option value="">Seleccione un equipo</option>
                                     @foreach ($equipos as $equipo)
-                                        <option value="{{ $equipo->id }}">{{ $equipo->etiqueta_skytex }}</option>
+                                        <option value="{{ $equipo->id }}"> {{ $equipo->etiqueta_skytex }} - {{ $equipo->tipo }} </option>
                                     @endforeach
                                 </select>
                             </div>

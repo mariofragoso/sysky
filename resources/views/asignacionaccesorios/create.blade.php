@@ -34,7 +34,7 @@
                         <select name="accesorio_id" id="accesorio_id" class="form-control" required>
                             <option value="">Seleccione un Accesorio</option>
                             @foreach ($accesorios as $accesorio)
-                                <option value="{{ $accesorio->id }}">{{ $accesorio->descripcion }}</option>
+                                <option value="{{ $accesorio->id }}">{{ $accesorio->descripcion }} - {{ $accesorio->marca }}</option>
                             @endforeach
                         </select>
                     </div>

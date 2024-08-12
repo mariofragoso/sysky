@@ -33,7 +33,7 @@
                         <label for="accesorio_id" class="form-label">Accesorio:</label>
                         <select id="accesorio_id" name="accesorio_id" class="form-control" required>
                             @foreach ($accesorios as $accesorio)
-                                <option value="{{ $accesorio->id }}" {{ $asignacion->accesorio_id == $accesorio->id ? 'selected' : '' }}>{{ $accesorio->descripcion }}</option>
+                                <option value="{{ $accesorio->id }}" {{ $asignacion->accesorio_id == $accesorio->id ? 'selected' : '' }}>{{ $accesorio->descripcion }} - {{ $accesorio->marca }}</option>
                             @endforeach
                         </select>
                     </div>
