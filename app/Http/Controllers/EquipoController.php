@@ -11,26 +11,26 @@ use Illuminate\Support\Facades\Auth;
 class EquipoController extends Controller
 {
     // Mostrar una lista de empleados
-   // En EquipoController.php
-public function index(Request $request)
-{
-    $search = $request->input('search');
-    $sortField = $request->input('sort', 'created_at');
-    $sortOrder = $request->input('order', 'desc');
+    // En EquipoController.php
+    public function index(Request $request)
+    {
+        $search = $request->input('search');
+        $sortField = $request->input('sort', 'created_at');
+        $sortOrder = $request->input('order', 'desc');
 
-    $equipos = Equipo::when($search, function ($query, $search) {
-        return $query->where('numero_serie', 'like', "%{$search}%")
-            ->orWhere('marca', 'like', "%{$search}%")
-            ->orWhere('modelo', 'like', "%{$search}%")
-            ->orWhere('etiqueta_skytex', 'like', "%{$search}%")
-            ->orWhere('tipo', 'like', "%{$search}%")
-            ->orWhere('orden_compra', 'like', "%{$search}%")
-            ->orWhere('requisicion', 'like', "%{$search}%")
-            ->orWhere('estado', 'like', "%{$search}%");
-    })->orderBy($sortField, $sortOrder)->paginate(10);
+        $equipos = Equipo::when($search, function ($query, $search) {
+            return $query->where('numero_serie', 'like', "%{$search}%")
+                ->orWhere('marca', 'like', "%{$search}%")
+                ->orWhere('modelo', 'like', "%{$search}%")
+                ->orWhere('etiqueta_skytex', 'like', "%{$search}%")
+                ->orWhere('tipo', 'like', "%{$search}%")
+                ->orWhere('orden_compra', 'like', "%{$search}%")
+                ->orWhere('requisicion', 'like', "%{$search}%")
+                ->orWhere('estado', 'like', "%{$search}%");
+        })->orderBy($sortField, $sortOrder)->paginate(10);
 
-    return view('equipos.index', compact('equipos', 'search', 'sortField', 'sortOrder'));
-}
+        return view('equipos.index', compact('equipos', 'search', 'sortField', 'sortOrder'));
+    }
 
 
     public function create()
@@ -85,10 +85,10 @@ public function index(Request $request)
     }
 
     public function edit($id)
-{
-    $equipo = Equipo::findOrFail($id);
-    return view('equipos.edit', compact('equipo'));
-}
+    {
+        $equipo = Equipo::findOrFail($id);
+        return view('equipos.edit', compact('equipo'));
+    }
     public function update(Request $request, Equipo $equipo)
     {
         $request->validate([
@@ -108,13 +108,13 @@ public function index(Request $request)
 
         $equipo->update($request->all());
 
-          // Registrar la acción
-          $accion = new Acciones();
-          $accion->modulo = "Equipo";
-          $accion->descripcion = "Se Edito el equipo: " . $equipo->etiqueta_skytex;
-          $accion->usuario_responsable_id = Auth::user()->id;
-          $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
-          $accion->save();
+        // Registrar la acción
+        $accion = new Acciones();
+        $accion->modulo = "Equipo";
+        $accion->descripcion = "Se Edito el equipo: " . $equipo->etiqueta_skytex;
+        $accion->usuario_responsable_id = Auth::user()->id;
+        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+        $accion->save();
 
         return redirect()->route('equipos.index')
             ->with('success', 'Equipo actualizado correctamente.');
@@ -130,5 +130,27 @@ public function index(Request $request)
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function baja(Request $request)
+    {
+        $search = $request->input('search');
+        $sortField = $request->input('sort', 'created_at');
+        $sortOrder = $request->input('order', 'desc');
+
+        $equipos = Equipo::where('estado', 'Baja')
+            ->when($search, function ($query, $search) {
+                return $query->where('numero_serie', 'like', "%{$search}%")
+                    ->orWhere('marca', 'like', "%{$search}%")
+                    ->orWhere('modelo', 'like', "%{$search}%")
+                    ->orWhere('etiqueta_skytex', 'like', "%{$search}%")
+                    ->orWhere('tipo', 'like', "%{$search}%")
+                    ->orWhere('orden_compra', 'like', "%{$search}%")
+                    ->orWhere('requisicion', 'like', "%{$search}%");
+            })
+            ->orderBy($sortField, $sortOrder)
+            ->paginate(10);
+
+        return view('equipos.baja', compact('equipos', 'search', 'sortField', 'sortOrder'));
     }
 }

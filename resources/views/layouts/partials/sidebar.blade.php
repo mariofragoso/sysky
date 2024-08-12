@@ -34,11 +34,19 @@
                 <span>Empleados</span>
             </a>
         </li>
+
         <li class="nav-item {{ Request::routeIs('equipos.index') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('equipos.index') }}">
-                <i class="fas fa-laptop"></i>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#ColpaseEquipos"
+                aria-expanded="true" aria-controls="ColpaseEquipos">
+                <i class="fas fa-fw fa-folder"></i>
                 <span>Equipos</span>
             </a>
+            <div id="ColpaseEquipos" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('equipos.index') }}">Todos los equipos</a>
+                    <a class="collapse-item" href="{{ route('equipos.baja') }}">Equipos Baja</a>
+                </div>
+            </div>
         </li>
         <li class="nav-item {{ Request::routeIs('accesorios.index') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('accesorios.index') }}">
@@ -80,15 +88,22 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Configuración
+            Ajustes
         </div>
 
-        <!-- Nav Item -->
-        <li class="nav-item {{ Request::routeIs('acciones.index') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('acciones.index') }}">
-                <i class="fas fa-cogs"></i>
-                <span>Acciones</span>
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                aria-expanded="true" aria-controls="collapsePages">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Configuracion</span>
             </a>
+            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('acciones.index') }}">Acciones</a>
+                    <a class="collapse-item" href="{{ route('empresas.index') }}">Empresas</a>
+                </div>
+            </div>
         </li>
 
         <!-- Divider -->

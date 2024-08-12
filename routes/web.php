@@ -68,6 +68,8 @@ Route::delete('empleados/{id}', [EmpleadoController::class, 'destroy'])->name('e
 // Ruta para listar todos los equipos
 Route::get('/equipos', [EquipoController::class, 'index'])->name('equipos.index');
 
+Route::get('/equipos/baja', [EquipoController::class, 'baja'])->name('equipos.baja');
+
 // Ruta para mostrar el formulario de creación de un nuevo equipo
 Route::get('/equipos/create', [EquipoController::class, 'create'])->name('equipos.create');
 
@@ -90,6 +92,8 @@ Route::get('/api/equipos/{id}/estado', function ($id) {
     $equipo = Equipo::findOrFail($id);
     return response()->json(['estado' => $equipo->estado]);
 });
+
+
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------//

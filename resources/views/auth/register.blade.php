@@ -30,7 +30,7 @@
                                         <input id="name" type="text"
                                             class="form-control form-control-user @error('name') is-invalid @enderror"
                                             name="name" value="{{ old('name') }}" required autocomplete="name"
-                                            autofocus placeholder="Name">
+                                            autofocus placeholder="Nombre Completo: ">
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -41,7 +41,7 @@
                                         <input id="email" type="email"
                                             class="form-control form-control-user @error('email') is-invalid @enderror"
                                             name="email" value="{{ old('email') }}" required autocomplete="email"
-                                            placeholder="Email Address">
+                                            placeholder="Correo Electronico">
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -53,7 +53,7 @@
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input id="password" type="password"
                                             class="form-control form-control-user @error('password') is-invalid @enderror"
-                                            name="password" required autocomplete="new-password" placeholder="Password">
+                                            name="password" required autocomplete="new-password" placeholder="Comtraseña">
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -63,20 +63,20 @@
                                     <div class="col-sm-6">
                                         <input id="password-confirm" type="password" class="form-control form-control-user"
                                             name="password_confirmation" required autocomplete="new-password"
-                                            placeholder="Repeat Password">
+                                            placeholder="Confirmar Contraseña">
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Register Account
+                                    Registrar Cuenta
                                 </button>
                                 
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="{{ route('password.request') }}">Forgot Password?</a>
+                                <a class="small" href="{{ route('password.request') }}">Olvidaste tu contraseña?</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="{{ route('login') }}">Already have an account? Login!</a>
+                                <a class="small" href="{{ route('login') }}">Tienes una cuenta? Inicia Sesion!</a>
                             </div>
                         </div>
                     </div>

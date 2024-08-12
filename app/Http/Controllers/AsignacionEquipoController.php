@@ -35,6 +35,7 @@ class AsignacionEquipoController extends Controller
             ->orderBy($sortField, $sortOrder)
             ->paginate(10);
 
+
         return view('asignacionesequipos.index', compact('asignacionesequipos', 'search', 'sortField', 'sortOrder'));
     }
 
