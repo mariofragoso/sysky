@@ -81,6 +81,9 @@ class PrestamoController extends Controller
             'devuelto' => 'boolean',
         ]);
 
+        // Verificar si el estado "devuelto" ha cambiado
+        $devueltoCambio = $prestamo->devuelto !== $request->devuelto;
+
         $prestamo->update([
             'equipo_id' => $request->equipo_id,
             'empleado_id' => $request->empleado_id,
@@ -90,16 +93,20 @@ class PrestamoController extends Controller
             'devuelto' => $request->devuelto,
         ]);
 
-        // Registrar la acción
+        // Registrar la acción si el estado "devuelto" cambió
         $accion = new Acciones();
         $accion->modulo = "Préstamos";
         $accion->descripcion = "Se actualizó el préstamo del equipo con número de serie: " . $prestamo->equipo->numero_serie;
+        if ($devueltoCambio) {
+            $accion->descripcion .= " y se cambió el estado a devuelto: " . ($request->devuelto ? 'Sí' : 'No');
+        }
         $accion->usuario_responsable_id = Auth::user()->id;
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();
 
         return redirect()->route('prestamos.index')->with('success', 'Préstamo actualizado exitosamente.');
     }
+
 
     public function destroy(Prestamo $prestamo)
     {

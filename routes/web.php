@@ -15,6 +15,7 @@ use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AccionesController;
+use App\Http\Controllers\SalidaEquipoController;
 use App\Models\AsignacionEquipo;
 use App\Models\Empleado;
 use App\Models\Equipo;
@@ -94,6 +95,9 @@ Route::get('/api/equipos/{id}/estado', function ($id) {
 });
 
 
+//Rutas para salidas de equipo
+Route::resource('salidas', SalidaEquipoController::class);
+Route::get('/salidas/{id}', [SalidaEquipoController::class, 'show'])->name('salidas.show');
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------//

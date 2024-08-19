@@ -25,6 +25,8 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('libs/sbadmin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
 
 
 </head>
@@ -155,6 +157,8 @@
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('/libs/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('/libs/bootstrap/js/bootstrap.min.js') }}"></script>
+
 
     <!-- Core plugin JavaScript-->
 
@@ -167,7 +171,6 @@
     <!-- Core plugin JavaScript-->
     <script src="{{ asset('/libs/jquery-easing/jquery.easing.min.js') }}"></script>
 
-   
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
 

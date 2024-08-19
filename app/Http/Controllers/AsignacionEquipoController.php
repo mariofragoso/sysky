@@ -160,7 +160,7 @@ class AsignacionEquipoController extends Controller
     {
         $asignacion = AsignacionEquipo::with(['empleado', 'equipo', 'usuario', 'empresa'])->findOrFail($id);
 
-        $pdf = FacadePdf::loadView('asignaciones.pdf', compact('asignacion'));
+        $pdf = FacadePdf::loadView('documentos.pdf', compact('asignacion'));
         return $pdf->download('asignacion_' . $asignacion->id . '.pdf');
     }
 

@@ -4,7 +4,7 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
             <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laptop-house"></i>
+                <i class="fas fa-cubes"></i>
             </div>
             <div class="sidebar-brand-text mx-3">Sis <sup>Sky</sup></div>
         </a>
@@ -38,7 +38,7 @@
         <li class="nav-item {{ Request::routeIs('equipos.index') ? 'active' : '' }}">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#ColpaseEquipos"
                 aria-expanded="true" aria-controls="ColpaseEquipos">
-                <i class="fas fa-fw fa-folder"></i>
+                <i class="fas fa-desktop"></i>
                 <span>Equipos</span>
             </a>
             <div id="ColpaseEquipos" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
@@ -72,14 +72,20 @@
         </li>
         <li class="nav-item {{ Request::routeIs('asignacionaccesorios.index') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('asignacionaccesorios.index') }}">
-                <i class="fas fa-keyboard"></i>
+                <i class="fas fa-mouse"></i>
                 <span>Asignacion de Accesorios</span>
             </a>
         </li>
         <li class="nav-item {{ Request::routeIs('prestamos.index') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('prestamos.index') }}">
-                <i class="fas fa-book"></i>
+                <i class="fas fa-hand-holding"></i>
                 <span>Prestamos</span>
+            </a>
+        </li>
+        <li class="nav-item {{ Request::routeIs('salidas.index') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('salidas.index') }}">
+                <i class="fas fa-laptop-house"></i>
+                <span>Salida de equipo</span>
             </a>
         </li>
 
@@ -95,7 +101,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                 aria-expanded="true" aria-controls="collapsePages">
-                <i class="fas fa-fw fa-folder"></i>
+                <i class="fas fa-tools"></i>
                 <span>Configuracion</span>
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
