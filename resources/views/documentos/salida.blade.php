@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Pase de Salida para Equipo de Cómputo | {{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM }}</title>
+    <title>Pase de Salida para Equipo de Cómputo | {{ $salida->empleado->nombre }}
+        {{ $salida->empleado->apellidoP }} {{ $salida->empleado->apellidoM }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -69,30 +70,32 @@
     <div class="header">
         <img src="{{ public_path('libs/img/logo_skytex.png') }}" alt="Skytex Logo" class="logo">
         <h1 class="title">Pase de Salida para Equipo de Cómputo</h1>
+        <p style="float: right; width: 10%"><font color="#ff0000 "> Folio: {{ $salida->id }}</font></p>
+
     </div>
     
     <div class="section">
         <table>
             <tr>
-                <td><strong>Folio:</strong> {{ $folio }}</td>
-                <td><strong>Fecha:</strong> {{ $fecha }}</td>
+                <td><strong>Nombre de empleado:</strong> {{ $salida->empleado->nombre }}
+                    {{ $salida->empleado->apellidoP }} {{ $salida->empleado->apellidoM }}</td>
+                <td><strong>Fecha:</strong> {{ $salida->fecha_salida }}</td>
             </tr>
             <tr>
-                <td><strong>Nómina:</strong> {{ $empleado->numero_nomina }}</td>
-                <td><strong>Departamento:</strong> {{ $empleado->area }}</td>
+                <td><strong>Nómina:</strong> {{$salida->empleado->numero_nomina }}</td>
+                <td><strong>Departamento:</strong> {{ $salida->empleado->area }}</td>
             </tr>
             <tr>
-                <td><strong>Área:</strong> {{ $empleado->area }}</td>
+                <td><strong>Área:</strong> {{ $salida->empleado->area }}</td>
                 <td>
-                    <strong>INGRESA ( )</strong>
-                    <strong>SALE ( @if($tipo_movimiento == 'salida') X @endif )</strong>
+                    <strong>SALE (X)</strong>
                 </td>
+                
             </tr>
         </table>
     </div>
     
     <div class="section">
-        <h3>Equipo de Cómputo</h3>
         <table>
             <tr>
                 <th>Partida</th>
@@ -100,27 +103,22 @@
                 <th>Descripción (Incluye modelo y/o etiqueta SKYTEX)</th>
                 <th>Número de Serie</th>
             </tr>
-            @foreach($equipos as $index => $equipo)
             <tr>
-                <td>{{ $index + 1 }}</td>
                 <td>1</td>
-                <td>{{ $equipo->tipo }} {{ $equipo->marca }} {{ $equipo->modelo }} Etq: {{ $equipo->etiqueta_skytex }}</td>
-                <td>{{ $equipo->numero_serie }}</td>
+                <td>1</td>
+                <td>{{ $salida->equipo->tipo }} {{ $salida->equipo->marca }} {{ $salida->equipo->modelo }} Etq: {{ $salida->equipo->etiqueta_skytex }}</td>
+                <td>{{ $salida->equipo->numero_serie }}</td>
             </tr>
-            @endforeach
         </table>
+    </div>
+    <div class="section">
+        <p><strong>Nota de Salida:</strong> {{ $salida->nota_salida }}</p>
+        
     </div>
     
     <div class="section">
-        <p><strong>Fecha de Salida:</strong> {{ $fecha_salida }}</p>
-        <p><strong>Fecha de Entrada:</strong> {{ $fecha_entrada }}</p>
-        <p><strong>Motivo de la Salida/Entrada:</strong> {{ $motivo }}</p>
-    </div>
-    
-    <div class="section footer">
-        <p>
-            NOTA: Este pase de salida solo es válido por 3 meses. Transcurrido este tiempo deberán tramitar uno nuevo.
-        </p>
+        <p><strong>Fecha de Salida:</strong> {{ $salida->fecha_salida }}</p>
+        <p><strong>Fecha de Regreso:</strong> {{ $salida->fecha_regreso }}</p>
     </div>
     
     <div class="section">
@@ -131,13 +129,19 @@
             </div>
             <div class="signature">
                 <div class="signature-line"></div>
-                <p>{{ $usuario->name }}<br>Autoriza</p>
+                <p>{{ $salida->usuarioResponsable->name ?? 'N/A' }}<br>Autoriza</p>
             </div>
             <div class="signature">
                 <div class="signature-line"></div>
-                <p>{{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM }}<br>Empleado</p>
+                <p>{{ $salida->empleado->nombre }} {{ $salida->empleado->apellidoP }}
+                    {{ $salida->empleado->apellidoM }}<br>Recibe</p>
             </div>
         </div>
+    </div>
+    <div class="section footer">
+        <p style="text-align: center">
+            <strong> Este pase de salida solo es válido por 3 meses. Transcurrido este tiempo deberán tramitar uno nuevo.</strong>
+        </p>
     </div>
 </body>
 </html>

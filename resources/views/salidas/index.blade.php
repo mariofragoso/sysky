@@ -19,8 +19,10 @@
                             <th>Empleado</th>
                             <th>Fecha de Salida</th>
                             <th>Fecha de Regreso</th>
+                            <th>Usuario Responsable</th>
                             <th>Imagen</th>
                             <th>Acciones</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -32,17 +34,22 @@
                                     {{ $salida->empleado->apellidoM }}</td>
                                 <td>{{ $salida->fecha_salida }}</td>
                                 <td>{{ $salida->fecha_regreso ?? 'No ha regresado' }}</td>
+                                <td>{{ $salida->usuarioResponsable->name }}</td>
                                 <td>
                                     @if ($salida->imagen)
-                                        <img src="{{ asset('images/salidas/' . $salida->imagen) }}" alt="Imagen de Salida" width="100">
+                                        <img src="{{ asset('images/salidas/' . $salida->imagen) }}" alt="Imagen de Salida"
+                                            width="100">
                                     @else
                                         Sin imagen
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('salidas.show', $salida->id) }}" class="btn btn-info">Ver Detalles</a>
+                                    <a href="{{ route('salidas.show', $salida->id) }}" class="btn btn-info">Ver
+                                        Detalles</a>
                                     <a href="{{ route('salidas.edit', $salida->id) }}" class="btn btn-warning">Registrar
                                         Regreso</a>
+                                        <a href="{{ route('ruta.generarPDF', $salida->id) }}" class="btn btn-primary">Generar PDF</a>
+
                                 </td>
                             </tr>
                         @endforeach

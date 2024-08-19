@@ -17,8 +17,11 @@ class SalidaEquipo extends Model
         'nota_regreso',
         'imagen',
         'imagen_regreso',
+        'usuario_responsable_id',
+
+
     ];
-    
+
 
     public function equipo()
     {
@@ -28,5 +31,9 @@ class SalidaEquipo extends Model
     public function empleado()
     {
         return $this->belongsTo(Empleado::class);
+    }
+    public function usuarioResponsable()
+    {
+        return $this->belongsTo(User::class, 'usuario_responsable_id');
     }
 }

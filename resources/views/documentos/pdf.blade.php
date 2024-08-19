@@ -70,6 +70,7 @@
     <div class="header">
         <img src="{{ public_path('libs/img/logo_skytex.png') }}" alt="Skytex Logo" class="logo">
         <h1 class="title">Formato de Entrega de Equipo</h1>
+        <p style="float: right; width: 10%"><font color="#ff0000 "> Folio: {{ $asignacion->id }}</font></p>
     </div>
     
     <div class="section">
@@ -137,7 +138,7 @@
             </div>
             <div class="signature">
                 <div class="signature-line"></div>
-                <p>{{ $asignacion->usuario->name }}<br>Entrega</p>
+                <p>{{ $asignacion->usuario->name ?? 'N/A' }}<br>Entrega</p>
             </div>
             <div class="signature">
                 <div class="signature-line"></div>
