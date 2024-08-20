@@ -8,6 +8,8 @@ use App\Models\Equipo;
 use App\Models\Accesorio;
 use App\Models\AsignacionEquipo;
 use App\Models\Empleado;
+use App\Models\Prestamo;
+use App\Models\SalidaEquipo;
 
 class HomeController extends Controller
 {
@@ -30,6 +32,11 @@ class HomeController extends Controller
         // Obtener accesorios con cantidad baja
         $accesoriosCantidadBaja = Accesorio::whereColumn('cantidad', '<=', 'cantidad_minima')->get();
 
+        // Nuevas consultas para préstamos y salidas aun no regresados
+        $prestamosPendientes = Prestamo::where('devuelto', '0')->count();
+        $salidasPendientes = SalidaEquipo::where('fecha_regreso', NULL)->count();
+
+
 
         return view('home', compact(
             'empleados_count',
@@ -39,7 +46,9 @@ class HomeController extends Controller
             'equiposNoAsignados',
             'equiposBaja',
             'ultimasAsignaciones',
-            'accesoriosCantidadBaja'
+            'accesoriosCantidadBaja',
+            'prestamosPendientes',
+            'salidasPendientes'
         ));
     }
 

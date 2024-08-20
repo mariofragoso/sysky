@@ -56,6 +56,33 @@
         </div>
     </div>
 
+
+    <div class="row justify-content-center">
+        <div class="col-lg-3 col-6">
+            <div class="card-counter text-white bg-dark mb-3">
+                <i class="fas fa-undo"></i>
+                <span class="count-numbers">{{ $prestamosPendientes }}</span>
+                <span class="count-name">Préstamos A regresar</span>
+                <div class="info-footer">
+                    <a href="{{ route('prestamos.index') }}" class="small-box-footer">Más info <div
+                            class="fas fa-arrow-circle-right"></div></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-6">
+            <div class="card-counter text-white bg-secondary mb-3">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="count-numbers">{{ $salidasPendientes }}</span>
+                <span class="count-name">Salidas por regresar</span>
+                <div class="info-footer">
+                    <a href="{{ route('salidas.index') }}" class="small-box-footer">Más info <div
+                            class="fas fa-arrow-circle-right"></div></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
         <div class="card-body row">
             <div class="col-lg-6">
@@ -74,9 +101,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($ultimasAsignaciones as $asignacion)
+                        @foreach ($ultimasAsignaciones as $asignacion)
                             <tr>
-                                <td>{{ $asignacion->empleado->nombre }} {{ $asignacion->empleado->apellidoP }} {{ $asignacion->empleado->apellidoM }}</td>
+                                <td>{{ $asignacion->empleado->nombre }} {{ $asignacion->empleado->apellidoP }}
+                                    {{ $asignacion->empleado->apellidoM }}</td>
                                 <td>{{ $asignacion->equipo->etiqueta_skytex }}</td>
                                 <td>{{ $asignacion->fecha_asignacion }}</td>
                             </tr>
@@ -98,7 +126,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($accesoriosCantidadBaja as $accesorio)
+                    @foreach ($accesoriosCantidadBaja as $accesorio)
                         <tr>
                             <td>{{ $accesorio->descripcion }}</td>
                             <td>{{ $accesorio->cantidad }}</td>

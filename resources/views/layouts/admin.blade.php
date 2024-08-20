@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ env('APP_NAME') }}  - @yield('titulo')</title>
+    <title>{{ env('APP_NAME') }} - @yield('titulo')</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('/libs/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -17,7 +17,7 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-         <!-- Styles -->
+    <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
@@ -25,7 +25,8 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('libs/sbadmin/css/sb-admin-2.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 
 
@@ -226,6 +227,12 @@
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
                 'style',
             allowClear: true
+        }).on('select2:open', function() {
+            // Auto-focus on the search field
+            setTimeout(function() {
+                document.querySelector(".select2-container--open .select2-search__field")
+                    .focus()
+            }, 0);
         });
     });
 
@@ -236,6 +243,12 @@
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
                 'style',
             allowClear: true
+        }).on('select2:open', function() {
+            // Auto-focus on the search field
+            setTimeout(function() {
+                document.querySelector(".select2-container--open .select2-search__field")
+                    .focus()
+            }, 0);
         });
     });
 
@@ -246,11 +259,23 @@
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
                 'style',
             allowClear: true
+        }).on('select2:open', function() {
+            // Auto-focus on the search field
+            setTimeout(function() {
+                document.querySelector(".select2-container--open .select2-search__field")
+                    .focus()
+            }, 0);
         });
     });
 
-    $('#datepicker').datepicker({ uiLibrary: 'bootstrap5', iconsLibrary: 'fontawesome' });
-    $('#fecha_asignacion').datepicker({ uiLibrary: 'bootstrap5', iconsLibrary: 'fontawesome' });
+    $('#datepicker').datepicker({
+        uiLibrary: 'bootstrap5',
+        iconsLibrary: 'fontawesome'
+    });
+    $('#fecha_asignacion').datepicker({
+        uiLibrary: 'bootstrap5',
+        iconsLibrary: 'fontawesome'
+    });
 
     $(document).ready(function() {
         $('#marca').select2({
@@ -259,6 +284,12 @@
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
                 'style',
             allowClear: true
+        }).on('select2:open', function() {
+            // Auto-focus on the search field
+            setTimeout(function() {
+                document.querySelector(".select2-container--open .select2-search__field")
+                    .focus()
+            }, 0);
         });
     });
     $(document).ready(function() {
@@ -268,6 +299,12 @@
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
                 'style',
             allowClear: true
+        }).on('select2:open', function() {
+            // Auto-focus on the search field
+            setTimeout(function() {
+                document.querySelector(".select2-container--open .select2-search__field")
+                .focus()
+            }, 0);
         });
     });
 </script>
@@ -277,7 +314,7 @@
         var day = ("0" + today.getDate()).slice(-2); // Agrega un cero delante si es necesario
         var month = ("0" + (today.getMonth() + 1)).slice(-2); // Los meses empiezan desde 0
         var year = today.getFullYear();
-        
+
         var formattedDate = year + "-" + month + "-" + day;
         document.getElementById('datepicker').value = formattedDate;
     });
@@ -286,7 +323,7 @@
         var day = ("0" + today.getDate()).slice(-2); // Agrega un cero delante si es necesario
         var month = ("0" + (today.getMonth() + 1)).slice(-2); // Los meses empiezan desde 0
         var year = today.getFullYear();
-        
+
         var formattedDate = year + "-" + month + "-" + day;
         document.getElementById('fecha_asignacion').value = formattedDate;
     });

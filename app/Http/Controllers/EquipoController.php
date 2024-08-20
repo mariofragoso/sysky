@@ -46,8 +46,8 @@ class EquipoController extends Controller
             'modelo' => 'required',
             'etiqueta_skytex' => 'required|unique:equipos,etiqueta_skytex',
             'tipo' => 'required',
-            'orden_compra' => 'required',
-            'requisicion' => 'required',
+            'orden_compra' => 'integer|min:1',
+            'requisicion' => 'integer|min:1',
             'estado' => 'required',
         ], [
             'numero_serie.unique' => 'El Numero de serie ya esta registrado.',
@@ -97,8 +97,8 @@ class EquipoController extends Controller
             'modelo' => 'required',
             'etiqueta_skytex' => 'required|unique:equipos,etiqueta_skytex,' . $equipo->id,
             'tipo' => 'required',
-            'orden_compra' => 'required',
-            'requisicion' => 'required',
+            'orden_compra',
+            'requisicion',
             'estado' => 'required',
         ], [
             'numero_serie.unique' => 'El Numero de serie ya esta registrado.',

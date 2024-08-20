@@ -57,7 +57,7 @@
 
                 <div class="col-md-3">
                     <label for="orden_compra_acc" class="form-label">Orden De Compra:</label>
-                    <input type="number" min="1" pattern="^[0-9]+" class="form-control" id="orden_compra_acc" name="orden_compra_acc" required>
+                    <input type="number" min="1" pattern="^[0-9]+" class="form-control" id="orden_compra_acc" name="orden_compra_acc">
                     <div class="valid-feedback">
                         Good!
                     </div>
@@ -65,7 +65,7 @@
 
                 <div class="col-md-3">
                     <label for="requisicion" class="form-label">Requisición:</label>
-                    <input type="number" min="1" pattern="^[0-9]+" class="form-control" id="requisicion" name="requisicion" required>
+                    <input type="number" min="1" pattern="^[0-9]+" class="form-control" id="requisicion" name="requisicion">
                     <div class="valid-feedback">
                         Good!
                     </div>

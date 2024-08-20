@@ -54,7 +54,7 @@
 
                 <div class="col-md-3">
                     <label for="orden_compra_acc" class="form-label">Orden de Compra:</label>
-                    <input type="text" class="form-control" id="orden_compra_acc" name="orden_compra_acc" value="{{ $accesorio->orden_compra_acc }}" required>
+                    <input type="text" class="form-control" id="orden_compra_acc" name="orden_compra_acc" value="{{ $accesorio->orden_compra_acc }}">
                     <div class="valid-feedback">
                         Good!
                     </div>
@@ -62,7 +62,7 @@
 
                 <div class="col-md-3">
                     <label for="requisicion" class="form-label">Requisición:</label>
-                    <input type="text" class="form-control" id="requisicion" name="requisicion" value="{{ $accesorio->requisicion }}" required>
+                    <input type="text" class="form-control" id="requisicion" name="requisicion" value="{{ $accesorio->requisicion }}">
                     <div class="valid-feedback">
                         Good!
                     </div>

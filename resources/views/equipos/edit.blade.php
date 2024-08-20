@@ -55,6 +55,7 @@
                         <option value="LENOVO" {{ $equipo->marca == 'LENOVO' ? 'selected' : '' }}>LENOVO</option>
                         <option value="LG" {{ $equipo->marca == 'LG' ? 'selected' : '' }}>LG</option>
                         <option value="MITEL" {{ $equipo->marca == 'MITEL' ? 'selected' : '' }}>MITEL</option>
+                        <option value="Grandstream" {{ $equipo->marca == 'Grandstream' ? 'selected' : '' }}>Grandstream</option>
                         <option value="PANASONIC" {{ $equipo->marca == 'PANASONIC' ? 'selected' : '' }}>PANASONIC</option>
                         <option value="PIXEL" {{ $equipo->marca == 'PIXEL' ? 'selected' : '' }}>PIXEL</option>
                         <option value="RASPBERRY" {{ $equipo->marca == 'RASPBERRY' ? 'selected' : '' }}>RASPBERRY</option>
@@ -100,7 +101,7 @@
                         <option value="AIO-PCTOUCHPANEL" {{ $equipo->tipo == 'AIO-PCTOUCHPANEL' ? 'selected' : '' }}>AIO-PCTOUCHPANEL</option>
                         <option value="AP" {{ $equipo->tipo == 'AP' ? 'selected' : '' }}>AP</option>
                         <option value="COMPUTADORA" {{ $equipo->tipo == 'COMPUTADORA' ? 'selected' : '' }}>COMPUTADORA</option>
-                        <option value="CTELEFONOPU" {{ $equipo->tipo == 'CTELEFONOPU' ? 'selected' : '' }}>TELEFONO</option>
+                        <option value="TELEFONO" {{ $equipo->tipo == 'TELEFONO' ? 'selected' : '' }}>TELEFONO</option>
                         <option value="CUENTAMETROS" {{ $equipo->tipo == 'CUENTAMETROS' ? 'selected' : '' }}>CUENTAMETROS</option>
                         <option value="ESCANER" {{ $equipo->tipo == 'ESCANER' ? 'selected' : '' }}>ESCANER</option>
                         <option value="ESPECTRO" {{ $equipo->tipo == 'ESPECTRO' ? 'selected' : '' }}>ESPECTRO</option>
@@ -133,7 +134,7 @@
 
                 <div class="col-md-3">
                     <label for="orden_compra" class="form-label">Orden De Compra:</label>
-                    <input type="text" class="form-control" id="orden_compra" name="orden_compra" value="{{ $equipo->orden_compra }}" required>
+                    <input type="text" class="form-control" id="orden_compra" name="orden_compra" value="{{ $equipo->orden_compra }}" >
                     <div class="valid-feedback">
                         Good!
                     </div>
@@ -141,7 +142,7 @@
 
                 <div class="col-md-3">
                     <label for="requisicion" class="form-label">Requisicion:</label>
-                    <input type="text" class="form-control" id="requisicion" name="requisicion" value="{{ $equipo->requisicion }}" required>
+                    <input type="text" class="form-control" id="requisicion" name="requisicion" value="{{ $equipo->requisicion }}" >
                     <div class="valid-feedback">
                         Good!
                     </div>

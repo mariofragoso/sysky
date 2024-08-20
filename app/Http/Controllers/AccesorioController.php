@@ -41,8 +41,8 @@ class AccesorioController extends Controller
             'marca' => 'required|max:50',
             'modelo' => 'required|max:50',
             'cantidad' => 'required|integer|min:1',
-            'orden_compra_acc' => 'required|integer|min:1',
-            'requisicion' => 'required|integer|min:1',
+            'orden_compra_acc',
+            'requisicion',
             'cantidad_minima' => 'required|integer|min:1',
         ]);
 
@@ -77,8 +77,8 @@ class AccesorioController extends Controller
             'marca' => 'required|max:50',
             'modelo' => 'required|max:50',
             'cantidad' => 'required|integer',
-            'orden_compra_acc' => 'required|integer',
-            'requisicion' => 'required|integer',
+            'orden_compra_acc',
+            'requisicion',
             'cantidad_minima' => 'required|integer',
         ]);
 

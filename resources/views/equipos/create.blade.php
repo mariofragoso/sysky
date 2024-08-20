@@ -30,7 +30,7 @@
                 <div class="col-md-3">
                     <label for="marca" class="form-label">Marca:</label>
                     <select id="marca" name="marca" class="form-control" required>
-                        <option value="">Seleccione un empleado</option>
+                        <option value="">Selecciona una marca</option>
                         <option value="ACER"> ACER</option>
                         <option value="ADC"> ADC</option>
                         <option value="AOC"> AOC</option>
@@ -55,6 +55,7 @@
                         <option value="LENOVO"> LENOVO</option>
                         <option value="LG"> LG</option>
                         <option value="MITEL"> MITEL</option>
+                        <option value="Grandstream"> Grandstream</option>
                         <option value="PANASONIC">PANASONIC</option>
                         <option value="PIXEL">PIXEL</option>
                         <option value="RASPBERRY"> RASPBERRY</option>
@@ -100,7 +101,7 @@
                         <option value="AIO-PCTOUCHPANEL"> AIO-PCTOUCHPANEL</option>
                         <option value="AP"> AP</option>
                         <option value="COMPUTADORA"> COMPUTADORA</option>
-                        <option value="CTELEFONOPU"> TELEFONO</option>
+                        <option value="TELEFONO"> TELEFONO</option>
                         <option value="CUENTAMETROS"> CUENTAMETROS</option>
                         <option value="ESCANER"> ESCANER</option>
                         <option value="ESPECTRO"> ESPECTRO</option>
