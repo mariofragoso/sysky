@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Acciones;
 use App\Models\Equipo;
+use App\Models\Marca;
+use App\Models\TipoEquipo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,16 +20,21 @@ class EquipoController extends Controller
         $sortField = $request->input('sort', 'created_at');
         $sortOrder = $request->input('order', 'desc');
 
-        $equipos = Equipo::when($search, function ($query, $search) {
-            return $query->where('numero_serie', 'like', "%{$search}%")
-                ->orWhere('marca', 'like', "%{$search}%")
-                ->orWhere('modelo', 'like', "%{$search}%")
-                ->orWhere('etiqueta_skytex', 'like', "%{$search}%")
-                ->orWhere('tipo', 'like', "%{$search}%")
-                ->orWhere('orden_compra', 'like', "%{$search}%")
-                ->orWhere('requisicion', 'like', "%{$search}%")
-                ->orWhere('estado', 'like', "%{$search}%");
-        })->orderBy($sortField, $sortOrder)->paginate(10);
+        $equipos = Equipo::with(['marca', 'tipoEquipo'])
+            ->when($search, function ($query, $search) {
+                return $query->where('numero_serie', 'like', "%{$search}%")
+                    ->orWhereHas('marca', function ($q) use ($search) {
+                        $q->where('nombre', 'like', "%{$search}%");
+                    })
+                    ->orWhere('modelo', 'like', "%{$search}%")
+                    ->orWhere('etiqueta_skytex', 'like', "%{$search}%")
+                    ->orWhereHas('tipoEquipo', function ($q) use ($search) {
+                        $q->where('nombre', 'like', "%{$search}%");
+                    })
+                    ->orWhere('orden_compra', 'like', "%{$search}%")
+                    ->orWhere('requisicion', 'like', "%{$search}%")
+                    ->orWhere('estado', 'like', "%{$search}%");
+            })->orderBy($sortField, $sortOrder)->paginate(10);
 
         return view('equipos.index', compact('equipos', 'search', 'sortField', 'sortOrder'));
     }
@@ -35,45 +42,36 @@ class EquipoController extends Controller
 
     public function create()
     {
-        return view('equipos.create');
+        $marcas = Marca::all();
+        $tipoequipos = TipoEquipo::all();
+        return view('equipos.create', compact('marcas', 'tipoequipos'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'numero_serie' => 'required|unique:equipos',
-            'marca' => 'required',
+            'marca_id' => 'required|exists:marcas,id',
             'modelo' => 'required',
             'etiqueta_skytex' => 'required|unique:equipos,etiqueta_skytex',
-            'tipo' => 'required',
-            'orden_compra' => 'integer|min:1',
-            'requisicion' => 'integer|min:1',
+            'tipo_equipo_id' => 'required|exists:tipos_equipos,id',  // Cambio aquí
+            'orden_compra' => 'nullable',
+            'requisicion' => 'nullable',
             'estado' => 'required',
         ], [
-            'numero_serie.unique' => 'El Numero de serie ya esta registrado.',
+            'numero_serie.unique' => 'El Numero de serie ya está registrado.',
             'etiqueta_skytex.unique' => 'La etiqueta Skytex ya está registrada.',
         ]);
-
-        $exists = Equipo::where('numero_serie', $request->numero_serie)
-            ->orWhere('etiqueta_skytex', $request->etiqueta_skytex)
-            ->exists();
-
-        if ($exists) {
-            return redirect()->back()
-                ->withErrors(['unique' => 'El Numero de serie o la etiqueta Skytex ya está registrada.'])
-                ->withInput();
-        }
 
         $equipo = Equipo::create($request->all());
 
         // Registrar la acción
         $accion = new Acciones();
         $accion->modulo = "Equipo";
-        $accion->descripcion = "Se Creo el equipo: " . $equipo->etiqueta_skytex;
+        $accion->descripcion = "Se creó el equipo: " . $equipo->etiqueta_skytex;
         $accion->usuario_responsable_id = Auth::user()->id;
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();
-
 
         return redirect()->route('equipos.index')
             ->with('success', 'Equipo creado correctamente.');
@@ -86,25 +84,28 @@ class EquipoController extends Controller
 
     public function edit($id)
     {
+        $marcas = Marca::all();
+        $tipoequipos = TipoEquipo::all();
         $equipo = Equipo::findOrFail($id);
-        return view('equipos.edit', compact('equipo'));
+        return view('equipos.edit', compact('equipo', 'marcas', 'tipoequipos'));
     }
+
+
     public function update(Request $request, Equipo $equipo)
     {
         $request->validate([
             'numero_serie' => 'required|unique:equipos,numero_serie,' . $equipo->id,
-            'marca' => 'required',
+            'marca_id' => 'required|exists:marcas,id',
             'modelo' => 'required',
             'etiqueta_skytex' => 'required|unique:equipos,etiqueta_skytex,' . $equipo->id,
-            'tipo' => 'required',
-            'orden_compra',
-            'requisicion',
+            'tipo_equipo_id' => 'required|exists:tipos_equipos,id',  // Cambio aquí
+            'orden_compra' => 'nullable',
+            'requisicion' => 'nullable',
             'estado' => 'required',
         ], [
-            'numero_serie.unique' => 'El Numero de serie ya esta registrado.',
+            'numero_serie.unique' => 'El Numero de serie ya está registrado.',
             'etiqueta_skytex.unique' => 'La etiqueta Skytex ya está registrada.',
         ]);
-
 
         $equipo->update($request->all());
 
@@ -119,6 +120,7 @@ class EquipoController extends Controller
         return redirect()->route('equipos.index')
             ->with('success', 'Equipo actualizado correctamente.');
     }
+
 
     public function destroy(Equipo $equipo)
     {

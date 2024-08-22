@@ -27,7 +27,8 @@
                                 <select id="empleado_id" class="form-control" required>
                                     <option value="">Seleccione un empleado</option>
                                     @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado->id }}">{{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM }}</option>
+                                        <option value="{{ $empleado->id }}">{{ $empleado->nombre }}
+                                            {{ $empleado->apellidoP }} {{ $empleado->apellidoM }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -37,7 +38,8 @@
                                 <select id="equipo_id" class="form-control" required>
                                     <option value="">Seleccione un equipo</option>
                                     @foreach ($equipos as $equipo)
-                                        <option value="{{ $equipo->id }}"> {{ $equipo->etiqueta_skytex }} - {{ $equipo->tipo }} </option>
+                                        <option value="{{ $equipo->id }}"> {{ $equipo->etiqueta_skytex }} -
+                                            {{ $equipo->tipo }} </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -49,7 +51,8 @@
 
                             <div class="col-md-3">
                                 <label for="ticket" class="form-label">Ticket:</label>
-                                <input type="number" id="ticket" class="form-control" min="1" pattern="^[0-9]+-" onpaste="return false;" onDrop="return false;" autocomplete=off required>
+                                <input type="number" id="ticket" class="form-control" min="1" pattern="^[0-9]+-"
+                                    onpaste="return false;" onDrop="return false;" autocomplete=off required>
                             </div>
 
                             <div class="col-md-3">
@@ -60,6 +63,7 @@
                             <div class="col-md-3">
                                 <label for="empresa_id" class="form-label">Empresa:</label>
                                 <select id="empresa_id" class="form-control" required>
+                                    <option value="">Seleccione una empresa</option>
                                     @foreach ($empresas as $empresa)
                                         <option value="{{ $empresa->id }}">{{ $empresa->nombre }}</option>
                                     @endforeach
@@ -137,14 +141,17 @@
             }
 
             const empleadoId = document.getElementById('empleado_id').value;
-            const empleadoText = document.getElementById('empleado_id').options[document.getElementById('empleado_id').selectedIndex].text;
+            const empleadoText = document.getElementById('empleado_id').options[document.getElementById('empleado_id')
+                .selectedIndex].text;
             const equipoId = document.getElementById('equipo_id').value;
-            const equipoText = document.getElementById('equipo_id').options[document.getElementById('equipo_id').selectedIndex].text;
+            const equipoText = document.getElementById('equipo_id').options[document.getElementById('equipo_id')
+                .selectedIndex].text;
             const fechaAsignacion = document.getElementById('fecha_asignacion').value;
             const ticket = document.getElementById('ticket').value;
             const notaDescriptiva = document.getElementById('nota_descriptiva').value;
             const empresaId = document.getElementById('empresa_id').value;
-            const empresaText = document.getElementById('empresa_id').options[document.getElementById('empresa_id').selectedIndex].text;
+            const empresaText = document.getElementById('empresa_id').options[document.getElementById('empresa_id')
+                .selectedIndex].text;
             const estado = document.getElementById('estado').value;
 
             const asignacion = {
@@ -188,7 +195,7 @@
             }
         }
 
-        document.getElementById('final-asignaciones-form').addEventListener('submit', function (event) {
+        document.getElementById('final-asignaciones-form').addEventListener('submit', function(event) {
             if (asignaciones.length === 0) {
                 event.preventDefault();
                 alert('Debe agregar al menos una asignación antes de crear.');
@@ -196,7 +203,5 @@
             }
             document.getElementById('asignaciones-input').value = JSON.stringify(asignaciones);
         });
-        
     </script>
 @endsection
-

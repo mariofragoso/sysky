@@ -11,10 +11,10 @@ class Equipo extends Model
 
     protected $fillable = [
         'numero_serie',
-        'marca',
+        'marca_id',        
         'modelo',
         'etiqueta_skytex',
-        'tipo',
+        'tipo_equipo_id',   
         'orden_compra',
         'requisicion',
         'estado',
@@ -25,5 +25,14 @@ class Equipo extends Model
     {
         return $this->belongsTo(Empleado::class);
     }
-}
 
+    public function marca()
+    {
+        return $this->belongsTo(Marca::class, 'marca_id');
+    }
+
+    public function tipoEquipo()
+    {
+        return $this->belongsTo(TipoEquipo::class, 'tipo_equipo_id');
+    }
+}

@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <th>Marca</th>
-                <td>{{ $accesorio->marca }}</td>
+                <td>{{ $accesorio->marcaAccesorio->nombre ?? 'Sin Marca' }}</td>
             </tr>
             <tr>
                 <th>Modelo</th>

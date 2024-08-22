@@ -11,7 +11,7 @@ class Accesorio extends Model
 
     protected $fillable = [
         'descripcion',
-        'marca',
+        'marca_id',
         'modelo',
         'cantidad',
         'orden_compra_acc',
@@ -22,5 +22,10 @@ class Accesorio extends Model
     public function empleado()
     {
         return $this->belongsTo(Empleado::class);
+    }
+
+    public function marcaAccesorio()
+    {
+        return $this->belongsTo(MarcaAccesorio::class, 'marca_id');
     }
 }

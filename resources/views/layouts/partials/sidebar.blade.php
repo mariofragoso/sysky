@@ -107,7 +107,10 @@
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ route('acciones.index') }}">Acciones</a>
-                    <a class="collapse-item" href="{{ route('empresas.index') }}">Empresas</a>
+                    <a class="collapse-item" href="{{ route('empresas.index') }}">Nueva Empresas</a>
+                    <a class="collapse-item" href="{{ route('tiposequipos.index') }}">Nuevo Tipo de Equipo</a>
+                    <a class="collapse-item" href="{{ route('marcas.index') }}">Nueva marca de Equipo</a>
+                    <a class="collapse-item" href="{{ route('marcasaccesorios.index') }}">Nueva marca de Accesorio</a>
                 </div>
             </div>
         </li>

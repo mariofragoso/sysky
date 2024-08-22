@@ -24,15 +24,15 @@
                         <tr>
                             <td>{{ $equipo->id }}</td>
                             <td>{{ $equipo->numero_serie }}</td>
-                            <td>{{ $equipo->marca }}</td>
+                            <td>{{ optional($equipo->marca)->nombre ?? '' }}</td>
                             <td>{{ $equipo->modelo }}</td>
                             <td>{{ $equipo->etiqueta_skytex }}</td>
-                            <td>{{ $equipo->tipo }}</td>
+                            <td>{{ optional($equipo->tipoEquipo)->nombre ?? '' }}</td>
                             <td>{{ $equipo->estado }}</td>
                             <td>
                                 <a href="{{ route('equipos.show', $equipo->id) }}" class="btn btn-info">Ver</a>
                                 <a href="{{ route('equipos.edit', $equipo->id) }}" class="btn btn-warning">Editar</a>
-                                <form action="{{ route('equipos.destroy', $equipo->id) }}" method="POST" style="display:inline-block;">
+                                <form hidden action="{{ route('equipos.destroy', $equipo->id) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de que desea eliminar este equipo?')">Eliminar</button>

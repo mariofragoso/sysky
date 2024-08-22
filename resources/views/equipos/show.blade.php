@@ -11,9 +11,10 @@
                 <th>Número de Serie</th>
                 <td>{{ $equipo->numero_serie }}</td>
             </tr>
+
             <tr>
-                <th>Marca</th>
-                <td>{{ $equipo->marca }}</td>
+                <th> Marca </th>
+                <td>{{ $equipo->marca->nombre }}</td>
             </tr>
             <tr>
                 <th>Modelo</th>
@@ -25,7 +26,7 @@
             </tr>
             <tr>
                 <th>Tipo</th>
-                <td>{{ $equipo->tipo }}</td>
+                <td>{{ $equipo->tipoEquipo->nombre }}</td>
             </tr>
             <tr>
                 <th>Orden de Compra</th>

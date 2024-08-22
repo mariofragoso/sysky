@@ -292,18 +292,19 @@
             }, 0);
         });
     });
+
+
     $(document).ready(function() {
-        $('#tipo').select2({
+        $('#tipo_equipo_id').select2({
             theme: "bootstrap-5",
             placeholder: 'Seleccione un tipo de equipo',
-            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
-                'style',
+            width: '100%',
             allowClear: true
         }).on('select2:open', function() {
             // Auto-focus on the search field
             setTimeout(function() {
                 document.querySelector(".select2-container--open .select2-search__field")
-                .focus()
+                    .focus();
             }, 0);
         });
     });

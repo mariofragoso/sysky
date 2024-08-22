@@ -28,17 +28,19 @@
                 </div>
 
                 <div class="col-md-3">
-                    <label for="marca" class="form-label">Marca:</label>
-                    <select id="marca" name="marca" class="form-control" required>
+                    <label for="marca_id" class="form-label">Marca:</label>
+                    <select id="marca_id" name="marca_id" class="form-control" required>
                         <option value="">Seleccione una Marca</option>
-                        <option value="Dell"> Dell</option>
-                        <option value="HP"> HP</option>
+                        @foreach ($marcasAccesorios as $marcaAccesorio)
+                            <option value="{{ $marcaAccesorio->id }}">{{ $marcaAccesorio->nombre }}</option>
+                        @endforeach
                     </select>
                     <div class="valid-feedback">
                         Good!
                     </div>
                 </div>
-
+                
+                
                 <div class="col-md-3">
                     <label for="modelo" class="form-label">Modelo:</label>
                     <input type="text" class="form-control" id="modelo" name="modelo" required>
