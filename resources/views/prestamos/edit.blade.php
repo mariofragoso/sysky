@@ -22,7 +22,7 @@
                     <label for="empleado_id">Empleado:</label>
                     <select id="empleado_id" name="empleado_id" class="form-control" required>
                         @foreach ($empleados as $empleado)
-                            <option value="{{ $empleado->id }}" {{ $prestamo->empleado_id == $empleado->id ? 'selected' : '' }}>{{ $empleado->nombre }}</option>
+                            <option value="{{ $empleado->id }}" {{ $prestamo->empleado_id == $empleado->id ? 'selected' : '' }}>{{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -31,7 +31,7 @@
                     <label for="equipo_id">Equipo:</label>
                     <select id="equipo_id" name="equipo_id" class="form-control" required>
                         @foreach ($equipos as $equipo)
-                            <option value="{{ $equipo->id }}" {{ $prestamo->equipo_id == $equipo->id ? 'selected' : '' }}>{{ $equipo->etiqueta_skytex }} - {{ $equipo->tipo }}</option>
+                            <option value="{{ $equipo->id }}" {{ $prestamo->equipo_id == $equipo->id ? 'selected' : '' }}>{{ $equipo->etiqueta_skytex }} - {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo'  }}</option>
                         @endforeach
                     </select>
                 </div>

@@ -16,7 +16,7 @@
                 </tr>
                 <tr>
                     <th>Equipo:</th>
-                    <td>{{ $prestamo->equipo->tipo ?? 'N/A' }} marca {{ $prestamo->equipo->marca ?? 'N/A' }} Con etiqueta {{ $prestamo->equipo->etiqueta_skytex ?? 'N/A' }}</td>
+                    <td>{{ $prestamo->equipo->tipoEquipo->nombre ?? 'Sin Tipo' }} marca {{ $prestamo->equipo->marca->nombre ?? 'Sin Marca' }} Con etiqueta {{ $prestamo->equipo->etiqueta_skytex ?? 'N/A' }}</td>
                 </tr>
                 <tr>
                     <th>Fecha de Préstamo:</th>

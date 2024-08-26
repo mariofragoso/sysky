@@ -15,7 +15,7 @@ class PrestamoController extends Controller
 {
     public function index()
     {
-        $prestamos = Prestamo::with(['equipo', 'empleado', 'usuario'])->paginate(10);
+        $prestamos = Prestamo::with(['equipo.tipoEquipo', 'equipo.marca', 'empleado', 'usuario'])->paginate(10);
         return view('prestamos.index', compact('prestamos'));
     }
 
@@ -58,7 +58,7 @@ class PrestamoController extends Controller
 
     public function show($id)
     {
-        $prestamo = Prestamo::with(['empleado', 'equipo', 'usuario'])->findOrFail($id);
+        $prestamo = Prestamo::with(['empleado', 'equipo.tipoEquipo','equipo.marca', 'usuario'])->findOrFail($id);
         return view('prestamos.show', compact('prestamo'));
     }
 

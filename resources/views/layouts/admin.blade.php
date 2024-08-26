@@ -220,6 +220,8 @@
 
 
 <script>
+    var $ = jQuery;
+
     $(document).ready(function() {
         $('#empleado_id').select2({
             theme: "bootstrap-5",
@@ -235,6 +237,24 @@
             }, 0);
         });
     });
+
+    $(document).ready(function() {
+        $('#empresa_id').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Seleccione un empleado',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
+                'style',
+            allowClear: true
+        }).on('select2:open', function() {
+            // Auto-focus on the search field
+            setTimeout(function() {
+                document.querySelector(".select2-container--open .select2-search__field")
+                    .focus()
+            }, 0);
+        });
+    });
+
+    
 
     $(document).ready(function() {
         $('#marca_id').select2({
@@ -269,8 +289,6 @@
     });
 
 
-    marca_id
-
     $(document).ready(function() {
         $('#equipo_id').select2({
             theme: "bootstrap-5",
@@ -303,14 +321,16 @@
         });
     });
 
+   /*Datapiker para fechas
     $('#datepicker').datepicker({
         uiLibrary: 'bootstrap5',
         iconsLibrary: 'fontawesome'
     });
+    
     $('#fecha_asignacion').datepicker({
         uiLibrary: 'bootstrap5',
         iconsLibrary: 'fontawesome'
-    });
+    });*/
 
     $(document).ready(function() {
         $('#marca').select2({
@@ -329,23 +349,11 @@
     });
 
 
-    $(document).ready(function() {
-        $('#tipo_equipo_id').select2({
-            theme: "bootstrap-5",
-            placeholder: 'Seleccione un tipo de equipo',
-            width: '100%',
-            allowClear: true
-        }).on('select2:open', function() {
-            // Auto-focus on the search field
-            setTimeout(function() {
-                document.querySelector(".select2-container--open .select2-search__field")
-                    .focus();
-            }, 0);
-        });
-    });
 </script>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    //Para poner la fecha en automatico en asignacion de equipos 
+    /*document.addEventListener('DOMContentLoaded', function() {
         var today = new Date();
         var day = ("0" + today.getDate()).slice(-2); // Agrega un cero delante si es necesario
         var month = ("0" + (today.getMonth() + 1)).slice(-2); // Los meses empiezan desde 0
@@ -362,7 +370,8 @@
 
         var formattedDate = year + "-" + month + "-" + day;
         document.getElementById('fecha_asignacion').value = formattedDate;
-    });
+    });*/
+    
 </script>
 <style>
     .badge-asignado {
