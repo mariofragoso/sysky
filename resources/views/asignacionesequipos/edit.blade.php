@@ -60,7 +60,7 @@
                 <div class="col-md-3">
                     <label for="ticket" class="form-label">Ticket:</label>
                     <input type="number" id="ticket" name="ticket" class="form-control"
-                        value="{{ $asignacion->ticket }}" required>
+                        value="{{ $asignacion->ticket }}">
                     <div class="valid-feedback">
                         Good!
                     </div>

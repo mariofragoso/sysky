@@ -18,7 +18,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                    <form id="asignaciones-form">
+                    <form id="asignaciones-form" method="POST">
                         @csrf
 
                         <div class="row">
@@ -52,7 +52,7 @@
                             <div class="col-md-3">
                                 <label for="ticket" class="form-label">Ticket:</label>
                                 <input type="number" id="ticket" class="form-control" min="1" pattern="^[0-9]+-"
-                                    onpaste="return false;" onDrop="return false;" autocomplete=off required>
+                                    onpaste="return false;" onDrop="return false;" autocomplete=off >
                             </div>
 
                             <div class="col-md-3">

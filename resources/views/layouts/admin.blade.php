@@ -237,6 +237,41 @@
     });
 
     $(document).ready(function() {
+        $('#marca_id').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Seleccione una Marca',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
+                'style',
+            allowClear: true
+        }).on('select2:open', function() {
+            // Auto-focus on the search field
+            setTimeout(function() {
+                document.querySelector(".select2-container--open .select2-search__field")
+                    .focus()
+            }, 0);
+        });
+    });
+
+    $(document).ready(function() {
+        $('#tipo_equipo_id').select2({
+            theme: "bootstrap-5",
+            placeholder: 'Seleccione un Tipo de Equipo  ',
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
+                'style',
+            allowClear: true
+        }).on('select2:open', function() {
+            // Auto-focus on the search field
+            setTimeout(function() {
+                document.querySelector(".select2-container--open .select2-search__field")
+                    .focus()
+            }, 0);
+        });
+    });
+
+
+    marca_id
+
+    $(document).ready(function() {
         $('#equipo_id').select2({
             theme: "bootstrap-5",
             placeholder: 'Seleccione un equipo',

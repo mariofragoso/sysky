@@ -70,7 +70,7 @@ class AsignacionEquipoController extends Controller
             'empleado_id' => 'required|exists:empleados,id',
             'equipo_id' => 'required|exists:equipos,id',
             'fecha_asignacion' => 'required|date',
-            'ticket' => 'required|integer',
+            'ticket' => 'nullable|integer',
             'nota_descriptiva' => 'nullable|string|max:100',
             'empresa_id' => 'required|exists:empresas,id',
             'estado' => 'required|string|max:50',

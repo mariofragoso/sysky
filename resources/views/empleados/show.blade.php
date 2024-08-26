@@ -71,9 +71,9 @@
                             <tr>
                                 <td>{{ $asignacion->equipo->id }}</td>
                                 <td>{{ $asignacion->equipo->numero_serie }}</td>
-                                <td>{{ $asignacion->equipo->marca }}</td>
+                                <td>{{ $asignacion->equipo->marca->nombre ?? 'Sin Marca' }}</td>
                                 <td>{{ $asignacion->equipo->modelo }}</td>
-                                <td>{{ $asignacion->equipo->tipo }}</td>
+                                <td>{{ $asignacion->equipo->tipoEquipo->nombre ?? 'Sin Tipo' }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -100,7 +100,7 @@
                             <tr>
                                 <td>{{ $asignacion->accesorio->id }}</td>
                                 <td>{{ $asignacion->accesorio->descripcion }}</td>
-                                <td>{{ $asignacion->accesorio->marca }}</td>
+                                <td>{{ $asignacion->accesorio->marcaAccesorio->nombre ?? 'Sin Marca' }}</td>
                                 <td>{{ $asignacion->accesorio->modelo }}</td>
                                 <td>{{ $asignacion->cantidad_asignada }}</td>
                             </tr>

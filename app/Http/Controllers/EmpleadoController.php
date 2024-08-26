@@ -48,7 +48,8 @@ class EmpleadoController extends Controller
 
     public function show($id)
     {
-        $empleado = Empleado::with(['asignacionesequipos.equipo', 'asignacionesaccesorios.accesorio', 'prestamos.equipo'])->findOrFail($id);
+        $empleado = Empleado::with(['asignacionesequipos.equipo.marca', 'asignacionesequipos.equipo.tipoEquipo', 'asignacionesaccesorios.accesorio.marcaAccesorio', 'prestamos.equipo'])->find($id);
+
         return view('empleados.show', compact('empleado'));
     }
 
