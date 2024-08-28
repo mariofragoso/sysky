@@ -14,7 +14,7 @@
 
             <tr>
                 <th> Marca </th>
-                <td>{{ $equipo->marca->nombre }}</td>
+                <td>{{ $equipo->marca->nombre ?? 'Sin Marca' }}</td>
             </tr>
             <tr>
                 <th>Modelo</th>
@@ -26,7 +26,8 @@
             </tr>
             <tr>
                 <th>Tipo</th>
-                <td>{{ $equipo->tipoEquipo->nombre }}</td>
+                <td> {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo' }}</td>
+                
             </tr>
             <tr>
                 <th>Orden de Compra</th>

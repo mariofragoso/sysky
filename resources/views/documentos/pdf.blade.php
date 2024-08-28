@@ -100,10 +100,10 @@
             </tr>
             <tr>
                 <td>1</td>
-                <td>{{ $asignacion->equipo->tipo }}</td>
+                <td>{{ $asignacion->equipo->tipoEquipo->nombre ?? 'Sin Tipo'  }}</td>
                 <td>1</td>
                 <td>
-                    Marca: {{ $asignacion->equipo->marca }}<br>
+                    Marca: {{ $asignacion->equipo->marca->nombre ?? 'Sin Marca' }}<br>
                     Modelo: {{ $asignacion->equipo->modelo }}<br>
                     Número de serie: {{ $asignacion->equipo->numero_serie }}<br>
                     Etiqueta Skytex: {{ $asignacion->equipo->etiqueta_skytex }}

@@ -39,7 +39,7 @@
                                     <option value="">Seleccione un equipo</option>
                                     @foreach ($equipos as $equipo)
                                         <option value="{{ $equipo->id }}"> {{ $equipo->etiqueta_skytex }} -
-                                            {{ $equipo->tipo }} </option>
+                                            {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo' }} </option>
                                     @endforeach
                                 </select>
                             </div>

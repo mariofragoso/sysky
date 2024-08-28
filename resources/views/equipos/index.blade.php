@@ -53,7 +53,7 @@
                                 <td>{{ $equipo->orden_compra }}</td>
                                 <td>{{ $equipo->requisicion }}</td>
                                 <td>
-                                    
+
                                     <span
                                         class="badge rounded-pill 
                 @if ($equipo->estado == 'No Asignado') badge-secondary
@@ -67,6 +67,7 @@
                                     <a href="{{ route('equipos.show', $equipo->id) }}" class="btn btn-info btn-sm">Ver</a>
                                     <a href="{{ route('equipos.edit', $equipo->id) }}"
                                         class="btn btn-warning btn-sm">Editar</a>
+
                                     <form hidden action="{{ route('equipos.destroy', $equipo->id) }}" method="POST"
                                         style="display:inline">
                                         @csrf

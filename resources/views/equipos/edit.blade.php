@@ -110,6 +110,9 @@
                     </div>
                 </div>
 
+                <input type="hidden" name="page" value="{{ request()->get('page', 1) }}">
+
+
                 <div class="col-12 mt-4">
                     <button type="submit" class="btn btn-primary">Actualizar</button>
                 </div>

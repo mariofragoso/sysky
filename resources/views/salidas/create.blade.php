@@ -15,7 +15,7 @@
                         <option value="">Seleccione un equipo</option>
                         @foreach ($equipos as $equipo)
                             <option value="{{ $equipo->id }}" {{ old('equipo_id') == $equipo->id ? 'selected' : '' }}>
-                                {{ $equipo->etiqueta_skytex }} - {{ $equipo->tipo }}
+                                {{ $equipo->etiqueta_skytex }} -  {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo' }}
                             </option>
                         @endforeach
                     </select>

@@ -47,7 +47,7 @@
             background-color: #f2f2f2;
         }
         .footer {
-            font-size: 10px;
+            font-size: 8px;
             text-align: justify;
         }
         .signatures {
@@ -106,7 +106,7 @@
             <tr>
                 <td>1</td>
                 <td>1</td>
-                <td>{{ $salida->equipo->tipo }} {{ $salida->equipo->marca }} {{ $salida->equipo->modelo }} Etq: {{ $salida->equipo->etiqueta_skytex }}</td>
+                <td>{{ $salida->equipo->tipoEquipo->nombre ?? 'Sin Tipo'  }} {{ $salida->equipo->marca->nombre ?? 'Sin Marca' }} {{ $salida->equipo->modelo }} Etq: {{ $salida->equipo->etiqueta_skytex }}</td>
                 <td>{{ $salida->equipo->numero_serie }}</td>
             </tr>
         </table>

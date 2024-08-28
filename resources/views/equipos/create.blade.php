@@ -29,7 +29,7 @@
 
                 <div class="col-md-3">
                     <label for="marca_id" class="form-label">Marca:</label>
-                    <select id="marca_id" class="form-control" required>
+                    <select id="marca_id" name="marca_id" class="form-control" required>
                         <option value="">Seleccione una Marca</option>
                         @foreach ($marcas as $marca)
                             <option value="{{ $marca->id }}">{{ $marca->nombre }}</option>
@@ -60,7 +60,7 @@
 
                 <div class="col-md-3">
                     <label for="tipo_equipo_id" class="form-label">Tipo:</label>
-                    <select id="tipo_equipo_id" class="form-control" required>
+                    <select id="tipo_equipo_id" name="tipo_equipo_id" class="form-control" required>
                         <option value="">Seleccione un Tipo de Equipo</option>
                         @foreach ($tipoequipos as $tipoequipo)
                             <option value="{{ $tipoequipo->id }}"> {{ $tipoequipo->nombre }} </option>
@@ -70,7 +70,7 @@
 
                 <div class="col-md-3">
                     <label for="orden_compra" class="form-label">Orden De Compra:</label>
-                    <input type="text" class="form-control" id="orden_compra" name="orden_compra" required>
+                    <input type="text" class="form-control" id="orden_compra" name="orden_compra" >
                     <div class="valid-feedback">
                         Good!
                     </div>
@@ -78,7 +78,7 @@
 
                 <div class="col-md-3">
                     <label for="requisicion" class="form-label">Requisición:</label>
-                    <input type="text" class="form-control" id="requisicion" name="requisicion" required>
+                    <input type="text" class="form-control" id="requisicion" name="requisicion" >
                     <div class="valid-feedback">
                         Good!
                     </div>

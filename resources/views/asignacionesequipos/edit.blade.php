@@ -39,7 +39,7 @@
                     <select id="equipo_id" name="equipo_id" class="form-control" required>
                         @foreach ($equipos as $equipo)
                             <option value="{{ $equipo->id }}"
-                                {{ $asignacion->equipo_id == $equipo->id ? 'selected' : '' }}>{{ $equipo->etiqueta_skytex }} - {{ $equipo->tipo }}
+                                {{ $asignacion->equipo_id == $equipo->id ? 'selected' : '' }}>{{ $equipo->etiqueta_skytex }} -  {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo' }}
                             </option>
                         @endforeach
                     </select>

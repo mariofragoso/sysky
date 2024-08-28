@@ -20,6 +20,9 @@ class EquipoController extends Controller
         $sortField = $request->input('sort', 'created_at');
         $sortOrder = $request->input('order', 'desc');
 
+        // Guardar la página actual en la sesión
+        $request->session()->put('equipo_page', $request->input('page', 1));
+
         $equipos = Equipo::with(['marca', 'tipoEquipo'])
             ->when($search, function ($query, $search) {
                 return $query->where('numero_serie', 'like', "%{$search}%")
@@ -34,7 +37,7 @@ class EquipoController extends Controller
                     ->orWhere('orden_compra', 'like', "%{$search}%")
                     ->orWhere('requisicion', 'like', "%{$search}%")
                     ->orWhere('estado', 'like', "%{$search}%");
-            })->orderBy($sortField, $sortOrder)->paginate(10);
+            })->orderBy($sortField, $sortOrder)->paginate(50);
 
         return view('equipos.index', compact('equipos', 'search', 'sortField', 'sortOrder'));
     }
@@ -93,12 +96,13 @@ class EquipoController extends Controller
 
     public function update(Request $request, Equipo $equipo)
     {
+        // Validación y actualización del equipo
         $request->validate([
             'numero_serie' => 'required|unique:equipos,numero_serie,' . $equipo->id,
             'marca_id' => 'required|exists:marcas,id',
             'modelo' => 'required',
             'etiqueta_skytex' => 'required|unique:equipos,etiqueta_skytex,' . $equipo->id,
-            'tipo_equipo_id' => 'required|exists:tipos_equipos,id',  // Cambio aquí
+            'tipo_equipo_id' => 'required|exists:tipos_equipos,id',
             'orden_compra' => 'nullable',
             'requisicion' => 'nullable',
             'estado' => 'required',
@@ -117,9 +121,14 @@ class EquipoController extends Controller
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();
 
-        return redirect()->route('equipos.index')
+        // Obtener la página actual desde la sesión
+        $page = session('equipo_page', 1);
+
+        // Redirigir a la página actual
+        return redirect()->route('equipos.index', ['page' => $page])
             ->with('success', 'Equipo actualizado correctamente.');
     }
+
 
 
     public function destroy(Equipo $equipo)

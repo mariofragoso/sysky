@@ -158,7 +158,7 @@ class AsignacionEquipoController extends Controller
 
     public function generatePdf($id)
     {
-        $asignacion = AsignacionEquipo::with(['empleado', 'equipo', 'usuario', 'empresa'])->findOrFail($id);
+        $asignacion = AsignacionEquipo::with(['empleado', 'equipo.marca', 'usuario', 'empresa'])->findOrFail($id);
 
         $pdf = FacadePdf::loadView('documentos.pdf', compact('asignacion'));
         return $pdf->download('asignacion_' . $asignacion->id . '.pdf');
