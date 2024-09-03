@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class UserController extends Controller
 {
     public function showProfile()
@@ -26,8 +27,12 @@ class UserController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         // Guardar otros campos si es necesario
-        $user->save();
-
+        try {
+            $user->save();
+            return redirect()->route('perfil')->with('success', 'Perfil actualizado correctamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('perfil')->with('error', 'Hubo un problema al actualizar el perfil: ' . $e->getMessage());
+        }
         return redirect()->route('perfil')->with('success', 'Perfil actualizado correctamente.');
     }
 }
