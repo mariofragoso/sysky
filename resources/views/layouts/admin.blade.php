@@ -75,6 +75,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('perfil') }}">
+                                        {{ __('Perfil') }}
+                                    </a>
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                         {{ __('Cerrar Sesion') }}
                                     </a>
@@ -84,6 +87,7 @@
                                     </form>
                                 </div>
                             </li>
+
                         @endguest
 
                     </ul>
@@ -241,7 +245,7 @@
     $(document).ready(function() {
         $('#empresa_id').select2({
             theme: "bootstrap-5",
-            placeholder: 'Seleccione un empleado',
+            placeholder: 'Seleccione una empresa',
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
                 'style',
             allowClear: true
@@ -254,7 +258,7 @@
         });
     });
 
-    
+
 
     $(document).ready(function() {
         $('#marca_id').select2({
@@ -321,16 +325,16 @@
         });
     });
 
-   /*Datapiker para fechas
-    $('#datepicker').datepicker({
-        uiLibrary: 'bootstrap5',
-        iconsLibrary: 'fontawesome'
-    });
-    
-    $('#fecha_asignacion').datepicker({
-        uiLibrary: 'bootstrap5',
-        iconsLibrary: 'fontawesome'
-    });*/
+    /*Datapiker para fechas
+     $('#datepicker').datepicker({
+         uiLibrary: 'bootstrap5',
+         iconsLibrary: 'fontawesome'
+     });
+     
+     $('#fecha_asignacion').datepicker({
+         uiLibrary: 'bootstrap5',
+         iconsLibrary: 'fontawesome'
+     });*/
 
     $(document).ready(function() {
         $('#marca').select2({
@@ -347,8 +351,6 @@
             }, 0);
         });
     });
-
-
 </script>
 
 <script>
@@ -371,7 +373,6 @@
         var formattedDate = year + "-" + month + "-" + day;
         document.getElementById('fecha_asignacion').value = formattedDate;
     });*/
-    
 </script>
 <style>
     .badge-asignado {

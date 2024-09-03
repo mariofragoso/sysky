@@ -12,36 +12,45 @@ use Illuminate\Support\Facades\Auth;
 
 class EquipoController extends Controller
 {
-    // Mostrar una lista de empleados
-    // En EquipoController.php
+    // App\Http\Controllers\EquipoController.php
+
     public function index(Request $request)
     {
-        $search = $request->input('search');
-        $sortField = $request->input('sort', 'created_at');
-        $sortOrder = $request->input('order', 'desc');
+        $sortField = $request->get('sort', 'created_at');
+        $sortOrder = $request->get('order', 'desc');
+        $search = $request->get('search'); // Obtener el término de búsqueda
 
         // Guardar la página actual en la sesión
-        $request->session()->put('equipo_page', $request->input('page', 1));
+        $currentPage = $request->get('page', 1);
+        session(['equipo_page' => $currentPage]);
 
         $equipos = Equipo::with(['marca', 'tipoEquipo'])
+            ->leftJoin('marcas', 'equipos.marca_id', '=', 'marcas.id')
+            ->leftJoin('tipos_equipos', 'equipos.tipo_equipo_id', '=', 'tipos_equipos.id')
+            ->select('equipos.*', 'marcas.nombre as marca_nombre', 'tipos_equipos.nombre as tipoEquipo_nombre')
             ->when($search, function ($query, $search) {
-                return $query->where('numero_serie', 'like', "%{$search}%")
-                    ->orWhereHas('marca', function ($q) use ($search) {
-                        $q->where('nombre', 'like', "%{$search}%");
-                    })
-                    ->orWhere('modelo', 'like', "%{$search}%")
-                    ->orWhere('etiqueta_skytex', 'like', "%{$search}%")
-                    ->orWhereHas('tipoEquipo', function ($q) use ($search) {
-                        $q->where('nombre', 'like', "%{$search}%");
-                    })
-                    ->orWhere('orden_compra', 'like', "%{$search}%")
-                    ->orWhere('requisicion', 'like', "%{$search}%")
-                    ->orWhere('estado', 'like', "%{$search}%");
-            })->orderBy($sortField, $sortOrder)->paginate(50);
+                return $query->where(function ($q) use ($search) {
+                    $q->where('equipos.numero_serie', 'like', "%{$search}%")
+                        ->orWhere('equipos.modelo', 'like', "%{$search}%")
+                        ->orWhere('marcas.nombre', 'like', "%{$search}%")
+                        ->orWhere('tipos_equipos.nombre', 'like', "%{$search}%")
+                        ->orWhere('equipos.etiqueta_skytex', 'like', "%{$search}%")
+                        ->orWhere('equipos.estado', 'like', "%{$search}%");
+                });
+            })
+            ->when($sortField === 'marca', function ($query) use ($sortOrder) {
+                return $query->orderBy('marca_nombre', $sortOrder);
+            })
+            ->when($sortField === 'tipoEquipo', function ($query) use ($sortOrder) {
+                return $query->orderBy('tipoEquipo_nombre', $sortOrder);
+            })
+            ->when(!in_array($sortField, ['marca', 'tipoEquipo']), function ($query) use ($sortField, $sortOrder) {
+                return $query->orderBy($sortField, $sortOrder);
+            })
+            ->paginate(50);
 
-        return view('equipos.index', compact('equipos', 'search', 'sortField', 'sortOrder'));
+        return view('equipos.index', compact('equipos', 'sortField', 'sortOrder', 'search'));
     }
-
 
     public function create()
     {
@@ -80,8 +89,11 @@ class EquipoController extends Controller
             ->with('success', 'Equipo creado correctamente.');
     }
 
-    public function show(Equipo $equipo)
+
+    public function show($id)
     {
+        $equipo = Equipo::with(['marca', 'tipoEquipo', 'asignacionActual.empleado'])->findOrFail($id);
+
         return view('equipos.show', compact('equipo'));
     }
 
@@ -92,7 +104,6 @@ class EquipoController extends Controller
         $equipo = Equipo::findOrFail($id);
         return view('equipos.edit', compact('equipo', 'marcas', 'tipoequipos'));
     }
-
 
     public function update(Request $request, Equipo $equipo)
     {
@@ -128,8 +139,6 @@ class EquipoController extends Controller
         return redirect()->route('equipos.index', ['page' => $page])
             ->with('success', 'Equipo actualizado correctamente.');
     }
-
-
 
     public function destroy(Equipo $equipo)
     {

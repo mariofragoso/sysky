@@ -20,7 +20,7 @@ class AsignacionEquipoController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $sortField = $request->input('sort', 'fecha_asignacion');
+        $sortField = $request->input('sort', 'created_at');
         $sortOrder = $request->input('order', 'desc');
 
         $asignacionesequipos = AsignacionEquipo::with(['empleado', 'equipo', 'usuario', 'empresa'])

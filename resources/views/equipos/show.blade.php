@@ -27,7 +27,6 @@
             <tr>
                 <th>Tipo</th>
                 <td> {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo' }}</td>
-                
             </tr>
             <tr>
                 <th>Orden de Compra</th>
@@ -41,6 +40,15 @@
                 <th>Estado</th>
                 <td>{{ $equipo->estado }}</td>
             </tr>
+            <tr>
+                <th>Empleado Asignado</th>
+                <td>{{ $equipo->asignacionActual->empleado->nombre ?? 'No Asignado' }} {{ $equipo->asignacionActual->empleado->apellidoP ?? '' }} {{ $equipo->asignacionActual->empleado->apellidoM ?? '' }}</td>
+            </tr>
+            
+
+            
+            
+            
         </table>
 
         <a href="{{ route('equipos.index') }}" class="btn btn-secondary">Volver a la lista</a>

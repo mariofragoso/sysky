@@ -11,19 +11,18 @@ class Equipo extends Model
 
     protected $fillable = [
         'numero_serie',
-        'marca_id',        
+        'marca_id',
         'modelo',
         'etiqueta_skytex',
-        'tipo_equipo_id',   
+        'tipo_equipo_id',
         'orden_compra',
         'requisicion',
         'estado',
-        'empleado_id',
     ];
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class);
+        return $this->belongsTo(Empleado::class, 'empleado_id');
     }
 
     public function marca()
@@ -34,5 +33,20 @@ class Equipo extends Model
     public function tipoEquipo()
     {
         return $this->belongsTo(TipoEquipo::class, 'tipo_equipo_id');
+    }
+
+    public function asignaciones()
+    {
+        return $this->hasMany(AsignacionEquipo::class);
+    }
+
+    public function asignacionActual()
+    {
+        return $this->hasOne(AsignacionEquipo::class)->latest();
+    }
+
+    public function empleadoActual()
+    {
+        return $this->asignacionActual()->with('empleado')->first()->empleado ?? null;
     }
 }

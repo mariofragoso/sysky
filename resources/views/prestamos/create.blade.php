@@ -22,8 +22,8 @@
                     <select id="empleado_id" name="empleado_id" class="form-control" required>
                         <option value="">Seleccione un empleado</option>
                         @foreach ($empleados as $empleado)
-                            <option value="{{ $empleado->id }}">{{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM}}</option>
-
+                            <option value="{{ $empleado->id }}">{{ $empleado->nombre }} {{ $empleado->apellidoP }}
+                                {{ $empleado->apellidoM }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -33,11 +33,11 @@
                     <select id="equipo_id" name="equipo_id" class="form-control" required>
                         <option value="">Seleccione un equipo</option>
                         @foreach ($equipos as $equipo)
-                            <option value="{{ $equipo->id }}">{{ $equipo->etiqueta_skytex }} - {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo'  }}</option>
+                            <option value="{{ $equipo->id }}">{{ $equipo->etiqueta_skytex }} -
+                                {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo' }}</option>
                         @endforeach
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label for="fecha_prestamo">Fecha de Préstamo:</label>
                     <input type="date" id="fecha_prestamo" name="fecha_prestamo" class="form-control" required>
@@ -53,4 +53,3 @@
         </div>
     </div>
 @endsection
-

@@ -8,6 +8,16 @@
         <a href="{{ route('prestamos.create') }}" class="btn btn-secondary mb-3">Crear Nuevo Préstamo +</a>
     </div>
 
+    <!-- Formulario de búsqueda -->
+    <form method="GET" action="{{ route('prestamos.index') }}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Buscar por empleado, equipo o responsable" value="{{ request('search') }}">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </div>
+    </form>
+
     <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
         <div class="card-body">
             <table class="table table-striped">
@@ -35,7 +45,7 @@
                             <td>{{ $prestamo->devuelto ? 'Sí' : 'No' }}</td>
                             <td>
                                 <a href="{{ route('prestamos.show', $prestamo->id) }}" class="btn btn-info">Ver</a>
-                                <a href="{{ route('prestamos.edit', $prestamo->id) }}" class="btn btn-warning">Editar</a>
+                                <a href="{{ route('prestamos.edit', $prestamo->id) }}?page={{ $prestamos->currentPage() }}" class="btn btn-warning">Editar</a>
                                 <form hidden action="{{ route('prestamos.destroy', $prestamo->id) }}" method="POST"
                                     style="display:inline-block;">
                                     @csrf
@@ -48,7 +58,9 @@
                     @endforeach
                 </tbody>
             </table>
-            {{ $prestamos->links() }}
+
+            <!-- Paginación -->
+            {{ $prestamos->appends(['search' => request('search')])->links() }}
         </div>
     </div>
 @endsection

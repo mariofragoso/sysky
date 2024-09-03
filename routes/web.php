@@ -22,6 +22,7 @@ use App\Models\Equipo;
 use App\Http\Controllers\TipoEquipoController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\MarcaAccesorioController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,10 @@ Route::get('/', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/perfil', [UserController::class, 'showProfile'])->name('perfil')->middleware('auth');
+Route::put('/perfil', [UserController::class, 'updateProfile'])->name('perfil.update')->middleware('auth');
+
 
 
 // Ruta para listar empleados

@@ -13,12 +13,24 @@ class AccionesController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        // Obtener el término de búsqueda
+        $search = $request->input('search');
+
+        // Construir la consulta con relación al usuario y ordenar por fecha de creación
         $acciones = Acciones::with('usuario')
-            ->orderBy('created_at', 'desc') // Ordenar de forma descendente
-            ->paginate(10); // Paginación de 10 registros por página
-        
-        return view('acciones.index', compact('acciones'));
+            ->when($search, function ($query) use ($search) {
+                $query->where('modulo', 'like', "%{$search}%")
+                      ->orWhere('descripcion', 'like', "%{$search}%")
+                      ->orWhereHas('usuario', function ($query) use ($search) {
+                          $query->where('name', 'like', "%{$search}%");
+                      });
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        // Pasar el término de búsqueda actual para mantenerlo en la vista
+        return view('acciones.index', compact('acciones', 'search'));
     }
 }

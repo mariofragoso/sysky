@@ -15,9 +15,25 @@ use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class SalidaEquipoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $salidas = SalidaEquipo::paginate(10);
+        $query = SalidaEquipo::query();
+
+        // Buscar por equipo o empleado
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->whereHas('equipo', function ($q) use ($search) {
+                $q->where('etiqueta_skytex', 'LIKE', "%$search%");
+            })->orWhereHas('empleado', function ($q) use ($search) {
+                $q->where('nombre', 'LIKE', "%$search%")
+                    ->orWhere('apellidoP', 'LIKE', "%$search%")
+                    ->orWhere('apellidoM', 'LIKE', "%$search%");
+            });
+        }
+
+        // Ordenar por fecha de creación en orden descendente
+        $salidas = $query->orderBy('created_at', 'desc')->paginate(10)->appends($request->all());
+
         return view('salidas.index', compact('salidas'));
     }
 
@@ -109,13 +125,13 @@ class SalidaEquipoController extends Controller
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();
 
-        return redirect()->route('salidas.index')->with('success', 'Regreso registrado exitosamente.');
+        return redirect()->to(url()->previous())->with('success', 'Regreso registrado exitosamente.');
     }
-    
+
     public function generarPDF($id)
     {
         $salida = SalidaEquipo::with(['empleado', 'equipo', 'usuarioResponsable'])->findOrFail($id);
-       
+
         $pdf = FacadePdf::loadView('documentos.salida', compact('salida'));
 
         return $pdf->download('Pase_de_Salida_' . $salida->id . '.pdf');

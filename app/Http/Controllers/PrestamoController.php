@@ -13,11 +13,36 @@ use Illuminate\Support\Facades\Auth;
 
 class PrestamoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $prestamos = Prestamo::with(['equipo.tipoEquipo', 'equipo.marca', 'empleado', 'usuario'])->paginate(10);
-        return view('prestamos.index', compact('prestamos'));
+        // Obtén el término de búsqueda de la solicitud
+        $search = $request->input('search');
+
+        // Construye la consulta base con el orden de creación descendente
+        $prestamos = Prestamo::with(['equipo.tipoEquipo', 'equipo.marca', 'empleado', 'usuario'])
+            ->orderBy('created_at', 'desc');  // Ordenar por fecha de creación en orden descendente
+
+        // Aplica el filtro de búsqueda si hay un término de búsqueda
+        if ($search) {
+            $prestamos = $prestamos->whereHas('empleado', function ($query) use ($search) {
+                $query->where('nombre', 'like', "%{$search}%")
+                    ->orWhere('apellidoP', 'like', "%{$search}%")
+                    ->orWhere('apellidoM', 'like', "%{$search}%");
+            })->orWhereHas('equipo', function ($query) use ($search) {
+                $query->where('etiqueta_skytex', 'like', "%{$search}%");
+            })->orWhereHas('usuario', function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%");
+            });
+        }
+
+        // Pagina los resultados
+        $prestamos = $prestamos->paginate(10);
+
+        // Retorna la vista con los resultados
+        return view('prestamos.index', compact('prestamos', 'search'));
     }
+
+
 
     public function create()
     {
@@ -58,7 +83,7 @@ class PrestamoController extends Controller
 
     public function show($id)
     {
-        $prestamo = Prestamo::with(['empleado', 'equipo.tipoEquipo','equipo.marca', 'usuario'])->findOrFail($id);
+        $prestamo = Prestamo::with(['empleado', 'equipo.tipoEquipo', 'equipo.marca', 'usuario'])->findOrFail($id);
         return view('prestamos.show', compact('prestamo'));
     }
 
@@ -102,9 +127,12 @@ class PrestamoController extends Controller
         }
         $accion->usuario_responsable_id = Auth::user()->id;
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
-        $accion->save();
+        $accion->save(); {
+            // Validación y actualización del préstamo
 
-        return redirect()->route('prestamos.index')->with('success', 'Préstamo actualizado exitosamente.');
+            return redirect()->route('prestamos.index', ['page' => $request->input('page', 1)])
+                ->with('success', 'Préstamo actualizado exitosamente.');
+        }
     }
 
 
