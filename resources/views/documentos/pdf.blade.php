@@ -30,7 +30,7 @@
             vertical-align: middle;
             font-size: 16px;
             font-weight: bold;
-            margin-left: 10px;
+            margin-left: 100px;
         }
 
         .section {
