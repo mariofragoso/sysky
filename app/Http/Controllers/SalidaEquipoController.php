@@ -125,7 +125,7 @@ class SalidaEquipoController extends Controller
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();
 
-        return redirect()->to(url()->previous())->with('success', 'Regreso registrado exitosamente.');
+        return redirect()->route('salidas.index')->with('success', 'Regreso registrado exitosamente.');
     }
 
     public function generarPDF($id)

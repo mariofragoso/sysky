@@ -71,7 +71,7 @@ class AsignacionEquipoController extends Controller
             'equipo_id' => 'required|exists:equipos,id',
             'fecha_asignacion' => 'required|date',
             'ticket' => 'nullable|integer',
-            'nota_descriptiva' => 'nullable|string|max:100',
+            'nota_descriptiva' => 'nullable|text',
             'empresa_id' => 'required|exists:empresas,id',
             'estado' => 'required|string|max:50',
             //'fecha_regreso' => $request->estado == 'prestamo' ? 'required|date|after_or_equal:fecha_prestamo' : 'nullable',
@@ -84,7 +84,7 @@ class AsignacionEquipoController extends Controller
         $asignacion->update($request->all());
 
         // Actualizar o crear préstamo según sea necesario
-       /* if ($request->estado == 'prestamo') {
+        /* if ($request->estado == 'prestamo') {
             Prestamo::updateOrCreate(
                 ['equipo_id' => $asignacion->equipo_id],
                 [
@@ -156,12 +156,15 @@ class AsignacionEquipoController extends Controller
         return view('asignacionesequipos.show', compact('asignacion'));
     }
 
+
     public function generatePdf($id)
     {
-        $asignacion = AsignacionEquipo::with(['empleado', 'equipo.marca', 'usuario', 'empresa'])->findOrFail($id);
+        $asignacion = AsignacionEquipo::findOrFail($id);
+        $asignaciones = AsignacionEquipo::where('ticket', $asignacion->ticket)->get();
 
-        $pdf = FacadePdf::loadView('documentos.pdf', compact('asignacion'));
-        return $pdf->download('asignacion_' . $asignacion->id . '.pdf');
+        $pdf = FacadePdf::loadView('documentos.pdf', compact('asignacion', 'asignaciones'));
+
+        return $pdf->download('asignacion_' . $asignacion->empleado->nombre . '.pdf');
     }
 
     public function destroy($id)
