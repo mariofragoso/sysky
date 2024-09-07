@@ -30,8 +30,6 @@
                             <th>Usuario Responsable</th>
                             <th><a href="{{ route('asignacionesequipos.index', ['sort' => 'ticket', 'order' => $sortField === 'ticket' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Ticket</a></th>
                             <th>Nota Descriptiva</th>
-                            <th>Empresa</th>
-                            <th><a href="{{ route('asignacionesequipos.index', ['sort' => 'estado', 'order' => $sortField === 'estado' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Estado</a></th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -44,11 +42,10 @@
                                 <td>{{ $asignacion->usuario->name ?? 'N/A' }}</td>
                                 <td>{{ $asignacion->ticket }}</td>
                                 <td>{{ $asignacion->nota_descriptiva }}</td>
-                                <td>{{ $asignacion->empresa->nombre ?? 'N/A' }}</td>
-                                <td>{{ $asignacion->estado }}</td>
                                 <td>
                                     <a href="{{ route('asignacionesequipos.show', $asignacion->id) }}" class="btn btn-info btn-sm">Ver</a>
                                     <a href="{{ route('asignacionesequipos.edit', $asignacion->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                    <a href="{{ route('asignacionesequipos.pdf', $asignacion->id) }}" class="btn btn-primary btn-sm" target="_blank">Ver PDF</a>
                                     <form hidden type action="{{ route('asignacionesequipos.destroy', $asignacion->id) }}" method="POST" style="display:inline">
                                         @csrf
                                         @method('DELETE')

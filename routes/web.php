@@ -203,6 +203,9 @@ Route::put('/asignacionaccesorios/{asignacion}', [AsignacionAccesoriosController
 Route::delete('/asignacionaccesorios/{asignacion}', [AsignacionAccesoriosController::class, 'destroy'])->name('asignacionaccesorios.destroy');
 
 Route::resource('prestamos', PrestamoController::class);
+Route::get('prestamos/{id}/pdf', [PrestamoController::class, 'generarPDF'])->name('prestamos.pdf');
+
+
 
 Route::get('/acciones', [AccionesController::class, 'index'])->name('acciones.index');
 

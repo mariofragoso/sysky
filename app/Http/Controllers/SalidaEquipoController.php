@@ -134,6 +134,6 @@ class SalidaEquipoController extends Controller
 
         $pdf = FacadePdf::loadView('documentos.salida', compact('salida'));
 
-        return $pdf->download('Pase_de_Salida_' . $salida->id . '.pdf');
+        return $pdf->stream('Pase_de_Salida_' . $salida->id . '.pdf');
     }
 }

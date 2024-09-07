@@ -25,7 +25,7 @@ class HomeController extends Controller
         // Temporalmente verifica los datos
         // dd($empleados_count, $equipos_count, $accesorios_count, $equiposAsignados, $equiposNoAsignados, $equiposBaja);
         $ultimasAsignaciones = AsignacionEquipo::with(['empleado', 'equipo'])
-            ->orderBy('fecha_asignacion', 'desc')
+            ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
 

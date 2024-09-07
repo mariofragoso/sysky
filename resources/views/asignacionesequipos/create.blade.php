@@ -52,8 +52,9 @@
                             <div class="col-md-3">
                                 <label for="ticket" class="form-label">Ticket:</label>
                                 <input type="number" id="ticket" class="form-control" min="1" pattern="^[0-9]+-"
-                                    onpaste="return false;" onDrop="return false;" autocomplete=off >
+                                    autocomplete="off">
                             </div>
+
 
                             <div class="col-md-3">
                                 <label for="nota_descriptiva" class="form-label">Nota Descriptiva:</label>

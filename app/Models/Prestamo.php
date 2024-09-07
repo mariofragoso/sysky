@@ -17,6 +17,8 @@ class Prestamo extends Model
         'fecha_regreso',
         'usuario_responsable_id',
         'devuelto',
+        'nota_prestamo',
+
 
     ];
 

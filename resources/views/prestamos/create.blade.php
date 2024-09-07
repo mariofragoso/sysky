@@ -48,6 +48,12 @@
                     <input type="date" id="fecha_regreso" name="fecha_regreso" class="form-control" required>
                 </div>
 
+                <div class="form-group">
+                    <label for="nota_prestamo">Observaciones:</label>
+                    <textarea id="nota_prestamo" name="nota_prestamo" class="form-control" required>{{ old('nota_prestamo') }}</textarea>
+                </div>
+                
+
                 <button type="submit" class="btn btn-primary">Crear</button>
             </form>
         </div>

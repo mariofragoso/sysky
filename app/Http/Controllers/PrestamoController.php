@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\Acciones;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+
 
 class PrestamoController extends Controller
 {
@@ -60,6 +62,7 @@ class PrestamoController extends Controller
             'empleado_id' => 'required|exists:empleados,id',
             'fecha_prestamo' => 'required|date',
             'fecha_regreso' => 'required|date|after_or_equal:fecha_prestamo',
+            'nota_prestamo' => 'nullable|string|max:255',
         ]);
 
         $prestamo = Prestamo::create([
@@ -67,6 +70,7 @@ class PrestamoController extends Controller
             'empleado_id' => $request->empleado_id,
             'fecha_prestamo' => $request->fecha_prestamo,
             'fecha_regreso' => $request->fecha_regreso,
+            'nota_prestamo' => $request->nota_prestamo,
             'usuario_responsable_id' => Auth::user()->id,
         ]);
 
@@ -80,6 +84,7 @@ class PrestamoController extends Controller
 
         return redirect()->route('prestamos.index')->with('success', 'Préstamo creado exitosamente.');
     }
+
 
     public function show($id)
     {
@@ -104,6 +109,8 @@ class PrestamoController extends Controller
             'fecha_prestamo' => 'required|date',
             'fecha_regreso' => 'required|date|after_or_equal:fecha_prestamo',
             'devuelto' => 'boolean',
+            'nota_prestamo' => 'nullable|string|max:255', // Validar la nota al actualizar
+
         ]);
 
         // Verificar si el estado "devuelto" ha cambiado
@@ -114,6 +121,7 @@ class PrestamoController extends Controller
             'empleado_id' => $request->empleado_id,
             'fecha_prestamo' => $request->fecha_prestamo,
             'fecha_regreso' => $request->fecha_regreso,
+            'nota_prestamo' => $request->nota_prestamo, // Actualizar la nota
             'usuario_responsable_id' => Auth::user()->id,
             'devuelto' => $request->devuelto,
         ]);
@@ -134,6 +142,19 @@ class PrestamoController extends Controller
                 ->with('success', 'Préstamo actualizado exitosamente.');
         }
     }
+
+    public function generarPDF($id)
+    {
+        $prestamo = Prestamo::with(['empleado', 'equipo', 'usuario'])->findOrFail($id);
+
+        // Generar el PDF usando la vista creada
+        $pdf = FacadePdf::loadView('documentos.prestamo', compact('prestamo'));
+
+        // Retornar el PDF como vista previa (stream)
+        return $pdf->stream('prestamo_' . $prestamo->id . '.pdf');
+    }
+
+
 
 
     public function destroy(Prestamo $prestamo)

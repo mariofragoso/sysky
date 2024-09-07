@@ -26,6 +26,12 @@
                     <th>Fecha de Regreso:</th>
                     <td>{{ $prestamo->fecha_regreso }}</td>
                 </tr>
+
+                <tr>
+                    <th>Nota de Préstamo:</th>
+                    <td>{{ $prestamo->nota_prestamo }}</td>
+                </tr>
+                
                 <tr>
                     <th>Usuario Responsable:</th>
                     <td>{{ $prestamo->usuario->name }}</td>

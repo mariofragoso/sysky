@@ -5,7 +5,7 @@
 @section('contenido')
 
 <div>
-    <a href="{{ route('salidas.create') }}" class="btn btn-primary mb-3">Registrar Nueva Salida</a>
+    <a href="{{ route('salidas.create') }}" class="btn btn-secondary mb-3">Registrar Nueva Salida</a>
 </div>
 
 <!-- Barra de búsqueda -->
@@ -48,9 +48,9 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('salidas.show', $salida->id) }}" class="btn btn-info">Ver Detalles</a>
-                                <a href="{{ route('salidas.edit', array_merge(['salida' => $salida->id], request()->query())) }}" class="btn btn-warning">Registrar Regreso</a>
-                                <a href="{{ route('ruta.generarPDF', $salida->id) }}" class="btn btn-primary">Generar PDF</a>
+                                <a href="{{ route('salidas.show', $salida->id) }}" class="btn btn-info btn-sm">Ver Detalles</a>
+                                <a href="{{ route('salidas.edit', array_merge(['salida' => $salida->id], request()->query())) }}" class="btn btn-warning btn-sm">Registrar Regreso</a>
+                                <a href="{{ route('ruta.generarPDF', $salida->id) }}" class="btn btn-primary btn-sm" target="_blank">Ver PDF</a>
                             </td>
                         </tr>
                     @endforeach

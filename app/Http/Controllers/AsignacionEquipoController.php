@@ -70,8 +70,8 @@ class AsignacionEquipoController extends Controller
             'empleado_id' => 'required|exists:empleados,id',
             'equipo_id' => 'required|exists:equipos,id',
             'fecha_asignacion' => 'required|date',
-            'ticket' => 'nullable|integer',
-            'nota_descriptiva' => 'nullable|text',
+            'ticket' => 'required|integer',
+            'nota_descriptiva' => 'nullable|string',
             'empresa_id' => 'required|exists:empresas,id',
             'estado' => 'required|string|max:50',
             //'fecha_regreso' => $request->estado == 'prestamo' ? 'required|date|after_or_equal:fecha_prestamo' : 'nullable',
@@ -164,7 +164,7 @@ class AsignacionEquipoController extends Controller
 
         $pdf = FacadePdf::loadView('documentos.pdf', compact('asignacion', 'asignaciones'));
 
-        return $pdf->download('asignacion_' . $asignacion->empleado->nombre . '.pdf');
+        return $pdf->stream('asignacion_' . $asignacion->empleado->nombre . '.pdf');
     }
 
     public function destroy($id)
