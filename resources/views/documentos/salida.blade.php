@@ -132,7 +132,7 @@
     <div class="section">
         <table>
             <tr>
-                <td><strong>Nota de Salida:</strong> {{ $salida->nota_salida }}</td>
+                <td><strong>Nota de Salida:</strong> {!! nl2br(e($salida->nota_salida )) !!}</td>
             </tr>
     </div>
     </table>
@@ -146,7 +146,7 @@
         <div class="signatures">
             <div class="signature">
                 <div class="signature-line"></div>
-                <p>Víctor Méndez Hdez<br>Gerente de Infraestructura TI</p>
+                <p>Nombre y firma del Gerente</p>
             </div>
             <div class="signature">
                 <div class="signature-line"></div>
@@ -155,7 +155,7 @@
             <div class="signature">
                 <div class="signature-line"></div>
                 <p>{{ $salida->empleado->nombre }} {{ $salida->empleado->apellidoP }}
-                    {{ $salida->empleado->apellidoM }}<br>Recibe</p>
+                    {{ $salida->empleado->apellidoM }}<br>Firma del solicitante</p>
             </div>
         </div>
     </div>

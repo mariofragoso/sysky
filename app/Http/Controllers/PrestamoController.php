@@ -58,32 +58,36 @@ class PrestamoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'equipo_id' => 'required|exists:equipos,id',
+            'equipo_id' => 'required|array', // Validar que sea un array para múltiples equipos
+            'equipo_id.*' => 'exists:equipos,id', // Validar que cada equipo exista
             'empleado_id' => 'required|exists:empleados,id',
             'fecha_prestamo' => 'required|date',
             'fecha_regreso' => 'required|date|after_or_equal:fecha_prestamo',
             'nota_prestamo' => 'nullable|string|max:255',
         ]);
 
-        $prestamo = Prestamo::create([
-            'equipo_id' => $request->equipo_id,
-            'empleado_id' => $request->empleado_id,
-            'fecha_prestamo' => $request->fecha_prestamo,
-            'fecha_regreso' => $request->fecha_regreso,
-            'nota_prestamo' => $request->nota_prestamo,
-            'usuario_responsable_id' => Auth::user()->id,
-        ]);
+        foreach ($request->equipo_id as $equipo_id) {
+            $prestamo = Prestamo::create([
+                'equipo_id' => $equipo_id,
+                'empleado_id' => $request->empleado_id,
+                'fecha_prestamo' => $request->fecha_prestamo,
+                'fecha_regreso' => $request->fecha_regreso,
+                'nota_prestamo' => $request->nota_prestamo,
+                'usuario_responsable_id' => Auth::user()->id,
+            ]);
 
-        // Registrar la acción
-        $accion = new Acciones();
-        $accion->modulo = "Préstamos";
-        $accion->descripcion = "Se creó el préstamo para el equipo con número de serie: " . $prestamo->equipo->numero_serie;
-        $accion->usuario_responsable_id = Auth::user()->id;
-        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
-        $accion->save();
+            // Registrar la acción
+            $accion = new Acciones();
+            $accion->modulo = "Préstamos";
+            $accion->descripcion = "Se creó el préstamo para el equipo con número de serie: " . $prestamo->equipo->numero_serie;
+            $accion->usuario_responsable_id = Auth::user()->id;
+            $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+            $accion->save();
+        }
 
-        return redirect()->route('prestamos.index')->with('success', 'Préstamo creado exitosamente.');
+        return redirect()->route('prestamos.index')->with('success', 'Préstamo(s) creado(s) exitosamente.');
     }
+
 
 
     public function show($id)
@@ -109,8 +113,6 @@ class PrestamoController extends Controller
             'fecha_prestamo' => 'required|date',
             'fecha_regreso' => 'required|date|after_or_equal:fecha_prestamo',
             'devuelto' => 'boolean',
-            'nota_prestamo' => 'nullable|string|max:255', // Validar la nota al actualizar
-
         ]);
 
         // Verificar si el estado "devuelto" ha cambiado
@@ -121,7 +123,6 @@ class PrestamoController extends Controller
             'empleado_id' => $request->empleado_id,
             'fecha_prestamo' => $request->fecha_prestamo,
             'fecha_regreso' => $request->fecha_regreso,
-            'nota_prestamo' => $request->nota_prestamo, // Actualizar la nota
             'usuario_responsable_id' => Auth::user()->id,
             'devuelto' => $request->devuelto,
         ]);
@@ -143,6 +144,28 @@ class PrestamoController extends Controller
         }
     }
 
+    public function generarPDFMultiple(Request $request)
+    {
+        // Validar que se haya seleccionado al menos un préstamo
+        $request->validate([
+            'prestamos' => 'required|array',
+            'prestamos.*' => 'exists:prestamos,id',
+        ]);
+
+        // Obtener los préstamos seleccionados
+        $prestamos = Prestamo::with(['empleado', 'equipo', 'usuario'])
+            ->whereIn('id', $request->prestamos)
+            ->get();
+
+        // Generar el PDF usando la vista personalizada para múltiples préstamos
+        $pdf = FacadePdf::loadView('documentos.prestamos_multiple', compact('prestamos'));
+
+        // Retornar el PDF como vista previa (stream)
+        return $pdf->stream('prestamos_seleccionados.pdf');
+    }
+
+
+
     public function generarPDF($id)
     {
         $prestamo = Prestamo::with(['empleado', 'equipo', 'usuario'])->findOrFail($id);
@@ -153,9 +176,6 @@ class PrestamoController extends Controller
         // Retornar el PDF como vista previa (stream)
         return $pdf->stream('prestamo_' . $prestamo->id . '.pdf');
     }
-
-
-
 
     public function destroy(Prestamo $prestamo)
     {

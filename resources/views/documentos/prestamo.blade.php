@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Préstamo de Equipo | {{ $prestamo->empleado->nombre }} {{ $prestamo->empleado->apellidoP }} {{ $prestamo->empleado->apellidoM }}</title>
+    <title>Préstamo de Equipo | {{ $prestamo->empleado->nombre }} {{ $prestamo->empleado->apellidoP }}
+        {{ $prestamo->empleado->apellidoM }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -91,7 +92,8 @@
     <div class="section">
         <table>
             <tr>
-                <td><strong>Nombre de empleado:</strong> {{ $prestamo->empleado->nombre }} {{ $prestamo->empleado->apellidoP }} {{ $prestamo->empleado->apellidoM }}</td>
+                <td><strong>Nombre de empleado:</strong> {{ $prestamo->empleado->nombre }}
+                    {{ $prestamo->empleado->apellidoP }} {{ $prestamo->empleado->apellidoM }}</td>
                 <td><strong>Fecha de Préstamo:</strong> {{ $prestamo->fecha_prestamo }}</td>
             </tr>
             <tr>
@@ -99,15 +101,14 @@
                 <td><strong>Departamento:</strong> {{ $prestamo->empleado->area }}</td>
             </tr>
             <tr>
+                <td><strong>Cargo:</strong> {{ $prestamo->empleado->puesto }}</td>
                 <td><strong>Área:</strong> {{ $prestamo->empleado->area }}</td>
-                <td>
-                    <strong>Préstamo</strong>
-                </td>
             </tr>
         </table>
     </div>
 
     <div class="section">
+        <h3 style="text-align: center">Equipo en Préstamo</h3>
         <table>
             <tr>
                 <th>Partida</th>
@@ -118,7 +119,9 @@
             <tr>
                 <td>1</td>
                 <td>1</td>
-                <td>{{ $prestamo->equipo->tipoEquipo->nombre ?? 'Sin Tipo' }} {{ $prestamo->equipo->marca->nombre ?? 'Sin Marca' }} {{ $prestamo->equipo->modelo }} Etq: {{ $prestamo->equipo->etiqueta_skytex }}</td>
+                <td>{{ $prestamo->equipo->tipoEquipo->nombre ?? 'Sin Tipo' }}
+                    {{ $prestamo->equipo->marca->nombre ?? 'Sin Marca' }} {{ $prestamo->equipo->modelo }} Etq:
+                    {{ $prestamo->equipo->etiqueta_skytex }}</td>
                 <td>{{ $prestamo->equipo->numero_serie }}</td>
             </tr>
         </table>
@@ -149,7 +152,8 @@
             </div>
             <div class="signature">
                 <div class="signature-line"></div>
-                <p>{{ $prestamo->empleado->nombre }} {{ $prestamo->empleado->apellidoP }} {{ $prestamo->empleado->apellidoM }}<br>Recibe</p>
+                <p>{{ $prestamo->empleado->nombre }} {{ $prestamo->empleado->apellidoP }}
+                    {{ $prestamo->empleado->apellidoM }}<br>Recibe</p>
             </div>
         </div>
     </div>

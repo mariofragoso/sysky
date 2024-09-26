@@ -47,6 +47,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Prestamo::class, 'usuario_responsable');
     }
-    
-    
+
+
+    public function licenciasResponsable()
+    {
+        return $this->hasMany(Licencia::class, 'usuario_responsable');
+    }
 }

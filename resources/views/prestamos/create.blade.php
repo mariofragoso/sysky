@@ -29,6 +29,17 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="equipo_id">Equipos:</label>
+                    <select id="equipo_id" name="equipo_id[]" class="form-control" multiple required>
+                        <option value="">Seleccione uno o más equipos</option>
+                        @foreach ($equipos as $equipo)
+                            <option value="{{ $equipo->id }}">{{ $equipo->etiqueta_skytex }} - {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo' }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                
+
+                <!-- <div class="form-group">
                     <label for="equipo_id">Equipo:</label>
                     <select id="equipo_id" name="equipo_id" class="form-control" required>
                         <option value="">Seleccione un equipo</option>
@@ -37,7 +48,8 @@
                                 {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo' }}</option>
                         @endforeach
                     </select>
-                </div>
+                </div> -->
+
                 <div class="form-group">
                     <label for="fecha_prestamo">Fecha de Préstamo:</label>
                     <input type="date" id="fecha_prestamo" name="fecha_prestamo" class="form-control" required>
@@ -52,7 +64,7 @@
                     <label for="nota_prestamo">Observaciones:</label>
                     <textarea id="nota_prestamo" name="nota_prestamo" class="form-control" required>{{ old('nota_prestamo') }}</textarea>
                 </div>
-                
+
 
                 <button type="submit" class="btn btn-primary">Crear</button>
             </form>

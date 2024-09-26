@@ -3,9 +3,9 @@
 @section('titulo', 'Lista de Empleados')
 
 @section('contenido')
-    <div>
+    <!--<div>
         <a href="{{ route('empleados.create') }}" class="btn btn-secondary mb-3">Crear Nuevo Empleado +</a>
-    </div>
+    </div>-->
 
     <!-- Barra de búsqueda -->
     <form action="{{ route('empleados.index') }}" method="GET" class="mb-3">
@@ -43,7 +43,7 @@
                                 <td>
                                     <a href="{{ route('empleados.show', $empleado->id) }}"
                                         class="btn btn-info btn-sm">Ver</a>
-                                    <a href="{{ route('empleados.edit', $empleado->id) }}"
+                                    <a hidden href="{{ route('empleados.edit', $empleado->id) }}"
                                         class="btn btn-warning btn-sm">Editar</a>
                                     <form hidden action="{{ route('empleados.destroy', $empleado->id) }}" method="POST"
                                         style="display:inline">

@@ -23,6 +23,8 @@ use App\Http\Controllers\TipoEquipoController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\MarcaAccesorioController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LicenciaController;
+use App\Http\Controllers\PagoLicenciaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -204,6 +206,9 @@ Route::delete('/asignacionaccesorios/{asignacion}', [AsignacionAccesoriosControl
 
 Route::resource('prestamos', PrestamoController::class);
 Route::get('prestamos/{id}/pdf', [PrestamoController::class, 'generarPDF'])->name('prestamos.pdf');
+Route::post('prestamos/pdf-multiple', [PrestamoController::class, 'generarPDFMultiple'])->name('prestamos.pdfMultiple');
+
+
 
 
 
@@ -272,3 +277,37 @@ Route::put('marcasaccesorios/{marcaAccesorio}', [MarcaAccesorioController::class
 
 // Ruta para eliminar una marca de accesorio existente
 Route::delete('marcasaccesorios/{marcaAccesorio}', [MarcaAccesorioController::class, 'destroy'])->name('marcasaccesorios.destroy');
+
+
+
+// Rutas para las licencias
+
+// Listar todas las licencias
+Route::get('licencias', [LicenciaController::class, 'index'])->name('licencias.index');
+
+// Mostrar el formulario para crear una nueva licencia
+Route::get('licencias/create', [LicenciaController::class, 'create'])->name('licencias.create');
+
+// Guardar la nueva licencia
+Route::post('licencias', [LicenciaController::class, 'store'])->name('licencias.store');
+
+// Mostrar una licencia en específico
+Route::get('licencias/{licencia}', [LicenciaController::class, 'show'])->name('licencias.show');
+
+// Mostrar el formulario para editar una licencia existente
+Route::get('licencias/{licencia}/edit', [LicenciaController::class, 'edit'])->name('licencias.edit');
+
+// Actualizar una licencia existente
+Route::put('licencias/{licencia}', [LicenciaController::class, 'update'])->name('licencias.update');
+
+// Eliminar una licencia
+Route::delete('licencias/{licencia}', [LicenciaController::class, 'destroy'])->name('licencias.destroy');
+
+
+// Rutas para los pagos asociados a las licencias
+Route::get('licencias/{licencia}/pagos', [PagoLicenciaController::class, 'index'])->name('licencias.pagos.index');
+Route::get('licencias/{licencia}/pagos/create', [PagoLicenciaController::class, 'create'])->name('licencias.pagos.create');
+Route::post('licencias/{licencia}/pagos', [PagoLicenciaController::class, 'store'])->name('licencias.pagos.store');
+
+Route::get('/licencias/{id}/enviar-notificacion', [LicenciaController::class, 'sendLicenciaNotification'])->name('licencias.sendNotification');
+

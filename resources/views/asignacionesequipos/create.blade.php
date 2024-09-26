@@ -56,9 +56,9 @@
                             </div>
 
 
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <label for="nota_descriptiva" class="form-label">Nota Descriptiva:</label>
-                                <input type="text" id="nota_descriptiva" class="form-control">
+                                <textarea  name="nota_descriptiva" type="text" id="nota_descriptiva" class="form-control" cols="30" rows="3"></textarea>
                             </div>
 
                             <div class="col-md-3">

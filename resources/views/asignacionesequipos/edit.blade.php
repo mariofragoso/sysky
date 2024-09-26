@@ -39,7 +39,8 @@
                     <select id="equipo_id" name="equipo_id" class="form-control" required>
                         @foreach ($equipos as $equipo)
                             <option value="{{ $equipo->id }}"
-                                {{ $asignacion->equipo_id == $equipo->id ? 'selected' : '' }}>{{ $equipo->etiqueta_skytex }} -  {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo' }}
+                                {{ $asignacion->equipo_id == $equipo->id ? 'selected' : '' }}>{{ $equipo->etiqueta_skytex }}
+                                - {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo' }}
                             </option>
                         @endforeach
                     </select>
@@ -68,8 +69,7 @@
 
                 <div class="col-md-12">
                     <label for="nota_descriptiva" class="form-label">Nota Descriptiva:</label>
-                    <input type="text" id="nota_descriptiva" name="nota_descriptiva" class="form-control"
-                        value="{{ $asignacion->nota_descriptiva }}">
+                    <textarea name="nota_descriptiva" id="nota_descriptiva" class="form-control" rows="4">{{ old('nota_descriptiva') ?? $asignacion->nota_descriptiva }}</textarea>
                     <div class="valid-feedback">
                         Good!
                     </div>
@@ -96,27 +96,27 @@
                 </div>
 
                 <!--<div class="col-md-3">
-                        <label for="estado" class="form-label">Estado:</label>
-                        <select id="estado" name="estado" class="form-control" required>
-                            <option value="asignado" {{ $asignacion->estado == 'asignado' ? 'selected' : '' }}>Asignado
-                            </option>
-                            <option value="no asignado" {{ $asignacion->estado == 'no asignado' ? 'selected' : '' }}>No
-                                Asignado</option>
-                            <option value="prestamo" {{ $asignacion->estado == 'prestamo' ? 'selected' : '' }}>Préstamo
-                            </option>
-                            <option value="baja" {{ $asignacion->estado == 'baja' ? 'selected' : '' }}>Baja</option>
-                        </select>
-                        <div class="valid-feedback">
-                            Good!
-                        </div>
-                    </div>
+                                <label for="estado" class="form-label">Estado:</label>
+                                <select id="estado" name="estado" class="form-control" required>
+                                    <option value="asignado" {{ $asignacion->estado == 'asignado' ? 'selected' : '' }}>Asignado
+                                    </option>
+                                    <option value="no asignado" {{ $asignacion->estado == 'no asignado' ? 'selected' : '' }}>No
+                                        Asignado</option>
+                                    <option value="prestamo" {{ $asignacion->estado == 'prestamo' ? 'selected' : '' }}>Préstamo
+                                    </option>
+                                    <option value="baja" {{ $asignacion->estado == 'baja' ? 'selected' : '' }}>Baja</option>
+                                </select>
+                                <div class="valid-feedback">
+                                    Good!
+                                </div>
+                            </div>
 
-                     imput para que aparesca si selecciona prestamo
+                             imput para que aparesca si selecciona prestamo
 
-                    <div class="col-md-3" id="fecha_regreso_container" style="display:none;">
-                        <label for="fecha_regreso" class="form-label">Fecha de Regreso:</label>
-                        <input type="date" id="fecha_regreso" name="fecha_regreso" class="form-control">
-                    </div>-->
+                            <div class="col-md-3" id="fecha_regreso_container" style="display:none;">
+                                <label for="fecha_regreso" class="form-label">Fecha de Regreso:</label>
+                                <input type="date" id="fecha_regreso" name="fecha_regreso" class="form-control">
+                            </div>-->
 
                 <div class="col-12 mt-3">
                     <button type="submit" class="btn btn-primary">Actualizar</button>
@@ -125,20 +125,20 @@
         </div>
     </div>
     <!--Este escrip funciona para muestre el imput de Fecha de regreso si selecciona el estado de prestamo
-            <script>
-                document.getElementById('estado').addEventListener('change', function() {
-                    var estado = this.value;
-                    var fechaRegresoContainer = document.getElementById('fecha_regreso_container');
+                    <script>
+                        document.getElementById('estado').addEventListener('change', function() {
+                            var estado = this.value;
+                            var fechaRegresoContainer = document.getElementById('fecha_regreso_container');
 
-                    if (estado === 'prestamo') {
-                        fechaRegresoContainer.style.display = 'block'; // Muestra el campo de fecha
-                        document.getElementById('fecha_regreso').required =
-                        true; // Hace que el campo de fecha sea obligatorio
-                    } else {
-                        fechaRegresoContainer.style.display = 'none'; // Oculta el campo de fecha
-                        document.getElementById('fecha_regreso').required = false; // No hace obligatorio el campo de fecha
-                    }
-                });
-            </script>-->
+                            if (estado === 'prestamo') {
+                                fechaRegresoContainer.style.display = 'block'; // Muestra el campo de fecha
+                                document.getElementById('fecha_regreso').required =
+                                    true; // Hace que el campo de fecha sea obligatorio
+                            } else {
+                                fechaRegresoContainer.style.display = 'none'; // Oculta el campo de fecha
+                                document.getElementById('fecha_regreso').required = false; // No hace obligatorio el campo de fecha
+                            }
+                        });
+                    </script>-->
 
 @endsection

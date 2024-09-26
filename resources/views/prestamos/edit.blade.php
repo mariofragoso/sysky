@@ -23,7 +23,8 @@
                     <select id="empleado_id" name="empleado_id" class="form-control" required>
                         <option value="">Seleccione un empleado</option>
                         @foreach ($empleados as $empleado)
-                            <option value="{{ $empleado->id }}" {{ $prestamo->empleado_id == $empleado->id ? 'selected' : '' }}>
+                            <option value="{{ $empleado->id }}"
+                                {{ $prestamo->empleado_id == $empleado->id ? 'selected' : '' }}>
                                 {{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM }}
                             </option>
                         @endforeach
@@ -44,12 +45,14 @@
 
                 <div class="form-group">
                     <label for="fecha_prestamo">Fecha de Préstamo:</label>
-                    <input type="date" id="fecha_prestamo" name="fecha_prestamo" class="form-control" value="{{ $prestamo->fecha_prestamo }}" required>
+                    <input type="date" id="fecha_prestamo" name="fecha_prestamo" class="form-control"
+                        value="{{ $prestamo->fecha_prestamo }}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="fecha_regreso">Fecha de Regreso:</label>
-                    <input type="date" id="fecha_regreso" name="fecha_regreso" class="form-control" value="{{ $prestamo->fecha_regreso }}" required>
+                    <input type="date" id="fecha_regreso" name="fecha_regreso" class="form-control"
+                        value="{{ $prestamo->fecha_regreso }}" required>
                 </div>
 
                 <!-- Nuevo campo para la nota de préstamo -->
@@ -62,7 +65,8 @@
                 <input type="hidden" name="devuelto" value="0">
                 <div class="form-group">
                     <label for="devuelto">¿Devuelto?</label>
-                    <input type="checkbox" id="devuelto" name="devuelto" value="1" {{ $prestamo->devuelto ? 'checked' : '' }}>
+                    <input type="checkbox" id="devuelto" name="devuelto" value="1"
+                        {{ $prestamo->devuelto ? 'checked' : '' }}>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Actualizar</button>

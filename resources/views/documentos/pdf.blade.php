@@ -52,6 +52,27 @@
             text-align: left;
         }
 
+        .section_nota{
+            border: 1px solid #ffffff;
+            padding: 8px;
+            margin-bottom: 10px;
+
+        }
+        .section_text{
+            border: 1px solid #ffffff;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-top: 0px
+
+        }
+        .section_datos{
+            border: 1px solid #ffffff;
+            padding: 8px;
+            margin-bottom: 0px;
+            border-radius: 8px 8px 0 0;
+
+        }
+
         th {
             background-color: #f2f2f2;
         }
@@ -89,7 +110,7 @@
         </p>
     </div>
 
-    <div class="section">
+    <div class="section_datos">
         <table>
             <tr>
                 <td><strong>Recibe:</strong> {{ $asignacion->empleado->nombre }} {{ $asignacion->empleado->apellidoP }}
@@ -105,7 +126,7 @@
         </table>
     </div>
 
-    <div class="section">
+    <div class="section_text ">
         <h3 style="text-align: center">Recibe el siguiente equipo</h3>
         <table>
             <tr>
@@ -130,10 +151,12 @@
         </table>
     </div>
 
-    <div class="section">
+    <div class="section_nota">
         <table>
             <tr>
-                <td>{{ $asignacion->nota_descriptiva }}</td>
+                <td>{!! nl2br(e($asignacion->nota_descriptiva )) !!}</td>
+                
+
             </tr>
         </table>
     </div>
