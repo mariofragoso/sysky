@@ -16,14 +16,14 @@ class Kernel extends ConsoleKernel
         $schedule->command('sync:empleados')->hourly();
 
         //$schedule->command('licencias:enviar-recordatorios')->daily();
-        $schedule->command('licencias:enviar-recordatorios')->dailyAt('17:01');
+        $schedule->command('licencias:enviar-recordatorios')->dailyAt('17:18');
 
     }
 
     protected function commands()
     {
         $this->load(__DIR__ . '/Commands');
-        
+
     }
     protected $commands = [
         Commands\SyncEmpleados::class,

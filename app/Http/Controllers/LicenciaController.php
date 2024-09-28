@@ -13,11 +13,29 @@ use Illuminate\Support\Facades\Notification;
 class LicenciaController extends Controller
 {
     // app/Http/Controllers/LicenciaController.php
-    public function index()
+    public function index(Request $request)
     {
-        $licencias = Licencia::with('usuario', 'tipoLicencia')->get();
+        // Parámetros para la búsqueda y ordenación
+        $search = $request->input('search');
+        $sortField = $request->input('sort', 'created_at'); // Campo de ordenación por defecto
+        $sortOrder = $request->input('order', 'desc');   // Orden por defecto (ascendente)
 
-        return view('licencias.index', compact('licencias'));
+        // Consulta de licencias con relaciones, filtrando por búsqueda y aplicando ordenación
+        $licencias = Licencia::with('usuario', 'tipoLicencia')
+            ->when($search, function ($query) use ($search) {
+                $query->where('nombre', 'like', "%{$search}%")
+                    ->orWhereHas('tipoLicencia', function ($q) use ($search) {
+                        $q->where('nombre', 'like', "%{$search}%");
+                    })
+                    ->orWhereHas('usuario', function ($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%");
+                    });
+            })
+            ->orderBy($sortField, $sortOrder)
+            ->paginate(10); // Puedes ajustar el número de elementos por página
+
+        // Pasar los parámetros de búsqueda, ordenación y licencias a la vista
+        return view('licencias.index', compact('licencias', 'search', 'sortField', 'sortOrder'));
     }
 
 
@@ -34,68 +52,67 @@ class LicenciaController extends Controller
 
     public function edit($id)
     {
-        $licencias = Licencia::findOrFail($id);
-        return view('licencias.edit', compact('licencias'));
+        $licencia = Licencia::findOrFail($id); // Cambié $licencias a $licencia por consistencia
+        $tiposLicencias = TipoLicencia::all(); // Traer los tipos de licencias
+        return view('licencias.edit', compact('licencia', 'tiposLicencias')); // Asegúrate de pasar ambas variables a la vista
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'tipo_licencia_id' => 'required|exists:tipos_licencias,id', // Asegurarse que este campo es correcto
+            'nombre' => 'required|string|max:255',
+            'fecha_adquisicion' => 'required|date',
+            'frecuencia_pago' => 'required|in:mensual,semestral,anual',
+            'fecha_siguiente_pago' => 'required|date',
+            'fecha_recordatorio' => 'nullable|date',
+            'estado' => 'required|in:activa,vencida,cancelada',
+            'observaciones' => 'nullable|string',
+        ]);
+
+        Licencia::create([
+            'tipo_licencia_id' => $request->input('tipo_licencia_id'), // Asegúrate de que es el nombre correcto en la base de datos
+            'nombre' => $request->input('nombre'),
+            'fecha_adquisicion' => $request->input('fecha_adquisicion'),
+            'frecuencia_pago' => $request->input('frecuencia_pago'),
+            'fecha_siguiente_pago' => $request->input('fecha_siguiente_pago'),
+            'fecha_recordatorio' => $request->input('fecha_recordatorio'),
+            'estado' => $request->input('estado'),
+            'observaciones' => $request->input('observaciones'),
+            'usuario_responsable' => Auth::id(), // Guardar el usuario autenticado
+        ]);
+
+        return redirect()->route('licencias.index')->with('success', 'Licencia creada exitosamente.');
     }
 
 
+    public function update(Request $request, Licencia $licencia)
+    {
+        $request->validate([
+            'tipo_licencia_id' => 'required|exists:tipos_licencias,id', // Asegúrate de validar esto también
+            'nombre' => 'required|string|max:255',
+            'fecha_adquisicion' => 'required|date',
+            'frecuencia_pago' => 'required|in:mensual,semestral,anual',
+            'fecha_siguiente_pago' => 'required|date',
+            'fecha_recordatorio' => 'nullable|date',
+            'estado' => 'required|in:activa,vencida,cancelada',
+            'observaciones' => 'nullable|string',
+        ]);
 
-    public function store(Request $request)
-{
-    $request->validate([
-        'tipo_licencia_id' => 'required|exists:tipos_licencias,id', // Asegurarse que este campo es correcto
-        'nombre' => 'required|string|max:255',
-        'fecha_adquisicion' => 'required|date',
-        'frecuencia_pago' => 'required|in:mensual,semestral,anual',
-        'fecha_siguiente_pago' => 'required|date',
-        'fecha_recordatorio' => 'nullable|date',
-        'estado' => 'required|in:activa,vencida,cancelada',
-        'observaciones' => 'nullable|string',
-    ]);
+        $licencia->update([
+            'tipo_licencia_id' => $request->input('tipo_licencia_id'), // Asegúrate de que este campo se actualiza correctamente
+            'nombre' => $request->input('nombre'),
+            'fecha_adquisicion' => $request->input('fecha_adquisicion'),
+            'frecuencia_pago' => $request->input('frecuencia_pago'),
+            'fecha_siguiente_pago' => $request->input('fecha_siguiente_pago'),
+            'fecha_recordatorio' => $request->input('fecha_recordatorio'),
+            'estado' => $request->input('estado'),
+            'observaciones' => $request->input('observaciones'),
+            'usuario_responsable' => Auth::id(), // Actualizar el usuario responsable
+        ]);
 
-    Licencia::create([
-        'tipo_licencia_id' => $request->input('tipo_licencia_id'), // Asegúrate de que es el nombre correcto en la base de datos
-        'nombre' => $request->input('nombre'),
-        'fecha_adquisicion' => $request->input('fecha_adquisicion'),
-        'frecuencia_pago' => $request->input('frecuencia_pago'),
-        'fecha_siguiente_pago' => $request->input('fecha_siguiente_pago'),
-        'fecha_recordatorio' => $request->input('fecha_recordatorio'),
-        'estado' => $request->input('estado'),
-        'observaciones' => $request->input('observaciones'),
-        'usuario_responsable' => Auth::id(), // Guardar el usuario autenticado
-    ]);
-
-    return redirect()->route('licencias.index')->with('success', 'Licencia creada exitosamente.');
-}
-
-
-public function update(Request $request, Licencia $licencia)
-{
-    $request->validate([
-        'tipo_licencia_id' => 'required|exists:tipos_licencias,id', // Asegúrate de validar esto también
-        'nombre' => 'required|string|max:255',
-        'fecha_adquisicion' => 'required|date',
-        'frecuencia_pago' => 'required|in:mensual,semestral,anual',
-        'fecha_siguiente_pago' => 'required|date',
-        'fecha_recordatorio' => 'nullable|date',
-        'estado' => 'required|in:activa,vencida,cancelada',
-        'observaciones' => 'nullable|string',
-    ]);
-
-    $licencia->update([
-        'tipo_licencia_id' => $request->input('tipo_licencia_id'), // Asegúrate de que este campo se actualiza correctamente
-        'nombre' => $request->input('nombre'),
-        'fecha_adquisicion' => $request->input('fecha_adquisicion'),
-        'frecuencia_pago' => $request->input('frecuencia_pago'),
-        'fecha_siguiente_pago' => $request->input('fecha_siguiente_pago'),
-        'fecha_recordatorio' => $request->input('fecha_recordatorio'),
-        'estado' => $request->input('estado'),
-        'observaciones' => $request->input('observaciones'),
-        'usuario_responsable' => Auth::id(), // Actualizar el usuario responsable
-    ]);
-
-    return redirect()->route('licencias.index')->with('success', 'Licencia actualizada exitosamente.');
-}
+        return redirect()->route('licencias.index')->with('success', 'Licencia actualizada exitosamente.');
+    }
 
 
     public function sendLicenciaNotification($licenciaId)

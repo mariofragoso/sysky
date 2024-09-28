@@ -3,9 +3,9 @@
 @section('titulo', 'Lista de Empleados')
 
 @section('contenido')
-    <!--<div>
+    <div>
         <a href="{{ route('empleados.create') }}" class="btn btn-secondary mb-3">Crear Nuevo Empleado +</a>
-    </div>-->
+    </div>
 
     <!-- Barra de búsqueda -->
     <form action="{{ route('empleados.index') }}" method="GET" class="mb-3">

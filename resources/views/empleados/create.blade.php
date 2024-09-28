@@ -67,6 +67,14 @@
                     </div>
                 </div>
 
+                <div class="col-md-6">
+                    <label for="status" class="form-label">Estado</label>
+                    <input type="text" class="form-control" id="status" name="status" required>
+                    <div class="valid-feedback">
+                        Good!
+                    </div>
+                </div>
+
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Crear</button>
                 </div>

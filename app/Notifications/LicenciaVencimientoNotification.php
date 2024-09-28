@@ -42,7 +42,7 @@ class LicenciaVencimientoNotification extends Notification
             ->line('Te recordamos que tu licencia, servicio o suscripción está por expirar.')
             ->line('Detalles:')
             ->line('Nombre: ' . $this->licencia->nombre)
-            ->line('Tipo: ' . $this->licencia->tipo)
+            ->line('Tipo: ' . $this->licencia->tipoLicencia->nombre)
             ->line('Fecha de Adquisición: ' . $this->licencia->fecha_adquisicion)
             ->line('Fecha del siguiente pago: ' . $this->licencia->fecha_siguiente_pago)
             ->line('Observaciones: ' . $this->licencia->observaciones)
