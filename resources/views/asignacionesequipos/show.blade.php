@@ -9,7 +9,7 @@
           
             <table class="table table-striped">
                 <tr>
-                    <th>ID:</th>
+                    <th>Folio:</th>
                     <td>{{ $asignacion->id }}</td>
                 </tr>
                 <tr>

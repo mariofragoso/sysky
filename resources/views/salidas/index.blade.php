@@ -21,7 +21,6 @@
             <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Equipo</th>
                         <th>Empleado</th>
                         <th>Fecha de Salida</th>
@@ -34,7 +33,6 @@
                 <tbody>
                     @foreach ($salidas as $salida)
                         <tr>
-                            <td>{{ $salida->id }}</td>
                             <td>{{ $salida->equipo->etiqueta_skytex }}</td>
                             <td>{{ $salida->empleado->nombre }} {{ $salida->empleado->apellidoP }} {{ $salida->empleado->apellidoM }}</td>
                             <td>{{ $salida->fecha_salida }}</td>

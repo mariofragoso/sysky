@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Acciones;
+use App\Models\AsignacionEquipo;
 use Illuminate\Http\Request;
 use App\Models\Empleado;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class EmpleadoController extends Controller
 {
@@ -16,7 +20,7 @@ class EmpleadoController extends Controller
 
         $empleados = Empleado::when($search, function ($q) use ($search) {
             $q->whereRaw("CONCAT(nombre, ' ', apellidoP, ' ', apellidoM) LIKE ?", ["%{$search}%"])
-              ->orWhere('numero_nomina', 'like', "%{$search}%");
+                ->orWhere('numero_nomina', 'like', "%{$search}%");
         })->orderBy($sortField, $sortOrder)->paginate(10);
 
         return view('empleados.index', compact('empleados', 'search', 'sortField', 'sortOrder'));
@@ -48,7 +52,7 @@ class EmpleadoController extends Controller
 
     public function show($id)
     {
-        $empleado = Empleado::with(['asignacionesequipos.equipo.marca', 'asignacionesequipos.equipo.tipoEquipo', 'asignacionesaccesorios.accesorio.marcaAccesorio', 'prestamos.equipo'])->find($id);
+        $empleado = Empleado::with(['asignacionesequipos.equipo.marca', 'asignacionesequipos.equipo.tipoEquipo', 'asignacionesaccesorios.accesorio.marcaAccesorio', 'prestamos.equipo', 'salidas.equipo'])->find($id);
 
         return view('empleados.show', compact('empleado'));
     }
@@ -92,4 +96,35 @@ class EmpleadoController extends Controller
     {
         $this->middleware('auth');
     }
+    public function desasignarEquipo($idAsignacion)
+    {
+        // Buscar la asignación de equipo por su ID
+        $asignacion = AsignacionEquipo::find($idAsignacion);
+        
+        $accion = new Acciones();
+        $accion->modulo = "Empleados";
+        $accion->descripcion = "Se registró la desasignacion de equipo: " . $asignacion->equipo->etiqueta_skytex;
+        $accion->usuario_responsable_id = Auth::user()->id;
+        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+        $accion->save();
+    
+        if ($asignacion) {
+            // Cambiar el estado del equipo a "no asignado"
+            $equipo = $asignacion->equipo;
+            $equipo->estado = 'No asignado';  // Actualizar el estado del equipo
+            $equipo->save();
+    
+            // Actualizar el estado de la asignación en lugar de eliminarla
+            $asignacion->estado = 'No asignado'; // O 'desasignado'
+            $asignacion->save();
+    
+            return redirect()->route('empleados.show', $asignacion->empleado_id)
+                ->with('success', 'Equipo desasignado y marcado como no asignado exitosamente.');
+        }
+    
+        return redirect()->route('empleados.show', $asignacion->empleado_id)
+            ->with('error', 'La asignación no fue encontrada.');
+    }
+    
+
 }

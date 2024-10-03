@@ -9,7 +9,6 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Número de Serie</th>
                         <th>Marca</th>
                         <th>Modelo</th>
@@ -22,7 +21,6 @@
                 <tbody>
                     @foreach ($equipos as $equipo)
                         <tr>
-                            <td>{{ $equipo->id }}</td>
                             <td>{{ $equipo->numero_serie }}</td>
                             <td>{{ optional($equipo->marca)->nombre ?? '' }}</td>
                             <td>{{ $equipo->modelo }}</td>

@@ -44,6 +44,7 @@
                                 </select>
                             </div>
 
+
                             <div class="col-md-3">
                                 <label for="fecha_asignacion" class="form-label">Fecha de Asignación:</label>
                                 <input type="date" id="fecha_asignacion" class="form-control" required>
@@ -58,7 +59,8 @@
 
                             <div class="col-md-6">
                                 <label for="nota_descriptiva" class="form-label">Nota Descriptiva:</label>
-                                <textarea  name="nota_descriptiva" type="text" id="nota_descriptiva" class="form-control" cols="30" rows="3"></textarea>
+                                <textarea name="nota_descriptiva" type="text" id="nota_descriptiva" class="form-control" cols="30"
+                                    rows="3"></textarea>
                             </div>
 
                             <div class="col-md-3">
@@ -141,10 +143,19 @@
                 return;
             }
 
+            const equipoId = document.getElementById('equipo_id').value;
+
+            // Verificar si el equipo ya está en la tabla temporal
+            const equipoYaAsignado = asignaciones.some(asignacion => asignacion.equipo_id === equipoId);
+
+            if (equipoYaAsignado) {
+                alert('El equipo ya ha sido asignado.');
+                return; // No continuar si el equipo ya está asignado
+            }
+
             const empleadoId = document.getElementById('empleado_id').value;
             const empleadoText = document.getElementById('empleado_id').options[document.getElementById('empleado_id')
                 .selectedIndex].text;
-            const equipoId = document.getElementById('equipo_id').value;
             const equipoText = document.getElementById('equipo_id').options[document.getElementById('equipo_id')
                 .selectedIndex].text;
             const fechaAsignacion = document.getElementById('fecha_asignacion').value;
@@ -171,19 +182,21 @@
             const newRow = tableBody.insertRow();
 
             newRow.innerHTML = `
-                <td>${empleadoText}</td>
-                <td>${equipoText}</td>
-                <td>${fechaAsignacion}</td>
-                <td>${ticket}</td>
-                <td>${notaDescriptiva}</td>
-                <td>${empresaText}</td>
-                <td>${estado}</td>
-                <td><button type="button" class="btn btn-danger btn-sm" onclick="removeAsignacion(${asignaciones.length - 1})">Eliminar</button></td>
-            `;
+            <td>${empleadoText}</td>
+            <td>${equipoText}</td>
+            <td>${fechaAsignacion}</td>
+            <td>${ticket}</td>
+            <td>${notaDescriptiva}</td>
+            <td>${empresaText}</td>
+            <td>${estado}</td>
+            <td><button type="button" class="btn btn-danger btn-sm" onclick="removeAsignacion(${asignaciones.length - 1})">Eliminar</button></td>
+        `;
 
-            // Limpiar los campos del formulario después de añadir la asignación
-            document.getElementById('equipo_id').value = '';
+            // Limpiar el campo del equipo (Select2)
+            $('#equipo_id').val(null).trigger('change');
         }
+
+
 
         function removeAsignacion(index) {
             asignaciones.splice(index, 1);

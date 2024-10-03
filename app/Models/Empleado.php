@@ -43,6 +43,11 @@ class Empleado extends Model
         return $this->hasMany(AsignacionesAccesorios::class);
     }
 
+    public function salidas()
+    {
+        return $this->hasMany(SalidaEquipo::class);
+    }
+
 }
 
    

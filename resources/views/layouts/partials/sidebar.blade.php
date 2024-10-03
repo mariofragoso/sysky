@@ -6,7 +6,7 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-cubes"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">Sis <sup>Sky</sup></div>
+            <div class="sidebar-brand-text mx-3">Sis <sup>Infra</sup></div>
         </a>
 
         <!-- Divider -->

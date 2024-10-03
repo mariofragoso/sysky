@@ -39,7 +39,6 @@
                             <th><a
                                     href="{{ route('asignacionesequipos.index', ['sort' => 'ticket', 'order' => $sortField === 'ticket' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Ticket</a>
                             </th>
-                            <th>Nota Descriptiva</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -53,7 +52,6 @@
                                 <td>{{ $asignacion->fecha_asignacion }}</td>
                                 <td>{{ $asignacion->usuario->name ?? 'N/A' }}</td>
                                 <td>{{ $asignacion->ticket }}</td>
-                                <td>{{ $asignacion->nota_descriptiva }}</td>
                                 <td>
                                     <a href="{{ route('asignacionesequipos.show', $asignacion->id) }}"
                                         class="btn btn-info btn-sm">Ver</a>

@@ -24,7 +24,7 @@
                 <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            @foreach (['numero_serie' => 'Número de Serie', 'marca' => 'Marca', 'modelo' => 'Modelo', 'etiqueta_skytex' => 'Etiqueta Skytex', 'tipoEquipo' => 'Tipo', 'orden_compra' => 'Orden De Compra', 'requisicion' => 'Requisición', 'estado' => 'Estado'] as $field => $label)
+                            @foreach (['numero_serie' => 'Número de Serie', 'marca' => 'Marca', 'modelo' => 'Modelo', 'etiqueta_skytex' => 'Etiqueta Skytex', 'tipoEquipo' => 'Tipo', 'estado' => 'Estado'] as $field => $label)
                                 <th>
                                     <a
                                         href="{{ route('equipos.index', ['sort' => $field, 'order' => $sortField === $field && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
@@ -50,8 +50,6 @@
                                 <td>{{ $equipo->modelo }}</td>
                                 <td>{{ $equipo->etiqueta_skytex }}</td>
                                 <td>{{ optional($equipo->tipoEquipo)->nombre ?? '' }}</td>
-                                <td>{{ $equipo->orden_compra }}</td>
-                                <td>{{ $equipo->requisicion }}</td>
                                 <td>
 
                                     <span

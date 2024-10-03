@@ -126,7 +126,7 @@ class AsignacionEquipoController extends Controller
         foreach ($asignaciones as $asignacionData) {
             // Verificar si el equipo ya está asignado o dado de baja
             $equipo = Equipo::findOrFail($asignacionData['equipo_id']);
-            if ($equipo->estado == 'asignado' || $equipo->estado == 'baja') {
+            if ($equipo->estado == 'Asignado' || $equipo->estado == 'Baja') {
                 return redirect()->back()->withErrors(['El equipo ' . $equipo->etiqueta_skytex . ' ya está asignado o dado de baja.']);
             }
 

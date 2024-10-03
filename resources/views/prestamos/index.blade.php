@@ -34,7 +34,6 @@
                     <thead>
                         <tr>
                             <th><input type="checkbox" id="select-all"></th>
-                            <th>ID</th>
                             <th>Empleado</th>
                             <th>Equipo</th>
                             <th>Fecha de Préstamo</th>
@@ -48,7 +47,6 @@
                         @foreach ($prestamos as $prestamo)
                             <tr>
                                 <td><input type="checkbox" name="prestamos[]" value="{{ $prestamo->id }}"></td>
-                                <td>{{ $prestamo->id }}</td>
                                 <td>{{ $prestamo->empleado->nombre ?? 'N/A' }} {{ $prestamo->empleado->apellidoP ?? 'N/A' }}
                                     {{ $prestamo->empleado->apellidoM ?? 'N/A' }}</td>
                                 <td>{{ $prestamo->equipo->etiqueta_skytex }}</td>

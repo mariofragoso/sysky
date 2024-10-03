@@ -92,7 +92,7 @@
                 <div class="col-md-3">
                     <label for="estado" class="form-label">Estado:</label>
                     <input type="text" id="estado" class="form-control" value="Asignado" disabled>
-                    <input type="hidden" name="estado" value="asignado">
+                    <input type="hidden" name="estado" value="Asignado">
                 </div>
 
                 <!--<div class="col-md-3">

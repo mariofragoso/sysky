@@ -7,7 +7,7 @@
         <div class="card-body">
             <table class="table table-striped">
                 <tr>
-                    <th>ID:</th>
+                    <th>Folio:</th>
                     <td>{{ $prestamo->id }}</td>
                 </tr>
                 <tr>

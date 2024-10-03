@@ -73,6 +73,10 @@ Route::put('empleados/{id}', [EmpleadoController::class, 'update'])->name('emple
 // Ruta para eliminar un empleado específico
 Route::delete('empleados/{id}', [EmpleadoController::class, 'destroy'])->name('empleados.destroy');
 
+//Desasignacion de equipos ruta para desasignar equipos 
+Route::delete('empleados/desasignar-equipo/{id}', [EmpleadoController::class, 'desasignarEquipo'])->name('empleados.desasignarEquipo');
+
+
 
 //----------------------------------------------------------------------------------------------------------------------------//
 

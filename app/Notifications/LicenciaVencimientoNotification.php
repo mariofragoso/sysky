@@ -36,19 +36,28 @@ class LicenciaVencimientoNotification extends Notification
      * Get the mail representation of the notification.
      */
     public function toMail($notifiable)
-    {
-        return (new MailMessage)
-            ->subject('Recordatorio de Licencia, Servicio o Suscripción')
-            ->line('Te recordamos que tu licencia, servicio o suscripción está por expirar.')
-            ->line('Detalles:')
-            ->line('Nombre: ' . $this->licencia->nombre)
-            ->line('Tipo: ' . $this->licencia->tipoLicencia->nombre)
-            ->line('Fecha de Adquisición: ' . $this->licencia->fecha_adquisicion)
-            ->line('Fecha del siguiente pago: ' . $this->licencia->fecha_siguiente_pago)
-            ->line('Observaciones: ' . $this->licencia->observaciones)
-            ->action('Ver Licencia', url('/licencias/' . $this->licencia->id))
-            ->line('Gracias por usar nuestro sistema.');
+{
+    $mailMessage = new MailMessage;
+    $mailMessage->subject('Recordatorio de Licencia, Servicio o Suscripción');
+
+    if ($this->licencia->fecha_siguiente_pago < now()) {
+        $mailMessage->line('¡Atención! Tu licencia, servicio o suscripción ha expirado.');
+    } else {
+        $mailMessage->line('Te recordamos que tu licencia, servicio o suscripción está por expirar.');
     }
+
+    $mailMessage->line('Detalles:')
+        ->line('Nombre: ' . $this->licencia->nombre)
+        ->line('Tipo: ' . $this->licencia->tipoLicencia->nombre)
+        ->line('Fecha de Adquisición: ' . $this->licencia->fecha_adquisicion)
+        ->line('Fecha del siguiente pago: ' . $this->licencia->fecha_siguiente_pago)
+        ->line('Observaciones: ' . $this->licencia->observaciones)
+        ->action('Ver Licencia', url('/licencias/' . $this->licencia->id))
+        ->line('Gracias por usar nuestro sistema.');
+
+    return $mailMessage;
+}
+
 
     public function toArray($notifiable)
     {

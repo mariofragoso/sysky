@@ -11,6 +11,7 @@
 
     <title>{{ env('APP_NAME') }} - @yield('titulo')</title>
 
+
     <!-- Custom fonts for this template-->
     <link href="{{ asset('/libs/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
@@ -27,6 +28,7 @@
     <link href="{{ asset('libs/sbadmin/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="icon" href="{{ asset('images/salidas/logo.png') }}">
 
 
 
