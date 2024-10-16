@@ -66,7 +66,7 @@
                 </div>
 
 
-                <button type="submit" class="btn btn-primary">Crear</button>
+                <button type="submit" class="btn btn-primary">Registrar</button>
             </form>
         </div>
     </div>

@@ -4,7 +4,7 @@
 
 @section('contenido')
     <div>
-        <a href="{{ route('empleados.create') }}" class="btn btn-secondary mb-3">Crear Nuevo Empleado +</a>
+        <a hidden href="{{ route('empleados.create') }}" class="btn btn-secondary mb-3">Registrar Nuevo Empleado +</a>
     </div>
 
     <!-- Barra de búsqueda -->

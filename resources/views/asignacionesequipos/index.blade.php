@@ -4,7 +4,7 @@
 
 @section('contenido')
     <div>
-        <a href="{{ route('asignacionesequipos.create') }}" class="btn btn-secondary mb-3">Crear Nueva Asignación +</a>
+        <a href="{{ route('asignacionesequipos.create') }}" class="btn btn-secondary mb-3">Registrar Nueva Asignación +</a>
         <a href="https://drive.google.com/drive/folders/19tknKByTY52YGtjIVrjk9Pr7sndunRib" class="btn btn-success mb-3" target="_blank">Subir formato de asignacion</a>
     </div>
 
@@ -32,6 +32,7 @@
                             <th><a
                                     href="{{ route('asignacionesequipos.index', ['sort' => 'equipo', 'order' => $sortField === 'equipo' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Equipo</a>
                             </th>
+                            <th>Equipo</th>
                             <th><a
                                     href="{{ route('asignacionesequipos.index', ['sort' => 'fecha_asignacion', 'order' => $sortField === 'fecha_asignacion' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Fecha
                                     de Asignación</a></th>
@@ -49,6 +50,7 @@
                                     {{ $asignacion->empleado->apellidoP ?? 'N/A' }}
                                     {{ $asignacion->empleado->apellidoM ?? 'N/A' }}</td>
                                 <td>{{ $asignacion->equipo->etiqueta_skytex ?? 'N/A' }}</td>
+                                <td>{{ $asignacion->equipo->tipoEquipo->nombre ?? 'Sin Tipo' }}</td>
                                 <td>{{ $asignacion->fecha_asignacion }}</td>
                                 <td>{{ $asignacion->usuario->name ?? 'N/A' }}</td>
                                 <td>{{ $asignacion->ticket }}</td>

@@ -4,7 +4,7 @@
 
 @section('contenido')
     <div>
-        <a href="{{ route('licencias.create') }}" class="btn btn-secondary mb-3">Agregar Nueva Licencia +</a>
+        <a href="{{ route('licencias.create') }}" class="btn btn-secondary mb-3">Registrar Nueva Licencia +</a>
     </div>
     <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
         <div class="card-body">

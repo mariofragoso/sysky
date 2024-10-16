@@ -88,7 +88,7 @@
                 <input type="hidden" name="estado" value="No asignado">
 
                 <div class="col-12 mt-4">
-                    <button type="submit" class="btn btn-primary">Crear</button>
+                    <button type="submit" class="btn btn-primary">Registrar</button>
                 </div>
 
             </form>

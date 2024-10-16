@@ -5,7 +5,7 @@
 @section('contenido')
 
     <div>
-        <a href="{{ route('equipos.create') }}" class="btn btn-secondary mb-3">Crear Nuevo Equipo +</a>
+        <a href="{{ route('equipos.create') }}" class="btn btn-secondary mb-3">Registrar Nuevo Equipo +</a>
     </div>
 
     <!-- Barra de búsqueda -->

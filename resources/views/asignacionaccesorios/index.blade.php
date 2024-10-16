@@ -4,7 +4,7 @@
 
 @section('contenido')
     <div>
-        <a href="{{ route('asignacionaccesorios.create') }}" class="btn btn-secondary mb-3">Crear Nueva Asignación +</a>
+        <a href="{{ route('asignacionaccesorios.create') }}" class="btn btn-secondary mb-3">Registrar Nueva Asignación +</a>
     </div>
 
     <form action="{{ route('asignacionaccesorios.index') }}" method="GET" class="mb-3">

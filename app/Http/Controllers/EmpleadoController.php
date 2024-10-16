@@ -103,7 +103,7 @@ class EmpleadoController extends Controller
         
         $accion = new Acciones();
         $accion->modulo = "Empleados";
-        $accion->descripcion = "Se registró la desasignacion de equipo: " . $asignacion->equipo->etiqueta_skytex;
+        $accion->descripcion = "Se registró la desasignacion de equipo: " . $asignacion->equipo->etiqueta_skytex . " de el empleado: " . $asignacion->empleado->nombre . " " . $asignacion->empleado-> apellidoP . " " .$asignacion->empleado-> apellidoM;
         $accion->usuario_responsable_id = Auth::user()->id;
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();

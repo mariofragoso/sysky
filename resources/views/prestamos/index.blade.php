@@ -5,7 +5,7 @@
 @section('contenido')
 
     <div>
-        <a href="{{ route('prestamos.create') }}" class="btn btn-secondary mb-3">Crear Nuevo Préstamo +</a>
+        <a href="{{ route('prestamos.create') }}" class="btn btn-secondary mb-3">Registrar Nuevo Préstamo +</a>
     </div>
 
     <!-- Formulario de búsqueda -->

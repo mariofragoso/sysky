@@ -39,7 +39,7 @@
                                     <option value="">Seleccione un equipo</option>
                                     @foreach ($equipos as $equipo)
                                         <option value="{{ $equipo->id }}"> {{ $equipo->etiqueta_skytex }} -
-                                            {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo' }} </option>
+                                            {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo' }} - {{ $equipo->numero_serie }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -76,7 +76,7 @@
                             <div class="col-md-3">
                                 <label for="estado" class="form-label">Estado:</label>
                                 <input type="text" id="estado" class="form-control" value="Asignado" disabled>
-                                <input type="hidden" name="estado" value="asignado">
+                                <input type="hidden" name="estado" value="Asignado">
                             </div>
                         </div>
 
@@ -113,7 +113,7 @@
                 <form action="{{ route('asignacionesequipos.store') }}" method="POST" id="final-asignaciones-form">
                     @csrf
                     <input type="hidden" name="asignaciones" id="asignaciones-input">
-                    <button type="submit" class="btn btn-primary">Crear</button>
+                    <button type="submit" class="btn btn-primary">Registrar</button>
                 </form>
             </div>
         </div>
