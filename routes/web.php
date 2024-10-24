@@ -15,6 +15,7 @@ use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AccionesController;
+use App\Http\Controllers\ImpresoraController;
 use App\Http\Controllers\SalidaEquipoController;
 use App\Models\AsignacionEquipo;
 use App\Models\Empleado;
@@ -315,3 +316,6 @@ Route::post('licencias/{licencia}/pagos', [PagoLicenciaController::class, 'store
 
 Route::get('/licencias/{id}/enviar-notificacion', [LicenciaController::class, 'sendLicenciaNotification'])->name('licencias.sendNotification');
 
+Route::resource('impresoras', ImpresoraController::class);
+Route::get('/impresoras/estados', [ImpresoraController::class, 'getEstados'])->name('impresoras.estados');
+Route::get('/impresoras/{id}/imprimir-prueba', [ImpresoraController::class, 'imprimirPrueba'])->name('impresoras.imprimirPrueba');

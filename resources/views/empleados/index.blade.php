@@ -41,9 +41,9 @@
                                 <td>
                                     <a href="{{ route('empleados.show', $empleado->id) }}"
                                         class="btn btn-info btn-sm">Ver</a>
-                                    <a hidden href="{{ route('empleados.edit', $empleado->id) }}"
+                                    <a href="{{ route('empleados.edit', $empleado->id) }}"
                                         class="btn btn-warning btn-sm">Editar</a>
-                                    <form hidden action="{{ route('empleados.destroy', $empleado->id) }}" method="POST"
+                                    <form  action="{{ route('empleados.destroy', $empleado->id) }}" method="POST"
                                         style="display:inline">
                                         @csrf
                                         @method('DELETE')
