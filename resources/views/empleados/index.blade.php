@@ -4,7 +4,7 @@
 
 @section('contenido')
     <div>
-        <a hidden href="{{ route('empleados.create') }}" class="btn btn-secondary mb-3">Registrar Nuevo Empleado +</a>
+        <a href="{{ route('empleados.create') }}" class="btn btn-secondary mb-3">Registrar Nuevo Empleado +</a>
     </div>
 
     <!-- Barra de búsqueda -->
@@ -43,7 +43,7 @@
                                         class="btn btn-info btn-sm">Ver</a>
                                     <a href="{{ route('empleados.edit', $empleado->id) }}"
                                         class="btn btn-warning btn-sm">Editar</a>
-                                    <form  action="{{ route('empleados.destroy', $empleado->id) }}" method="POST"
+                                    <form hidden action="{{ route('empleados.destroy', $empleado->id) }}" method="POST"
                                         style="display:inline">
                                         @csrf
                                         @method('DELETE')

@@ -46,7 +46,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light" style="background-color: #2c3e50;"; topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -391,4 +391,25 @@
         background-color: gray;
         color: white;
     }
+
+    .nav-item .dropdown-menu {
+        background-color: #333333;
+        /* Fondo oscuro */
+    }
+
+    .dropdown-item {
+        color: #f8f9fa;
+        /* Texto claro */
+    }
+
+    .dropdown-item:hover {
+        background-color: #577be7;
+        /* Azul suave al pasar el mouse */
+        color: #ffffff;
+        /* Texto blanco */
+    }
+
+    #navbarDropdown {
+    color: #ffffff !important; /* Blanco */
+}
 </style>

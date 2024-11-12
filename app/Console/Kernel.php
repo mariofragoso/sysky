@@ -13,12 +13,12 @@ class Kernel extends ConsoleKernel
 {
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('prestamos:notificar')->dailyAt('11:55');
+        $schedule->command('prestamos:notificar')->dailyAt('08:30');
         // Programa la sincronización para que se ejecute cada ho
         $schedule->command('sync:empleados')->hourly();
 
         //$schedule->command('licencias:enviar-recordatorios')->daily();
-        $schedule->command('licencias:enviar-recordatorios')->dailyAt('17:18');
+        $schedule->command('licencias:enviar-recordatorios')->dailyAt('08:30');
     }
 
     protected function commands()

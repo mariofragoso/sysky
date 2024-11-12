@@ -100,7 +100,7 @@
                 <div class="col-md-6">
                     <label for="estado">Estado:</label>
                     <select id="estado" name="estado" class="form-control" required>
-                        <option value="Asignado" {{ $equipo->estado == 'Asignado' ? 'selected' : '' }}>Asignado</option>
+                        <option hidden value="Asignado" {{ $equipo->estado == 'Asignado' ? 'selected' : '' }}>Asignado</option>
                         <option value="No asignado" {{ $equipo->estado == 'No asignado' ? 'selected' : '' }}>No asignado
                         </option>
                         <option value="Baja" {{ $equipo->estado == 'Baja' ? 'selected' : '' }}>Baja</option>

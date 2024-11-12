@@ -23,7 +23,6 @@
                         <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" required>
                     </div>
 
-                    <!-- Otros campos según sea necesario -->
 
                     <button type="submit" class="btn btn-primary mt-3">Actualizar Perfil</button>
                 </form>
