@@ -156,15 +156,15 @@ class EquipoController extends Controller
     {
         $search = $request->input('search');
         $sortField = $request->input('sort', 'created_at');
-        $sortOrder = $request->input('order', 'desc');
+        $sortOrder = $request->input('order', 'asc');
 
         $equipos = Equipo::where('estado', 'Baja')
             ->when($search, function ($query, $search) {
                 return $query->where('numero_serie', 'like', "%{$search}%")
-                    ->orWhere('marca', 'like', "%{$search}%")
+                    ->orWhere('marca_id', 'like', "%{$search}%")
                     ->orWhere('modelo', 'like', "%{$search}%")
                     ->orWhere('etiqueta_skytex', 'like', "%{$search}%")
-                    ->orWhere('tipo', 'like', "%{$search}%")
+                    ->orWhere('tipo_equipo_id', 'like', "%{$search}%")
                     ->orWhere('orden_compra', 'like', "%{$search}%")
                     ->orWhere('requisicion', 'like', "%{$search}%");
             })

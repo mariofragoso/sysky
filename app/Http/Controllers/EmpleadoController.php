@@ -45,7 +45,15 @@ class EmpleadoController extends Controller
             'status' => 'required|string|max:100',
         ]);
 
-        Empleado::create($request->all());
+        $empleado = Empleado::create($request->all());
+
+        // Registrar la acción
+        $accion = new Acciones();
+        $accion->modulo = "Empleados";
+        $accion->descripcion = "Se creó un nuevo empleado: " . $empleado->nombre . " " . $empleado->apellidoP . " " . $empleado->apellidoM . " (Nómina: " . $empleado->numero_nomina . ")";
+        $accion->usuario_responsable_id = Auth::user()->id;
+        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+        $accion->save();
 
         return redirect()->route('empleados.index')->with('success', 'Empleado creado exitosamente.');
     }
@@ -80,6 +88,14 @@ class EmpleadoController extends Controller
         $empleado = Empleado::find($id);
         $empleado->update($request->all());
 
+        // Registrar la acción
+        $accion = new Acciones();
+        $accion->modulo = "Empleados";
+        $accion->descripcion = "Se actualizó el empleado: " . $empleado->nombre . " " . $empleado->apellidoP . " " . $empleado->apellidoM . " (Nómina: " . $empleado->numero_nomina . ")";
+        $accion->usuario_responsable_id = Auth::user()->id;
+        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+        $accion->save();
+
         return redirect()->route('empleados.index')->with('success', 'Empleado actualizado exitosamente.');
     }
 
@@ -100,31 +116,29 @@ class EmpleadoController extends Controller
     {
         // Buscar la asignación de equipo por su ID
         $asignacion = AsignacionEquipo::find($idAsignacion);
-        
+
         $accion = new Acciones();
         $accion->modulo = "Empleados";
-        $accion->descripcion = "Se registró la desasignacion de equipo: " . $asignacion->equipo->etiqueta_skytex . " de el empleado: " . $asignacion->empleado->nombre . " " . $asignacion->empleado-> apellidoP . " " .$asignacion->empleado-> apellidoM;
+        $accion->descripcion = "Se registró la desasignacion de equipo: " . $asignacion->equipo->etiqueta_skytex . " de el empleado: " . $asignacion->empleado->nombre . " " . $asignacion->empleado->apellidoP . " " . $asignacion->empleado->apellidoM;
         $accion->usuario_responsable_id = Auth::user()->id;
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();
-    
+
         if ($asignacion) {
             // Cambiar el estado del equipo a "no asignado"
             $equipo = $asignacion->equipo;
             $equipo->estado = 'No asignado';  // Actualizar el estado del equipo
             $equipo->save();
-    
+
             // Actualizar el estado de la asignación en lugar de eliminarla
             $asignacion->estado = 'No asignado'; // O 'desasignado'
             $asignacion->save();
-    
+
             return redirect()->route('empleados.show', $asignacion->empleado_id)
                 ->with('success', 'Equipo desasignado y marcado como no asignado exitosamente.');
         }
-    
+
         return redirect()->route('empleados.show', $asignacion->empleado_id)
             ->with('error', 'La asignación no fue encontrada.');
     }
-    
-
 }

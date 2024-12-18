@@ -1,76 +1,111 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use App\Models\Acciones;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmpresaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    // Mostrar lista de empresas
     public function index()
     {
-        // Implementar paginación de 10 elementos por página
-        $empresas = Empresa::paginate(5);
+        $empresas = Empresa::paginate(10);
+
         return view('empresas.index', compact('empresas'));
     }
 
+    // Mostrar formulario para crear una nueva empresa
     public function create()
     {
         return view('empresas.create');
     }
 
+    // Almacenar una nueva empresa
     public function store(Request $request)
     {
-        // Validar la entrada
         $request->validate([
-            'nombre' => 'required|max:50',
+            'nombre' => 'required|max:50|unique:empresas,nombre',
         ]);
 
-        // Verificar si la empresa ya existe
-        $empresaExistente = Empresa::where('nombre', $request->nombre)->first();
-        if ($empresaExistente) {
+        try {
+            $empresa = Empresa::create($request->all());
+
+            // Registrar la acción
+            $this->registrarAccion('Crear', "Se creó la empresa: {$empresa->nombre}");
+
             return redirect()->route('empresas.index')
-                ->with('error', 'La empresa ya existe.');
+                ->with('success', 'Empresa creada exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('empresas.index')
+                ->with('error', 'Ocurrió un error al crear la empresa. Intente nuevamente.');
         }
-
-        // Crear la nueva empresa
-        Empresa::create($request->all());
-
-        return redirect()->route('empresas.index')
-            ->with('success', 'Empresa creada exitosamente.');
     }
 
+    // Mostrar detalles de una empresa
     public function show(Empresa $empresa)
     {
         return view('empresas.show', compact('empresa'));
     }
 
+    // Mostrar formulario para editar una empresa
     public function edit(Empresa $empresa)
     {
         return view('empresas.edit', compact('empresa'));
     }
 
+    // Actualizar una empresa
     public function update(Request $request, Empresa $empresa)
     {
         $request->validate([
-            'nombre' => 'required|max:50',
+            'nombre' => 'required|max:50|unique:empresas,nombre,' . $empresa->id,
         ]);
 
-        $empresa->update($request->all());
+        try {
+            $empresa->update($request->all());
 
-        return redirect()->route('empresas.index')
-            ->with('success', 'Empresa actualizada exitosamente.');
+            // Registrar la acción
+            $this->registrarAccion('Editar', "Se actualizó la empresa: {$empresa->nombre}");
+
+            return redirect()->route('empresas.index')
+                ->with('success', 'Empresa actualizada exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('empresas.index')
+                ->with('error', 'Ocurrió un error al actualizar la empresa. Intente nuevamente.');
+        }
     }
 
+    // Eliminar una empresa
     public function destroy(Empresa $empresa)
     {
-        $empresa->delete();
+        try {
+            $empresa->delete();
 
-        return redirect()->route('empresas.index')
-            ->with('success', 'Empresa eliminada exitosamente.');
+            // Registrar la acción
+            $this->registrarAccion('Eliminar', "Se eliminó la empresa: {$empresa->nombre}");
+
+            return redirect()->route('empresas.index')
+                ->with('success', 'Empresa eliminada exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('empresas.index')
+                ->with('error', 'Ocurrió un error al eliminar la empresa. Intente nuevamente.');
+        }
     }
 
-    public function __construct()
+    // Método privado para registrar acciones
+    private function registrarAccion($accion, $descripcion)
     {
-        $this->middleware('auth');
+        Acciones::create([
+            'modulo' => 'Empresas',
+            'descripcion' => $descripcion,
+            'usuario_responsable_id' => Auth::user()->id, // Usuario autenticado
+        ]);
     }
 }

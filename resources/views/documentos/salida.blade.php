@@ -132,7 +132,7 @@
     <div class="section">
         <table>
             <tr>
-                <td><strong>Nota de Salida:</strong> {!! nl2br(e($salida->nota_salida )) !!}</td>
+                <td><strong>Nota de Salida:</strong> {!! nl2br(e($salida->nota_salida)) !!}</td>
             </tr>
     </div>
     </table>
@@ -146,17 +146,18 @@
         <div class="signatures">
             <div class="signature">
                 <div class="signature-line"></div>
+                <p>{{ $salida->empleado->nombre }} {{ $salida->empleado->apellidoP }}
+                    {{ $salida->empleado->apellidoM }}<br>Firma del solicitante</p>
+            </div>
+            <div class="signature">
+                <div class="signature-line"></div>
                 <p>Nombre y firma del Gerente</p>
             </div>
             <div class="signature">
                 <div class="signature-line"></div>
-                <p>{{ $salida->usuarioResponsable->name ?? 'N/A' }}<br>Autoriza</p>
+                <p>{{ $salida->usuarioResponsable->name ?? 'N/A' }}<br>Firma de IT</p>
             </div>
-            <div class="signature">
-                <div class="signature-line"></div>
-                <p>{{ $salida->empleado->nombre }} {{ $salida->empleado->apellidoP }}
-                    {{ $salida->empleado->apellidoM }}<br>Firma del solicitante</p>
-            </div>
+
         </div>
     </div>
     <div class="section footer">

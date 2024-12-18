@@ -178,7 +178,7 @@ class AsignacionAccesoriosController extends Controller
     public function sendLowStockNotification($accesorio)
     {
         // Define el correo específico al que deseas enviar la notificación
-        $toEmail = 'soporte.hw3@skytex.com.mx';
+        $toEmail = 'gerente.it@skytex.com.mx';
 
         // Enviar la notificación por correo
         Notification::route('mail', $toEmail)->notify(new LowStockNotification($accesorio));

@@ -5,7 +5,20 @@
 @section('contenido')
     <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
         <div class="card-body">
-            <h4>Equipos con estado Baja</h4>
+
+            <!-- Barra de búsqueda -->
+            <form action="{{ route('equipos.baja') }}" method="GET" class="mb-3">
+                <div class="row">
+                    <div class="col-md-10">
+                        <input type="text" name="search" class="form-control" placeholder="Buscar por Número de Serie o Etiqueta Skytex" value="{{ request('search') }}">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Tabla de equipos -->
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -19,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($equipos as $equipo)
+                    @forelse ($equipos as $equipo)
                         <tr>
                             <td>{{ $equipo->numero_serie }}</td>
                             <td>{{ optional($equipo->marca)->nombre ?? '' }}</td>
@@ -37,9 +50,15 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="7" class="text-center">No se encontraron equipos.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
+
+            <!-- Paginación -->
             {{ $equipos->links() }}
         </div>
     </div>
