@@ -44,20 +44,22 @@
                     </thead>
                     <tbody>
                         @forelse ($equipos as $equipo)
-                            <tr>
+                            <tr
+                                class="
+                        @if ($equipo->estado === 'Baja') table-danger @endif">
+
                                 <td>{{ $equipo->numero_serie }}</td>
                                 <td>{{ optional($equipo->marca)->nombre ?? '' }}</td>
                                 <td>{{ $equipo->modelo }}</td>
                                 <td>{{ $equipo->etiqueta_skytex }}</td>
                                 <td>{{ optional($equipo->tipoEquipo)->nombre ?? '' }}</td>
                                 <td>
-
                                     <span
                                         class="badge rounded-pill 
-                @if ($equipo->estado == 'No Asignado') badge-secondary
-                @elseif ($equipo->estado == 'Asignado') badge-primary
-                @elseif ($equipo->estado == 'Baja') badge-danger
-                @else badge-default @endif">
+                                    @if ($equipo->estado == 'No Asignado') badge-secondary
+                                    @elseif ($equipo->estado == 'Asignado') badge-primary
+                                    @elseif ($equipo->estado == 'Baja') badge-danger
+                                    @else badge-default @endif">
                                         {{ $equipo->estado }}
                                     </span>
                                 </td>
@@ -80,8 +82,8 @@
                                 <td colspan="9" class="text-center">No se encontraron equipos</td>
                             </tr>
                         @endforelse
-
                     </tbody>
+
                 </table>
             </div>
         </div>

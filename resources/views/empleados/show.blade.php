@@ -32,6 +32,10 @@
                         <th>Área</th>
                         <td>{{ $empleado->area }}</td>
                     </tr>
+                    <tr>
+                        <th>Estado</th>
+                        <td>{{ $empleado->status }}</td>
+                    </tr>
                 </table>
             </div>
 

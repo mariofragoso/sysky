@@ -107,7 +107,7 @@ class EquipoController extends Controller
 
     public function update(Request $request, Equipo $equipo)
     {
-        // Validación y actualización del equipo
+        // Validación del equipo
         $request->validate([
             'numero_serie' => 'required|unique:equipos,numero_serie,' . $equipo->id,
             'marca_id' => 'required|exists:marcas,id',
@@ -122,12 +122,22 @@ class EquipoController extends Controller
             'etiqueta_skytex.unique' => 'La etiqueta Skytex ya está registrada.',
         ]);
 
+        // Verificar si el estado cambia a "Baja"
+        $cambioEstado = $request->estado === 'Baja' && $equipo->estado !== 'Baja';
+
+        // Actualizar equipo
         $equipo->update($request->all());
 
         // Registrar la acción
         $accion = new Acciones();
         $accion->modulo = "Equipo";
-        $accion->descripcion = "Se Edito el equipo: " . $equipo->etiqueta_skytex;
+
+        if ($cambioEstado) {
+            $accion->descripcion = "Se dio de baja el equipo: " . $equipo->etiqueta_skytex;
+        } else {
+            $accion->descripcion = "Se editó el equipo: " . $equipo->etiqueta_skytex;
+        }
+
         $accion->usuario_responsable_id = Auth::user()->id;
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();
@@ -139,7 +149,6 @@ class EquipoController extends Controller
         return redirect()->route('equipos.index', ['page' => $page])
             ->with('success', 'Equipo actualizado correctamente.');
     }
-
     public function destroy(Equipo $equipo)
     {
         $equipo->delete();
@@ -155,8 +164,8 @@ class EquipoController extends Controller
     public function baja(Request $request)
     {
         $search = $request->input('search');
-        $sortField = $request->input('sort', 'created_at');
-        $sortOrder = $request->input('order', 'asc');
+        $sortField = $request->input('sort', 'updated_at');
+        $sortOrder = $request->input('order', 'desc');
 
         $equipos = Equipo::where('estado', 'Baja')
             ->when($search, function ($query, $search) {

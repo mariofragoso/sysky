@@ -26,12 +26,8 @@
                 <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th><a
-                                    href="{{ route('asignacionesequipos.index', ['sort' => 'empleado', 'order' => $sortField === 'empleado' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Empleado</a>
-                            </th>
-                            <th><a
-                                    href="{{ route('asignacionesequipos.index', ['sort' => 'equipo', 'order' => $sortField === 'equipo' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Equipo</a>
-                            </th>
+                            <th>Empleado</th>
+                            <th>Etiqueta Skytex</th>
                             <th>Equipo</th>
                             <th><a
                                     href="{{ route('asignacionesequipos.index', ['sort' => 'fecha_asignacion', 'order' => $sortField === 'fecha_asignacion' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">Fecha
