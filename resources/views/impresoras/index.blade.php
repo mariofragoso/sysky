@@ -5,7 +5,6 @@
 @section('contenido')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="h3">Listado de Impresoras</h1>
         <a href="{{ route('impresoras.create') }}" class="btn btn-success">
             <i class="bi bi-plus-circle"></i> Agregar Nueva Impresora
         </a>

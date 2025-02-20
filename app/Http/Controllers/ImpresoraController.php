@@ -4,39 +4,73 @@ namespace App\Http\Controllers;
 
 use App\Models\Impresora;
 use Illuminate\Http\Request;
+use App\Services\PingService;
 
 class ImpresoraController extends Controller
 {
+    protected $pingService;
+
+    /**
+     * Constructor del controlador.
+     *
+     * @param PingService $pingService
+     */
+    public function __construct(PingService $pingService)
+    {
+        $this->middleware('auth');
+        $this->pingService = $pingService;
+    }
+
+    /**
+     * Muestra una lista de todas las impresoras.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $impresoras = Impresora::all();
 
-        // Verificar el estado de cada impresora usando el método ping() de esta clase
-        $impresoras->map(function ($impresora) {
-            $impresora->estado = $this->ping($impresora->ip);  // Ajuste aquí
+        // Verificar el estado de cada impresora usando el servicio de ping
+        $impresoras->each(function ($impresora) {
+            $impresora->estado = $this->pingService->ping($impresora->ip) ? 'En línea' : 'Sin Red';
         });
 
         return view('impresoras.index', compact('impresoras'));
     }
 
+    /**
+     * Obtiene y actualiza el estado de todas las impresoras.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getEstados()
     {
         $impresoras = Impresora::all();
 
-        foreach ($impresoras as $impresora) {
-            $impresora->estado = $this->ping($impresora->ip) ? 'En linea' : 'Sin Red';
+        $impresoras->each(function ($impresora) {
+            $impresora->estado = $this->pingService->ping($impresora->ip) ? 'En línea' : 'Sin Red';
             $impresora->save(); // Guardar el nuevo estado
-        }
+        });
 
         return response()->json($impresoras);
     }
 
-
+    /**
+     * Muestra el formulario para crear una nueva impresora.
+     *
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
         return view('impresoras.create');
     }
 
+    /**
+     * Almacena una nueva impresora en la base de datos.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -51,11 +85,24 @@ class ImpresoraController extends Controller
         return redirect()->route('impresoras.index')->with('success', 'Impresora registrada correctamente.');
     }
 
+    /**
+     * Muestra el formulario para editar una impresora.
+     *
+     * @param Impresora $impresora
+     * @return \Illuminate\View\View
+     */
     public function edit(Impresora $impresora)
     {
         return view('impresoras.edit', compact('impresora'));
     }
 
+    /**
+     * Actualiza una impresora en la base de datos.
+     *
+     * @param Request $request
+     * @param Impresora $impresora
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, Impresora $impresora)
     {
         $request->validate([
@@ -69,51 +116,32 @@ class ImpresoraController extends Controller
         return redirect()->route('impresoras.index')->with('success', 'Impresora actualizada correctamente.');
     }
 
+    /**
+     * Muestra los detalles de una impresora.
+     *
+     * @param int $id
+     * @return \Illuminate\View\View
+     */
     public function show($id)
     {
         $impresora = Impresora::findOrFail($id);
         return view('impresoras.show', compact('impresora'));
     }
 
-
-
-
-    function ping($host, $timeout = 1)
-    {
-        $output = null;
-        $status = null;
-
-        // Ejecuta ping basado en el sistema operativo
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            exec("ping -n 1 -w " . ($timeout * 1000) . " {$host}", $output, $status);
-        } else {
-            exec("ping -c 1 -W {$timeout} {$host}", $output, $status);
-        }
-
-        return $status === 0 ? 'En línea' : 'Sin Red';
-    }
-
+    /**
+     * Actualiza el estado de una impresora específica.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateEstado($id)
     {
         $impresora = Impresora::findOrFail($id);
 
-        // Simulación de estado basado en un ping
-        $enLinea = $this->realizarPing($impresora->ip);
-
+        $enLinea = $this->pingService->ping($impresora->ip);
         $impresora->estado = $enLinea ? 'En línea' : 'Sin red';
-        $impresora->save(); // Asegúrate de guardar el estado actualizado
+        $impresora->save();
 
         return response()->json(['estado' => $impresora->estado]);
-        if ($impresora->save()) {
-            return "Estado actualizado correctamente.";
-        } else {
-            return "Error al actualizar el estado.";
-        }
     }
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
 }

@@ -193,6 +193,17 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
+    <div class="sidebar-heading">
+        Otro
+    </div>
+    <li class="nav-item {{ Request::routeIs('impresoras.index') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('impresoras.index') }}">
+            <i class="fas fa-laptop-house"></i>
+            <span>Test Impresoras</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
+
     <!-- Heading -->
     <div class="sidebar-heading">
         Ajustes
