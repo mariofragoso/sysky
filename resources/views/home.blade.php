@@ -83,10 +83,10 @@
         </div>
     </div>
 
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
+    <div class="card shadow-lg p-5 mb-5 bg-white rounded mb-4">
         <div class="card-body row">
             <div class="col-lg-6">
-                <div class="chart-container" style="position: relative; height:40vh; width:40vw">
+                <div class="chart-container" style="position: relative; height:45vh; width:40vw">
                     <canvas id="equiposChart"></canvas>
                 </div>
             </div>

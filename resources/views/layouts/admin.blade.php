@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ env('APP_NAME') }} - @yield('titulo')</title>
+    <title>{{ config('app.name') }} - @yield('titulo')</title>
 
 
     <!-- Custom fonts for this template-->
@@ -46,7 +46,8 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light" style="background-color: #2c3e50;"; topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light" style="background-color: #2c3e50;"; topbar mb-4
+                    static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -136,6 +137,26 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal de Errores -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="errorModalLabel">Errores en el formulario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li class="text-danger">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -410,6 +431,7 @@
     }
 
     #navbarDropdown {
-    color: #ffffff !important; /* Blanco */
-}
+        color: #ffffff !important;
+        /* Blanco */
+    }
 </style>

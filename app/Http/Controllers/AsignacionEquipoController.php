@@ -14,6 +14,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use App\Exports\AsignacionesEquiposExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class AsignacionEquipoController extends Controller
 {
@@ -120,19 +123,19 @@ class AsignacionEquipoController extends Controller
         $request->validate([
             'asignaciones' => 'required|json',
         ]);
-    
+
         // Decodificar las asignaciones recibidas
         $asignaciones = json_decode($request->asignaciones, true);
-    
+
         foreach ($asignaciones as $asignacionData) {
             // Buscar el equipo por ID
             $equipo = Equipo::findOrFail($asignacionData['equipo_id']);
-    
+
             // Verificar si el equipo está asignado
             if ($equipo->estado == 'Asignado') {
                 // Recuperar la asignación actual para obtener el usuario al que está asignado
                 $asignacionActual = AsignacionEquipo::where('equipo_id', $equipo->id)->latest()->first();
-    
+
                 // Verificar si existe una asignación previa y obtener el usuario
                 if ($asignacionActual) {
                     $usuarioAsignado = $asignacionActual->usuario->name;
@@ -140,26 +143,26 @@ class AsignacionEquipoController extends Controller
                         'El equipo ' . $equipo->etiqueta_skytex . ' ya está asignado'
                     ]);
                 }
-    
+
                 return redirect()->back()->withErrors([
                     'El equipo ' . $equipo->etiqueta_skytex . ' ya está asignado.'
                 ]);
             }
-    
+
             // Verificar si el equipo está dado de baja
             if ($equipo->estado == 'Baja') {
                 return redirect()->back()->withErrors([
                     'El equipo ' . $equipo->etiqueta_skytex . ' está dado de baja.'
                 ]);
             }
-    
+
             // Asignar el equipo
             $asignacionData['usuario_responsable'] = Auth::id(); // Establecer el usuario autenticado
             AsignacionEquipo::create($asignacionData);
-    
+
             // Actualizar el estado del equipo a "Asignado"
             $equipo->update(['estado' => $asignacionData['estado']]);
-    
+
             // Registrar la acción
             $accion = new Acciones();
             $accion->modulo = "Asignación de Equipo";
@@ -168,11 +171,11 @@ class AsignacionEquipoController extends Controller
             $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
             $accion->save();
         }
-    
+
         // Redirigir a la vista de índice con un mensaje de éxito
         return redirect()->route('asignacionesequipos.index')->with('success', 'Las asignaciones de equipos se han creado correctamente.');
     }
-    
+
 
 
     public function show($id)
@@ -204,5 +207,10 @@ class AsignacionEquipoController extends Controller
 
         return redirect()->route('asignacionesequipos.index')
             ->with('success', 'Asignación de equipo eliminada correctamente');
+    }
+    
+    public function exportExcel()
+    {
+        return Excel::download(new AsignacionesEquiposExport, 'asignaciones_equipos.xlsx');
     }
 }

@@ -6,6 +6,9 @@
     <div>
         <a href="{{ route('asignacionesequipos.create') }}" class="btn btn-secondary mb-3">Registrar Nueva Asignación +</a>
         <a href="https://drive.google.com/drive/folders/19tknKByTY52YGtjIVrjk9Pr7sndunRib" class="btn btn-success mb-3" target="_blank">Subir formato de asignacion</a>
+        <a href="{{ route('asignacionesequipos.export') }}" class="btn btn-info mb-3" class="fas fa-file-excel" >Exportar a Excel XL</a>
+
+
     </div>
 
     <!-- Barra de búsqueda -->

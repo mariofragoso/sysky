@@ -167,6 +167,9 @@ Route::delete('/empresas/{empresa}', [EmpresaController::class, 'destroy'])->nam
 //Ruta para listar todas las asignaciones de equipos
 Route::get('asignacionesequipos', [AsignacionEquipoController::class, 'index'])->name('asignacionesequipos.index');
 
+//Ruta para exportar a excel
+Route::get('/asignacionesequipos/export', [AsignacionEquipoController::class, 'exportExcel'])->name('asignacionesequipos.export');
+
 //Ruta para mostrar el formulario de creacion de una nueva asignacionde equipo
 Route::get('asignacionesequipos/create', [AsignacionEquipoController::class, 'create'])->name('asignacionesequipos.create');
 
@@ -184,6 +187,7 @@ Route::put('asignacionesequipos/{asignacion}', [AsignacionEquipoController::clas
 
 // Ruta para eliminar una asignación de equipo específica
 Route::delete('asignacionesequipos/{asignacion}', [AsignacionEquipoController::class, 'destroy'])->name('asignacionesequipos.destroy');
+
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------//
