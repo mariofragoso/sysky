@@ -10,7 +10,8 @@
             <form action="{{ route('equipos.baja') }}" method="GET" class="mb-3">
                 <div class="row">
                     <div class="col-md-10">
-                        <input type="text" name="search" class="form-control" placeholder="Buscar por Número de Serie o Etiqueta Skytex" value="{{ request('search') }}">
+                        <input type="text" name="search" class="form-control"
+                            placeholder="Buscar por Número de Serie o Etiqueta Skytex" value="{{ request('search') }}">
                     </div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-primary">Buscar</button>
@@ -43,11 +44,16 @@
                             <td>
                                 <a href="{{ route('equipos.show', $equipo->id) }}" class="btn btn-info">Ver</a>
                                 <a href="{{ route('equipos.edit', $equipo->id) }}" class="btn btn-warning">Editar</a>
-                                <form hidden action="{{ route('equipos.destroy', $equipo->id) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de que desea eliminar este equipo?')">Eliminar</button>
-                                </form>
+
+                                @if (in_array(auth()->id(), [1]))
+                                    <form action="{{ route('equipos.destroy', $equipo->id) }}" method="POST"
+                                        style="display:inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('¿Está seguro de que desea eliminar este equipo?')">Eliminar</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @empty

@@ -10,7 +10,12 @@ class AccionesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (!in_array(auth()->id(), [1])) {
+                abort(403, 'Acceso no autorizado');
+            }
+            return $next($request);
+        });
     }
 
     public function index(Request $request)

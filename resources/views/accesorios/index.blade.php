@@ -24,7 +24,8 @@
                 <thead>
                     <tr>
                         <th>
-                            <a href="{{ route('accesorios.index', ['sort' => 'descripcion', 'order' => $sortField === 'descripcion' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                            <a
+                                href="{{ route('accesorios.index', ['sort' => 'descripcion', 'order' => $sortField === 'descripcion' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
                                 Descripción
                                 @if ($sortField === 'descripcion')
                                     @if ($sortOrder === 'asc')
@@ -36,7 +37,8 @@
                             </a>
                         </th>
                         <th>
-                            <a href="{{ route('accesorios.index', ['sort' => 'marca_id', 'order' => $sortField === 'marca_id' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                            <a
+                                href="{{ route('accesorios.index', ['sort' => 'marca_id', 'order' => $sortField === 'marca_id' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
                                 Marca
                                 @if ($sortField === 'marca_id')
                                     @if ($sortOrder === 'asc')
@@ -48,7 +50,8 @@
                             </a>
                         </th>
                         <th>
-                            <a href="{{ route('accesorios.index', ['sort' => 'modelo', 'order' => $sortField === 'modelo' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                            <a
+                                href="{{ route('accesorios.index', ['sort' => 'modelo', 'order' => $sortField === 'modelo' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
                                 Modelo
                                 @if ($sortField === 'modelo')
                                     @if ($sortOrder === 'asc')
@@ -77,11 +80,16 @@
                             <td>
                                 <a href="{{ route('accesorios.show', $accesorio->id) }}" class="btn btn-info">Ver</a>
                                 <a href="{{ route('accesorios.edit', $accesorio->id) }}" class="btn btn-warning">Editar</a>
-                                <form hidden action="{{ route('accesorios.destroy', $accesorio->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este accesorio?')">Eliminar</button>
-                                </form>
+
+                                @if (in_array(auth()->id(), [1]))
+                                    <form action="{{ route('accesorios.destroy', $accesorio->id) }}" method="POST"
+                                        style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('¿Está seguro de que desea eliminar este accesorio?')">Eliminar</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

@@ -20,8 +20,7 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover text-justify barang-table"
-                style="width: 100%">
+                <table class="table table-striped table-bordered table-hover text-justify barang-table" style="width: 100%">
                     <thead>
                         <tr>
                             <th>Número de Nómina</th>
@@ -43,13 +42,16 @@
                                         class="btn btn-info btn-sm">Ver</a>
                                     <a href="{{ route('empleados.edit', $empleado->id) }}"
                                         class="btn btn-warning btn-sm">Editar</a>
-                                    <form hidden action="{{ route('empleados.destroy', $empleado->id) }}" method="POST"
-                                        style="display:inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('¿Estás seguro de eliminar este empleado?')">Eliminar</button>
-                                    </form>
+
+                                    @if (in_array(auth()->id(), [1]))
+                                        <form action="{{ route('empleados.destroy', $empleado->id) }}" method="POST"
+                                            style="display:inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('¿Estás seguro de eliminar este empleado?')">Eliminar</button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @empty
@@ -68,4 +70,3 @@
         {{ $empleados->appends(['search' => request('search'), 'sort' => $sortField, 'order' => $sortOrder])->links() }}
     </div>
 @endsection
-

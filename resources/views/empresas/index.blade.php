@@ -125,6 +125,44 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if (in_array(auth()->id(), [1]))
+                                    <!-- Botón para eliminar -->
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteEmpresaModal-{{ $empresa->id }}">
+                                        Eliminar
+                                    </button>
+
+                                    <!-- Modal de confirmación de eliminación -->
+                                    <div class="modal fade" id="deleteEmpresaModal-{{ $empresa->id }}" tabindex="-1"
+                                        aria-labelledby="deleteEmpresaModalLabel-{{ $empresa->id }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"
+                                                        id="deleteEmpresaModalLabel-{{ $empresa->id }}">
+                                                        Confirmar Eliminación</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>¿Estás seguro de que deseas eliminar la empresa
+                                                        <strong>{{ $empresa->nombre }}</strong>?
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="{{ route('empresas.destroy', $empresa->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

@@ -44,13 +44,15 @@
             <a href="{{ route('asignacionaccesorios.index') }}" class="btn btn-secondary">Volver a la lista</a>
             <a href="{{ route('asignacionaccesorios.edit', $asignacion->id) }}" class="btn btn-primary">Editar</a>
 
-            <form hidden action="{{ route('asignacionaccesorios.destroy', $asignacion->id) }}" method="POST"
-                style="display: inline-block;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger"
-                    onclick="return confirm('¿Está seguro de que desea eliminar este accesorio?')">Eliminar</button>
-            </form>
+            @if (in_array(auth()->id(), [1]))
+                <form action="{{ route('asignacionaccesorios.destroy', $asignacion->id) }}" method="POST"
+                    style="display: inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('¿Está seguro de que desea eliminar este accesorio?')">Eliminar</button>
+                </form>
+            @endif
         </div>
     </div>
 @endsection

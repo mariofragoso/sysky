@@ -49,7 +49,7 @@
         </div>
     </div>
 
-    <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
+    <div class="card shadow-lg p-6 mb-5 bg-white rounded mb-4">
         <div class="card-body">
             <table class="table table-striped table-hover">
                 <thead>
@@ -68,6 +68,16 @@
                                     data-bs-target="#editTipoEquipoModal-{{ $tipoEquipo->id }}">
                                     Editar
                                 </button>
+                                @if (in_array(auth()->id(), [1]))
+                                    <!-- Botón para eliminar -->
+                                    <form action="{{ route('tiposequipos.destroy', $tipoEquipo->id) }}" method="POST"
+                                        class="d-inline"
+                                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar este tipo de equipo?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </form>
+                                @endif
 
                                 <!-- Modal de edición -->
                                 <!-- Modal de edición -->

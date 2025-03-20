@@ -5,9 +5,12 @@
 @section('contenido')
     <div>
         <a href="{{ route('asignacionesequipos.create') }}" class="btn btn-secondary mb-3">Registrar Nueva Asignación +</a>
-        <a href="https://drive.google.com/drive/folders/19tknKByTY52YGtjIVrjk9Pr7sndunRib" class="btn btn-success mb-3" target="_blank">Subir formato de asignacion</a>
-        <a href="{{ route('asignacionesequipos.export') }}" class="btn btn-info mb-3" class="fas fa-file-excel" >Exportar a Excel XL</a>
-
+        <a href="https://drive.google.com/drive/folders/19tknKByTY52YGtjIVrjk9Pr7sndunRib" class="btn btn-success mb-3"
+            target="_blank">Subir formato de asignacion</a>
+        @if (in_array(auth()->id(), [1]))
+            <a href="{{ route('asignacionesequipos.export') }}" class="btn btn-info mb-3" class="fas fa-file-excel">Exportar a
+                Excel XL</a>
+        @endif
 
     </div>
 
@@ -60,13 +63,17 @@
                                         class="btn btn-warning btn-sm">Editar</a>
                                     <a href="{{ route('asignacionesequipos.pdf', $asignacion->id) }}"
                                         class="btn btn-primary btn-sm" target="_blank">Ver PDF</a>
-                                    <form hidden type action="{{ route('asignacionesequipos.destroy', $asignacion->id) }}"
-                                        method="POST" style="display:inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="hidden" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('¿Estás seguro de eliminar esta asignación?')">Eliminar</button>
-                                    </form>
+
+                                    @if (in_array(auth()->id(), [1]))
+                                        <form action="{{ route('asignacionesequipos.destroy', $asignacion->id) }}"
+                                            method="POST" style="display:inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm"
+                                                onclick="return confirm('¿Estás seguro de eliminar esta asignación?')">Eliminar</button>
+                                        </form>
+                                    @endif
+
                                 </td>
                             </tr>
                         @endforeach

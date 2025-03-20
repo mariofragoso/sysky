@@ -127,6 +127,32 @@ class SalidaEquipoController extends Controller
 
         return redirect()->route('salidas.index')->with('success', 'Regreso registrado exitosamente.');
     }
+    public function destroy($id)
+    {
+        $salida = SalidaEquipo::findOrFail($id);
+
+        // Eliminar imágenes si existen
+        if ($salida->imagen) {
+            Storage::disk('public')->delete($salida->imagen);
+        }
+        if ($salida->imagen_regreso) {
+            Storage::disk('public')->delete($salida->imagen_regreso);
+        }
+
+        // Registrar la acción en el log
+        $accion = new Acciones();
+        $accion->modulo = "Salida de Equipos";
+        $accion->descripcion = "Se eliminó la salida del equipo con número de serie: " . $salida->equipo->numero_serie;
+        $accion->usuario_responsable_id = Auth::user()->id;
+        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
+        $accion->save();
+
+        // Eliminar la salida
+        $salida->delete();
+
+        return redirect()->route('salidas.index')->with('success', 'Salida eliminada exitosamente.');
+    }
+
 
     public function generarPDF($id)
     {

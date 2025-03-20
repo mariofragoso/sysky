@@ -218,7 +218,9 @@
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('acciones.index') }}">Acciones</a>
+                @if (in_array(auth()->id(), [1]))
+                    <a class="collapse-item" href="{{ route('acciones.index') }}">Acciones</a>
+                @endif
                 <a class="collapse-item" href="{{ route('empresas.index') }}">Nueva Empresas</a>
                 <a class="collapse-item" href="{{ route('tiposequipos.index') }}">Nuevo Tipo de Equipo</a>
                 <a class="collapse-item" href="{{ route('marcas.index') }}">Nueva Marca de Equipo</a>

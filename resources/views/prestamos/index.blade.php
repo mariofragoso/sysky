@@ -55,18 +55,22 @@
                                 <td>{{ $prestamo->usuario->name }}</td>
                                 <td>{{ $prestamo->devuelto ? 'Sí' : 'No' }}</td>
                                 <td>
-                                    <a href="{{ route('prestamos.show', $prestamo->id) }}" class="btn btn-info btn-sm">Ver</a>
+                                    <a href="{{ route('prestamos.show', $prestamo->id) }}"
+                                        class="btn btn-info btn-sm">Ver</a>
                                     <a href="{{ route('prestamos.edit', $prestamo->id) }}?page={{ $prestamos->currentPage() }}"
                                         class="btn btn-warning btn-sm">Editar</a>
                                     <a href="{{ route('prestamos.pdf', $prestamo->id) }}" class="btn btn-primary btn-sm"
                                         target="_blank">Ver PDF</a>
-                                    <!--<form hidden action="{{ route('prestamos.destroy', $prestamo->id) }}" method="POST"
-                                        style="display:inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger"
-                                            onclick="return confirm('¿Está seguro de que desea eliminar este préstamo?')">Eliminar</button>
-                                    </form>-->
+
+                                    @if (in_array(auth()->id(), [1]))
+                                        <form hidden action="{{ route('prestamos.destroy', $prestamo->id) }}"
+                                            method="POST" style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger"
+                                                onclick="return confirm('¿Está seguro de que desea eliminar este préstamo?')">Eliminar</button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -81,22 +85,22 @@
 
     <script>
         // Seleccionar/Deseleccionar todos los checkboxes
-        document.getElementById('select-all').addEventListener('click', function (event) {
+        document.getElementById('select-all').addEventListener('click', function(event) {
             const checkboxes = document.querySelectorAll('input[name="prestamos[]"]');
             checkboxes.forEach(checkbox => checkbox.checked = event.target.checked);
         });
     </script>
     <script>
         // Seleccionar/Deseleccionar todos los checkboxes
-        document.getElementById('select-all').addEventListener('click', function (event) {
+        document.getElementById('select-all').addEventListener('click', function(event) {
             const checkboxes = document.querySelectorAll('input[name="prestamos[]"]');
             checkboxes.forEach(checkbox => checkbox.checked = event.target.checked);
         });
-    
+
         // Validar si hay algún checkbox seleccionado antes de enviar el formulario
-        document.getElementById('pdf-form').addEventListener('submit', function (event) {
+        document.getElementById('pdf-form').addEventListener('submit', function(event) {
             const checkboxes = document.querySelectorAll('input[name="prestamos[]"]:checked');
-            
+
             if (checkboxes.length === 0) {
                 event.preventDefault(); // Evitar que el formulario se envíe
                 alert('Por favor, selecciona al menos un préstamo para generar el PDF.');

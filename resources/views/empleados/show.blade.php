@@ -43,13 +43,14 @@
             <a href="{{ route('empleados.index') }}" class="btn btn-secondary">Volver a la lista</a>
             <a href="{{ route('empleados.edit', $empleado->id) }}" class="btn btn-primary">Editar</a>
 
-            <form hidden action="{{ route('empleados.destroy', $empleado->id) }}" method="POST"
-                style="display: inline-block;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger"
-                    onclick="return confirm('¿Está seguro de que desea eliminar este empleado?')">Eliminar</button>
-            </form>
+            @if (in_array(auth()->id(), [1]))
+                <form action="{{ route('empleados.destroy', $empleado->id) }}" method="POST" style="display: inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('¿Está seguro de que desea eliminar este empleado?')">Eliminar</button>
+                </form>
+            @endif
         </div>
     </div>
 
@@ -80,11 +81,11 @@
                                 <td>
                                     <!-- Botón para desasignar -->
                                     <form action="{{ route('empleados.desasignarEquipo', $asignacion->id) }}"
-                                          method="POST" style="display: inline-block;">
+                                        method="POST" style="display: inline-block;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('¿Está seguro de que desea desasignar este equipo?')">
+                                            onclick="return confirm('¿Está seguro de que desea desasignar este equipo?')">
                                             Desasignar
                                         </button>
                                     </form>
@@ -96,7 +97,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Tabla para equipos desasignados o no asignados -->
     <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
         <div class="card-body">
@@ -127,7 +128,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
         <div class="card-body">
             <h3>Accesorios Asignados</h3>

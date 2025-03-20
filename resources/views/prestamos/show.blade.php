@@ -12,11 +12,14 @@
                 </tr>
                 <tr>
                     <th>Empleado:</th>
-                    <td>{{ $prestamo->empleado->nombre ?? 'N/A' }} {{ $prestamo->empleado->apellidoP ?? 'N/A' }} {{ $prestamo->empleado->apellidoM ?? 'N/A' }}</td>
+                    <td>{{ $prestamo->empleado->nombre ?? 'N/A' }} {{ $prestamo->empleado->apellidoP ?? 'N/A' }}
+                        {{ $prestamo->empleado->apellidoM ?? 'N/A' }}</td>
                 </tr>
                 <tr>
                     <th>Equipo:</th>
-                    <td>{{ $prestamo->equipo->tipoEquipo->nombre ?? 'Sin Tipo' }} marca {{ $prestamo->equipo->marca->nombre ?? 'Sin Marca' }} Con etiqueta {{ $prestamo->equipo->etiqueta_skytex ?? 'N/A' }}</td>
+                    <td>{{ $prestamo->equipo->tipoEquipo->nombre ?? 'Sin Tipo' }} marca
+                        {{ $prestamo->equipo->marca->nombre ?? 'Sin Marca' }} Con etiqueta
+                        {{ $prestamo->equipo->etiqueta_skytex ?? 'N/A' }}</td>
                 </tr>
                 <tr>
                     <th>Fecha de Préstamo:</th>
@@ -31,7 +34,7 @@
                     <th>Nota de Préstamo:</th>
                     <td>{{ $prestamo->nota_prestamo }}</td>
                 </tr>
-                
+
                 <tr>
                     <th>Usuario Responsable:</th>
                     <td>{{ $prestamo->usuario->name }}</td>
@@ -43,11 +46,15 @@
             </table>
             <a href="{{ route('prestamos.index') }}" class="btn btn-secondary">Volver a la lista</a>
             <a href="{{ route('prestamos.edit', $prestamo->id) }}" class="btn btn-primary">Editar</a>
-            <form hidden action="{{ route('prestamos.destroy', $prestamo->id) }}" method="POST" style="display:inline-block;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este préstamo?')">Eliminar</button>
-            </form>
+
+            @if (in_array(auth()->id(), [1]))
+                <form action="{{ route('prestamos.destroy', $prestamo->id) }}" method="POST" style="display:inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('¿Está seguro de que desea eliminar este préstamo?')">Eliminar</button>
+                </form>
+            @endif
         </div>
     </div>
 @endsection

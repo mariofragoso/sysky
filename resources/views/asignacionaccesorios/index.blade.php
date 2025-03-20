@@ -9,8 +9,8 @@
 
     <form action="{{ route('asignacionaccesorios.index') }}" method="GET" class="mb-3">
         <div class="input-group">
-            <input type="text" name="search" class="form-control" placeholder="Buscar por Empleado, Accesorio, Fecha o Ticket"
-                value="{{ request('search') }}">
+            <input type="text" name="search" class="form-control"
+                placeholder="Buscar por Empleado, Accesorio, Fecha o Ticket" value="{{ request('search') }}">
             <button class="btn btn-outline-secondary" type="submit">Buscar</button>
         </div>
     </form>
@@ -23,7 +23,8 @@
                     <thead>
                         <tr>
                             <th>
-                                <a href="{{ route('asignacionaccesorios.index', ['sort' => 'id', 'order' => $sortField === 'id' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                                <a
+                                    href="{{ route('asignacionaccesorios.index', ['sort' => 'id', 'order' => $sortField === 'id' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
                                     ID
                                     @if ($sortField === 'id')
                                         @if ($sortOrder === 'asc')
@@ -35,7 +36,8 @@
                                 </a>
                             </th>
                             <th>
-                                <a href="{{ route('asignacionaccesorios.index', ['sort' => 'empleado_id', 'order' => $sortField === 'empleado_id' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                                <a
+                                    href="{{ route('asignacionaccesorios.index', ['sort' => 'empleado_id', 'order' => $sortField === 'empleado_id' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
                                     Empleado
                                     @if ($sortField === 'empleado_id')
                                         @if ($sortOrder === 'asc')
@@ -47,7 +49,8 @@
                                 </a>
                             </th>
                             <th>
-                                <a href="{{ route('asignacionaccesorios.index', ['sort' => 'accesorio_id', 'order' => $sortField === 'accesorio_id' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                                <a
+                                    href="{{ route('asignacionaccesorios.index', ['sort' => 'accesorio_id', 'order' => $sortField === 'accesorio_id' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
                                     Accesorio
                                     @if ($sortField === 'accesorio_id')
                                         @if ($sortOrder === 'asc')
@@ -60,7 +63,8 @@
                             </th>
                             <th>Cantidad Asignada</th>
                             <th>
-                                <a href="{{ route('asignacionaccesorios.index', ['sort' => 'fecha_asignacion', 'order' => $sortField === 'fecha_asignacion' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                                <a
+                                    href="{{ route('asignacionaccesorios.index', ['sort' => 'fecha_asignacion', 'order' => $sortField === 'fecha_asignacion' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
                                     Fecha de Asignación
                                     @if ($sortField === 'fecha_asignacion')
                                         @if ($sortOrder === 'asc')
@@ -73,7 +77,8 @@
                             </th>
                             <th>Usuario Responsable</th>
                             <th>
-                                <a href="{{ route('asignacionaccesorios.index', ['sort' => 'ticket', 'order' => $sortField === 'ticket' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                                <a
+                                    href="{{ route('asignacionaccesorios.index', ['sort' => 'ticket', 'order' => $sortField === 'ticket' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
                                     Ticket
                                     @if ($sortField === 'ticket')
                                         @if ($sortOrder === 'asc')
@@ -92,7 +97,8 @@
                         @foreach ($asignacionesaccesorios as $asignacion)
                             <tr>
                                 <td>{{ $asignacion->id }}</td>
-                                <td>{{ $asignacion->empleado->nombre }} {{ $asignacion->empleado->apellidoP }} {{ $asignacion->empleado->apellidoM }}</td>
+                                <td>{{ $asignacion->empleado->nombre }} {{ $asignacion->empleado->apellidoP }}
+                                    {{ $asignacion->empleado->apellidoM }}</td>
                                 <td>{{ $asignacion->accesorio->descripcion }}</td>
                                 <td>{{ $asignacion->cantidad_asignada }}</td>
                                 <td>{{ $asignacion->fecha_asignacion }}</td>
@@ -100,13 +106,21 @@
                                 <td>{{ $asignacion->ticket }}</td>
                                 <td>{{ $asignacion->nota_descriptiva }}</td>
                                 <td>
-                                    <a href="{{ route('asignacionaccesorios.show', $asignacion->id) }}" class="btn btn-info btn-sm">Ver</a>
-                                    <a href="{{ route('asignacionaccesorios.edit', $asignacion->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                                    <form hidden action="{{ route('asignacionaccesorios.destroy', $asignacion->id) }}" method="POST" style="display:inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta asignación?')">Eliminar</button>
-                                    </form>
+                                    <a href="{{ route('asignacionaccesorios.show', $asignacion->id) }}"
+                                        class="btn btn-info btn-sm">Ver</a>
+                                    <a href="{{ route('asignacionaccesorios.edit', $asignacion->id) }}"
+                                        class="btn btn-warning btn-sm">Editar</a>
+
+                                    @if (in_array(auth()->id(), [1]))
+                                        <form action="{{ route('asignacionaccesorios.destroy', $asignacion->id) }}"
+                                            method="POST" style="display:inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('¿Estás seguro de eliminar esta asignación?')">Eliminar</button>
+                                        </form>
+                                    @endif
+
                                 </td>
                             </tr>
                         @endforeach

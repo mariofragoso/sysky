@@ -44,8 +44,7 @@
                     </thead>
                     <tbody>
                         @forelse ($equipos as $equipo)
-                            <tr
-                                class="
+                            <tr class="
                         @if ($equipo->estado === 'Baja') table-danger @endif">
 
                                 <td>{{ $equipo->numero_serie }}</td>
@@ -68,13 +67,15 @@
                                     <a href="{{ route('equipos.edit', $equipo->id) }}"
                                         class="btn btn-warning btn-sm">Editar</a>
 
-                                    <form hidden action="{{ route('equipos.destroy', $equipo->id) }}" method="POST"
-                                        style="display:inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('¿Estás seguro de eliminar este equipo?')">Eliminar</button>
-                                    </form>
+                                    @if (in_array(auth()->id(), [1]))
+                                        <form action="{{ route('equipos.destroy', $equipo->id) }}" method="POST"
+                                            style="display:inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('¿Estás seguro de eliminar este equipo?')">Eliminar</button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @empty
