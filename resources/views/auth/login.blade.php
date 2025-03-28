@@ -1,79 +1,71 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Custom fonts for this template-->
     <link href="{{ asset('libs/fontawesome/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
     <link href="{{ asset('libs/sbadmin/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
-    
-
-    <div class="container" class="bg-gradient-primary">
-        <div class="row justify-content-center">
-            <div class="col-xl-10 col-lg-12 col-md-9">
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <!-- Image Column -->
-                            <div class="col-lg-6 d-none d-lg-block">
-                                <img src="{{ asset('libs/img/pngegg.png') }}" alt="Login Image" class="img-fluid">
-                            </div>
-                            <!-- Form Column -->
-                            <div class="col-lg-6">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">¡Bienvenido!</h1>
-                                    </div>
-                                    <form method="POST" action="{{ route('login') }}" class="user">
-                                        @csrf
-                                        <div class="form-group">
-                                            <input id="email" type="email"
-                                                class="form-control form-control-user @error('email') is-invalid @enderror"
-                                                name="email" value="{{ old('email') }}" required autocomplete="email"
-                                                autofocus placeholder="Correo Electronico...">
-                                            @error('email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="row justify-content-center w-100">
+            <div class="col-lg-8 col-md-10">
+                <div class="card shadow-lg border-0 rounded-lg">
+                    <div class="row g-0">
+                        <!-- Imagen -->
+                        <div class="col-lg-5 d-none d-lg-flex align-items-center justify-content-center bg-light">
+                            <img src="{{ asset('libs/img/pngegg.png') }}" class="img-fluid" alt="Login Image">
+                        </div>
+                        <!-- Formulario -->
+                        <div class="col-lg-7">
+                            <div class="p-5">
+                                <div class="text-center mb-4">
+                                    <h1 class="h4 text-gray-900">¡Bienvenido!</h1>
+                                    <p class="small text-muted">Inicia sesión para continuar</p>
+                                </div>
+                                <form method="POST" action="{{ route('login') }}" class="user">
+                                    @csrf
+                                    <div class="form-group mb-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                            <input type="email" id="email" name="email" value="{{ old('email') }}"
+                                                class="form-control @error('email') is-invalid @enderror"
+                                                placeholder="Correo Electrónico" required autofocus>
                                         </div>
-                                        <div class="form-group">
-                                            <input id="password" type="password"
-                                                class="form-control form-control-user @error('password') is-invalid @enderror"
-                                                name="password" required autocomplete="current-password"
-                                                placeholder="Contrasña">
-                                            @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" name="remember"
-                                                    id="customCheck" {{ old('remember') ? 'checked' : '' }}>
-                                                <label class="custom-control-label" for="customCheck">Recordarme</label>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            {{ __('Iniciar Sesion') }}
-                                        </button>
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        @if (Route::has('password.request'))
-                                            <a class="small"
-                                                href="{{ route('password.request') }}">{{ __('Olvidaste Tu contraseña?') }}</a>
-                                        @endif
+                                        @error('email')
+                                            <span class="invalid-feedback d-block"><strong>{{ $message }}</strong></span>
+                                        @enderror
                                     </div>
-                                    <div class="text-center">
-                                        <a hidden class="small" href="{{ route('register') }}">Crear una cuenta!</a>
+                                    <div class="form-group mb-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                            <input type="password" id="password" name="password"
+                                                class="form-control @error('password') is-invalid @enderror"
+                                                placeholder="Contraseña" required>
+                                        </div>
+                                        @error('password')
+                                            <span class="invalid-feedback d-block"><strong>{{ $message }}</strong></span>
+                                        @enderror
                                     </div>
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" name="remember" id="remember"
+                                            {{ old('remember') ? 'checked' : '' }}>
+                                        <label class="form-check-label small text-muted" for="remember">Recordarme</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-user w-100">
+                                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                                    </button>
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                    @if (Route::has('password.request'))
+                                        <a class="small text-muted" href="{{ route('password.request') }}">
+                                            ¿Olvidaste tu contraseña?
+                                        </a>
+                                    @endif
+                                </div>
+                                <div class="text-center">
+                                    <a hidden class="small text-muted" href="{{ route('register') }}">
+                                        Crear una cuenta
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -83,13 +75,7 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('libs/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="{{ asset('libs/sbadmin/js/sb-admin-2.min.js') }}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{{ asset('libs/chart.js/Chart.min.js') }}"></script>
 @endsection

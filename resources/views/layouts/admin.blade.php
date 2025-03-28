@@ -85,6 +85,10 @@
                                         {{ __('Cerrar Sesion') }}
                                     </a>
 
+                                    @if (auth()->check() && auth()->id() === 1)
+                                        <a href="{{ route('register') }}" class="dropdown-item">Registrar Usuario</a>
+                                    @endif
+
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>

@@ -26,6 +26,8 @@ use App\Http\Controllers\MarcaAccesorioController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LicenciaController;
 use App\Http\Controllers\PagoLicenciaController;
+use App\Http\Controllers\BackupController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +57,8 @@ Route::put('/perfil', [UserController::class, 'updateProfile'])->name('perfil.up
 
 // Ruta para listar empleados
 Route::get('empleados', [EmpleadoController::class, 'index'])->name('empleados.index');
+
+Route::get('/empleados/bajas', [EmpleadoController::class, 'bajas'])->name('empleados.bajas');
 
 // Ruta para mostrar el formulario de creación de un empleado
 Route::get('empleados/create', [EmpleadoController::class, 'create'])->name('empleados.create');
@@ -216,6 +220,7 @@ Route::delete('/asignacionaccesorios/{asignacion}', [AsignacionAccesoriosControl
 Route::resource('prestamos', PrestamoController::class);
 Route::get('prestamos/{id}/pdf', [PrestamoController::class, 'generarPDF'])->name('prestamos.pdf');
 Route::post('prestamos/pdf-multiple', [PrestamoController::class, 'generarPDFMultiple'])->name('prestamos.pdfMultiple');
+Route::delete('/prestamos/{prestamo}', [PrestamoController::class, 'destroy'])->name('prestamos.destroy');
 
 
 
@@ -323,3 +328,12 @@ Route::get('/licencias/{id}/enviar-notificacion', [LicenciaController::class, 's
 Route::resource('impresoras', ImpresoraController::class);
 Route::get('/impresoras/estados', [ImpresoraController::class, 'getEstados'])->name('impresoras.estados');
 Route::get('/impresoras/{id}/imprimir-prueba', [ImpresoraController::class, 'imprimirPrueba'])->name('impresoras.imprimirPrueba');
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/backups', [BackupController::class, 'index'])->name('backups.index');
+    Route::post('/backups/schedule', [BackupController::class, 'scheduleBackup'])->name('backups.schedule');
+    Route::post('/backups/create', [BackupController::class, 'createBackup'])->name('backups.create');
+    Route::get('/backups/download/{filename}', [BackupController::class, 'downloadBackup'])->name('backups.download');
+    Route::delete('/backups/delete/{filename}', [BackupController::class, 'deleteBackup'])->name('backups.delete');
+});

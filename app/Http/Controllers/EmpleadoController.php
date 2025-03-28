@@ -18,12 +18,29 @@ class EmpleadoController extends Controller
         $sortField = $request->input('sort', 'created_at');
         $sortOrder = $request->input('order', 'desc');
 
-        $empleados = Empleado::when($search, function ($q) use ($search) {
-            $q->whereRaw("CONCAT(nombre, ' ', apellidoP, ' ', apellidoM) LIKE ?", ["%{$search}%"])
-                ->orWhere('numero_nomina', 'like', "%{$search}%");
-        })->orderBy($sortField, $sortOrder)->paginate(10);
+        $empleados = Empleado::where('status', 'A')
+            ->when($search, function ($q) use ($search) {
+                $q->whereRaw("CONCAT(nombre, ' ', apellidoP, ' ', apellidoM) LIKE ?", ["%{$search}%"])
+                    ->orWhere('numero_nomina', 'like', "%{$search}%");
+            })->orderBy($sortField, $sortOrder)->paginate(10);
 
         return view('empleados.index', compact('empleados', 'search', 'sortField', 'sortOrder'));
+    }
+
+    // Mostrar lista de empleados inactivos (estatus B)
+    public function bajas(Request $request)
+    {
+        $search = $request->input('search');
+        $sortField = $request->input('sort', 'created_at');
+        $sortOrder = $request->input('order', 'desc');
+
+        $empleados = Empleado::where('status', 'B')
+            ->when($search, function ($q) use ($search) {
+                $q->whereRaw("CONCAT(nombre, ' ', apellidoP, ' ', apellidoM) LIKE ?", ["%{$search}%"])
+                    ->orWhere('numero_nomina', 'like', "%{$search}%");
+            })->orderBy($sortField, $sortOrder)->paginate(10);
+
+        return view('empleados.bajas', compact('empleados', 'search', 'sortField', 'sortOrder'));
     }
 
     // Mostrar el formulario para crear un nuevo empleado

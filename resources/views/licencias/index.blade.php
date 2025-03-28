@@ -68,11 +68,14 @@
                             <td>
                                 <a href="{{ route('licencias.show', $licencia->id) }}" class="btn btn-info">Ver</a>
                                 <a href="{{ route('licencias.edit', $licencia->id) }}" class="btn btn-warning">Editar</a>
-                                <form hidden action="{{ route('licencias.destroy', $licencia->id) }}" method="POST" style="display:inline;">
+                                
+                                @if (in_array(auth()->id(), [1]))
+                                <form action="{{ route('licencias.destroy', $licencia->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar esta licencia?')">Eliminar</button>
                                 </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

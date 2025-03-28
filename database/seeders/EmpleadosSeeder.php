@@ -32,7 +32,6 @@ class EmpleadosSeeder extends Seeder
                 INNER JOIN RH_DEPTO 
                     ON RH_TRAB.CLA_DEPTO = RH_DEPTO.CLA_DEPTO 
                     AND RH_TRAB.CLA_EMPRESA = RH_DEPTO.CLA_EMPRESA
-                WHERE RH_TRAB.STATUS_TRAB = \'A\'
                 ORDER BY Nomina ASC;
             ');
 

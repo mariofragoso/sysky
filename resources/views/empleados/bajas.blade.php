@@ -1,15 +1,14 @@
 @extends('layouts.admin')
 
-@section('titulo', 'Lista de Empleados')
+@section('titulo', 'Empleados de Baja')
 
 @section('contenido')
     <div>
-        <a href="{{ route('empleados.create') }}" class="btn btn-secondary mb-3">Registrar Nuevo Empleado +</a>
-        <a href="{{ route('empleados.bajas') }}" class="btn btn-outline-secondary mb-3">Ver Empleados de Baja</a>
+        <a href="{{ route('empleados.index') }}" class="btn btn-secondary mb-3">Ver Empleados Activos</a>
     </div>
 
     <!-- Barra de búsqueda -->
-    <form action="{{ route('empleados.index') }}" method="GET" class="mb-3">
+    <form action="{{ route('empleados.bajas') }}" method="GET" class="mb-3">
         <div class="input-group">
             <input type="text" name="search" class="form-control" placeholder="Buscar por número de nómina o nombre"
                 value="{{ request('search') }}">
@@ -57,7 +56,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center">No se encontraron empleados</td>
+                                <td colspan="6" class="text-center">No se encontraron empleados de baja</td>
                             </tr>
                         @endforelse
                     </tbody>

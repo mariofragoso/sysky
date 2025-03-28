@@ -179,12 +179,15 @@ class PrestamoController extends Controller
 
     public function destroy(Prestamo $prestamo)
     {
+        // Guardar información antes de eliminar
+        $numeroSerie = $prestamo->equipo->numero_serie ?? 'No disponible';
+
         $prestamo->delete();
 
         // Registrar la acción
         $accion = new Acciones();
         $accion->modulo = "Préstamos";
-        $accion->descripcion = "Se eliminó el préstamo del equipo con número de serie: " . $prestamo->equipo->numero_serie;
+        $accion->descripcion = "Se eliminó el préstamo del equipo con número de serie: " . $numeroSerie;
         $accion->usuario_responsable_id = Auth::user()->id;
         $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
         $accion->save();

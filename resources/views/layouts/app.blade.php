@@ -6,7 +6,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ env('APP_NAME') }} - @yield('titulo')</title>
+    <title>{{ env('APP_NAME') }} - @yield('titulo', 'Bienvenido')</title>
 
 
     <!-- Fonts -->

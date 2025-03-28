@@ -44,11 +44,14 @@
         <a href="{{ route('licencias.index') }}" class="btn btn-secondary">Regresar</a>
         <a href="{{ route('licencias.edit', $licencias->id) }}" class="btn btn-primary">Editar</a>
 
-        <form hidden action="{{ route('licencias.destroy', $licencias->id) }}" method="POST" style="display: inline-block;">
+
+        @if (in_array(auth()->id(), [1]))
+        <form action="{{ route('licencias.destroy', $licencias->id) }}" method="POST" style="display: inline-block;">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar esta licencia?')">Eliminar</button>
         </form>
+        @endif
     </div>
 </div>
 

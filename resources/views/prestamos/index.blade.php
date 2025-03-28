@@ -22,65 +22,67 @@
     <!-- Formulario para generar PDF -->
     <form id="pdf-form" action="{{ route('prestamos.pdfMultiple') }}" method="POST" target="_blank">
         @csrf
-        <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
-            <div class="card-body">
-
-                <!-- Botón Generar PDF -->
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-success">Generar PDF seleccionados.</button>
-                </div>
-
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" id="select-all"></th>
-                            <th>Empleado</th>
-                            <th>Equipo</th>
-                            <th>Fecha de Préstamo</th>
-                            <th>Fecha de Regreso</th>
-                            <th>Responsable</th>
-                            <th>Devuelto</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($prestamos as $prestamo)
-                            <tr>
-                                <td><input type="checkbox" name="prestamos[]" value="{{ $prestamo->id }}"></td>
-                                <td>{{ $prestamo->empleado->nombre ?? 'N/A' }} {{ $prestamo->empleado->apellidoP ?? 'N/A' }}
-                                    {{ $prestamo->empleado->apellidoM ?? 'N/A' }}</td>
-                                <td>{{ $prestamo->equipo->etiqueta_skytex }}</td>
-                                <td>{{ $prestamo->fecha_prestamo }}</td>
-                                <td>{{ $prestamo->fecha_regreso }}</td>
-                                <td>{{ $prestamo->usuario->name }}</td>
-                                <td>{{ $prestamo->devuelto ? 'Sí' : 'No' }}</td>
-                                <td>
-                                    <a href="{{ route('prestamos.show', $prestamo->id) }}"
-                                        class="btn btn-info btn-sm">Ver</a>
-                                    <a href="{{ route('prestamos.edit', $prestamo->id) }}?page={{ $prestamos->currentPage() }}"
-                                        class="btn btn-warning btn-sm">Editar</a>
-                                    <a href="{{ route('prestamos.pdf', $prestamo->id) }}" class="btn btn-primary btn-sm"
-                                        target="_blank">Ver PDF</a>
-
-                                    @if (in_array(auth()->id(), [1]))
-                                        <form hidden action="{{ route('prestamos.destroy', $prestamo->id) }}"
-                                            method="POST" style="display:inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('¿Está seguro de que desea eliminar este préstamo?')">Eliminar</button>
-                                        </form>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
-                <!-- Paginación -->
-                {{ $prestamos->appends(['search' => request('search')])->links() }}
-            </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success">Generar PDF seleccionados.</button>
         </div>
+    </form>
+
+    <!-- Aquí empieza la tabla, fuera del form -->
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="select-all"></th>
+                        <th>Empleado</th>
+                        <th>Equipo</th>
+                        <th>Fecha de Préstamo</th>
+                        <th>Fecha de Regreso</th>
+                        <th>Responsable</th>
+                        <th>Devuelto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($prestamos as $prestamo)
+                        <tr>
+                            <td><input form="pdf-form" type="checkbox" name="prestamos[]" value="{{ $prestamo->id }}"></td>
+                            <td>{{ $prestamo->empleado->nombre ?? 'N/A' }} {{ $prestamo->empleado->apellidoP ?? 'N/A' }}
+                                {{ $prestamo->empleado->apellidoM ?? 'N/A' }}</td>
+                            <td>{{ $prestamo->equipo->etiqueta_skytex }}</td>
+                            <td>{{ $prestamo->fecha_prestamo }}</td>
+                            <td>{{ $prestamo->fecha_regreso }}</td>
+                            <td>{{ $prestamo->usuario->name }}</td>
+                            <td>{{ $prestamo->devuelto ? 'Sí' : 'No' }}</td>
+                            <td>
+                                <a href="{{ route('prestamos.show', $prestamo->id) }}" class="btn btn-info btn-sm">Ver</a>
+                                <a href="{{ route('prestamos.edit', $prestamo->id) }}?page={{ $prestamos->currentPage() }}"
+                                    class="btn btn-warning btn-sm">Editar</a>
+                                <a href="{{ route('prestamos.pdf', $prestamo->id) }}" class="btn btn-primary btn-sm"
+                                    target="_blank">Ver PDF</a>
+
+                                @if (in_array(auth()->id(), [1]))
+                                    <form action="{{ route('prestamos.destroy', $prestamo->id) }}" method="POST"
+                                        style="display: inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este préstamo?')">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            <!-- Paginación -->
+            {{ $prestamos->appends(['search' => request('search')])->links() }}
+        </div>
+    </div>
+
     </form>
 
     <script>

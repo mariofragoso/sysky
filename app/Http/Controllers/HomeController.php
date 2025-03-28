@@ -15,7 +15,7 @@ class HomeController extends Controller
 {
     public function home()
     {
-        $empleados_count = Empleado::count();
+        $empleados_count = Empleado::where('status', 'A')->count();
         $equipos_count = Equipo::count();
         $accesorios_count = Accesorio::count();
         $equiposAsignados = Equipo::where('estado', 'Asignado')->count();

@@ -83,7 +83,7 @@
 <body>
     <div class="header">
         <img src="{{ public_path('libs/img/logo_skytex.png') }}" alt="Skytex Logo" class="logo">
-        <h1 class="title">Préstamo de Equipo de Cómputo</h1>
+        <h1 class="title">Préstamo de Equipo de Cómputo ({{ $prestamo->equipo->tipoEquipo->nombre ?? 'Sin Tipo' }})</h1>
         <p style="float: right; width: 10%">
             <font color="#ff0000"> Folio: {{ $prestamo->id }}</font>
         </p>
