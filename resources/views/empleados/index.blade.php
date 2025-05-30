@@ -4,7 +4,9 @@
 
 @section('contenido')
     <div>
-        <a href="{{ route('empleados.create') }}" class="btn btn-secondary mb-3">Registrar Nuevo Empleado +</a>
+        @if (in_array(auth()->id(), [1]))
+            <a href="{{ route('empleados.create') }}" class="btn btn-secondary mb-3">Registrar Nuevo Empleado +</a>
+        @endif
         <a href="{{ route('empleados.bajas') }}" class="btn btn-outline-secondary mb-3">Ver Empleados de Baja</a>
     </div>
 

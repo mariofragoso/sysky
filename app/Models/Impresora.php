@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Impresora extends Model
 {
-    protected $fillable = ['nombre', 'marca', 'modelo', 'ip', 'area', 'en_linea', 'estado'];
+    protected $fillable = ['nombre', 'marca', 'modelo', 'area', 'ip', 'en_linea', 'estado'];
 }

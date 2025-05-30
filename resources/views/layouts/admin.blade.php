@@ -210,6 +210,7 @@
 
 
 
+    @yield('scripts')
 
 </body>
 

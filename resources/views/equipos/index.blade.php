@@ -6,6 +6,7 @@
 
     <div>
         <a href="{{ route('equipos.create') }}" class="btn btn-secondary mb-3">Registrar Nuevo Equipo +</a>
+        <a href="{{ route('equipos.baja') }}" class="btn btn-outline-secondary mb-3">Ver Equipos Baja</a>
     </div>
 
     <!-- Barra de búsqueda -->
@@ -52,6 +53,7 @@
                                 <td>{{ $equipo->modelo }}</td>
                                 <td>{{ $equipo->etiqueta_skytex }}</td>
                                 <td>{{ optional($equipo->tipoEquipo)->nombre ?? '' }}</td>
+
                                 <td>
                                     <span
                                         class="badge rounded-pill 

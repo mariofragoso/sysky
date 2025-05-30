@@ -3,6 +3,15 @@
 @section('titulo', 'Crear Nueva Asignación de Equipo')
 
 @section('contenido')
+    @if ($errors->any())
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                errorModal.show();
+            });
+        </script>
+    @endif
+
 
     <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
         <div class="card-body">
@@ -29,7 +38,8 @@
                                     <option value="">Seleccione un equipo</option>
                                     @foreach ($equipos as $equipo)
                                         <option value="{{ $equipo->id }}"> {{ $equipo->etiqueta_skytex }} -
-                                            {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo' }} - {{ $equipo->numero_serie }}</option>
+                                            {{ $equipo->tipoEquipo->nombre ?? 'Sin Tipo' }} - {{ $equipo->numero_serie }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -108,6 +118,26 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal para mostrar errores -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content border-danger">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="errorModalLabel">Error de Asignación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         let asignaciones = [];

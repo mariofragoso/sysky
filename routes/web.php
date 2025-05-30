@@ -328,6 +328,8 @@ Route::get('/licencias/{id}/enviar-notificacion', [LicenciaController::class, 's
 Route::resource('impresoras', ImpresoraController::class);
 Route::get('/impresoras/estados', [ImpresoraController::class, 'getEstados'])->name('impresoras.estados');
 Route::get('/impresoras/{id}/imprimir-prueba', [ImpresoraController::class, 'imprimirPrueba'])->name('impresoras.imprimirPrueba');
+Route::delete('/impresoras/{impresora}', [ImpresoraController::class, 'destroy'])->name('impresoras.destroy');
+
 
 
 Route::middleware('auth')->group(function () {

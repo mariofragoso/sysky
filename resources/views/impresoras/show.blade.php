@@ -1,29 +1,56 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('content')
-<div class="container">
-    <h1>Detalles de la Impresora</h1>
+@section('titulo', 'Detalle de la Impresora')
 
-    <div class="card">
+@section('contenido')
+
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded mb-4">
         <div class="card-body">
-            <h5 class="card-title">Modelo: {{ $impresora->modelo }}</h5>
-            <p class="card-text"><strong>Marca:</strong> {{ $impresora->marca }}</p>
-            <p class="card-text"><strong>Área:</strong> {{ $impresora->area }}</p>
-            <p class="card-text"><strong>Dirección IP:</strong> {{ $impresora->ip }}</p>
+            <table class="table table-striped">
+                <tr>
+                    <th>Modelo</th>
+                    <td>{{ $impresora->modelo }}</td>
+                </tr>
+                <tr>
+                    <th>Marca</th>
+                    <td>{{ $impresora->marca }}</td>
+                </tr>
+                <tr>
+                    <th>Área</th>
+                    <td>{{ $impresora->area }}</td>
+                </tr>
+                <tr>
+                    <th>Dirección IP</th>
+                    <td>{{ $impresora->ip }}</td>
+                </tr>
+                <tr>
+                    <th>Estado</th>
+                    <td>
+                        @if($impresora->en_linea)
+                            <span class="badge bg-success">En línea</span>
+                        @else
+                            <span class="badge bg-danger">Fuera de línea</span>
+                        @endif
+                    </td>
+                </tr>
+                
+            </table>
 
-            <!-- Estado con color dinámico -->
-            <p class="card-text">
-                <strong>Estado:</strong> 
-                <span 
-                    class="badge 
-                        {{ $impresora->estado === 'En línea' ? 'bg-success' : 'bg-danger' }}">
-                    {{ $impresora->estado }}
-                </span>
-            </p>
+            <a href="{{ route('impresoras.index') }}" class="btn btn-secondary">Volver a la lista</a>
+            <a href="{{ route('impresoras.edit', $impresora->id) }}" class="btn btn-primary">Editar</a>
 
-            <a href="{{ route('impresoras.edit', $impresora->id) }}" class="btn btn-warning">Editar</a>
-            <a href="{{ route('impresoras.index') }}" class="btn btn-secondary">Volver</a>
+            @if (in_array(auth()->id(), [1]))
+                <form action="{{ route('impresoras.destroy', $impresora->id) }}" method="POST"
+                      style="display: inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger"
+                            onclick="return confirm('¿Está seguro de que desea eliminar esta impresora?')">
+                        Eliminar
+                    </button>
+                </form>
+            @endif
         </div>
     </div>
-</div>
+
 @endsection

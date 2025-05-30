@@ -28,6 +28,16 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <form action="{{ route('empresas.store') }}" method="POST">
                             @csrf
                             <div class="mb-3">
@@ -173,3 +183,14 @@
     </div>
 
 @endsection
+@section('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            @if ($errors->any())
+                var myModal = new bootstrap.Modal(document.getElementById('createEmpresaModal'));
+                myModal.show();
+            @endif
+        });
+    </script>
+@endsection
+

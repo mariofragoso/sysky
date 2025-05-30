@@ -38,15 +38,13 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            // Permitir solo al usuario con ID 1 acceder
-            if (auth()->check() && auth()->id() === 1) {
-                return $next($request);
+            if (!in_array(auth()->id(), [1])) {
+                abort(403, 'Acceso no autorizado');
             }
-
-            // Si el usuario no está autenticado o no es ID 1, bloquear acceso
-            return redirect('/')->with('error', 'No tienes permiso para acceder.');
+            return $next($request);
         });
     }
+
 
 
 

@@ -28,15 +28,15 @@ class ImpresoraController extends Controller
      */
     public function index()
     {
-        $impresoras = Impresora::all();
+        $impresoras = Impresora::paginate(20);
 
-        // Verificar el estado de cada impresora usando el servicio de ping
-        $impresoras->each(function ($impresora) {
+        $impresoras->getCollection()->each(function ($impresora) {
             $impresora->estado = $this->pingService->ping($impresora->ip) ? 'En línea' : 'Sin Red';
         });
 
         return view('impresoras.index', compact('impresoras'));
     }
+
 
     /**
      * Obtiene y actualiza el estado de todas las impresoras.
@@ -47,13 +47,14 @@ class ImpresoraController extends Controller
     {
         $impresoras = Impresora::all();
 
+        // No guardar el estado en DB, solo devolverlo como respuesta
         $impresoras->each(function ($impresora) {
             $impresora->estado = $this->pingService->ping($impresora->ip) ? 'En línea' : 'Sin Red';
-            $impresora->save(); // Guardar el nuevo estado
         });
 
         return response()->json($impresoras);
     }
+
 
     /**
      * Muestra el formulario para crear una nueva impresora.
@@ -74,16 +75,25 @@ class ImpresoraController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string',
-            'marca' => 'required|string',
-            'modelo' => 'required|string',
-            'ip' => 'required|ip',
-            'area' => 'required|string',
+            'nombre' => 'required|string|max:255',
+            'marca' => 'required|string|max:255',
+            'modelo' => 'required|string|max:255',
+            'area' => 'required|string|max:255',
+            'ip' => 'required|ip|unique:impresoras',
         ]);
 
-        Impresora::create($request->all());
+        Impresora::create([
+            'nombre' => $request->nombre,
+            'marca' => $request->marca,
+            'modelo' => $request->modelo,
+            'area' => $request->area,
+            'ip' => $request->ip,
+            'en_linea' => $request->has('en_linea'),
+        ]);
+
         return redirect()->route('impresoras.index')->with('success', 'Impresora registrada correctamente.');
     }
+
 
     /**
      * Muestra el formulario para editar una impresora.
@@ -104,17 +114,27 @@ class ImpresoraController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Impresora $impresora)
-    {
-        $request->validate([
-            'modelo' => 'required',
-            'marca' => 'required',
-            'area' => 'required',
-            'ip' => 'required|ip',
-        ]);
+{
+    $request->validate([
+        'nombre' => 'required|string|max:255',
+        'marca' => 'required|string|max:255',
+        'modelo' => 'required|string|max:255',
+        'area' => 'required|string|max:255',
+        'ip' => 'required|ip|unique:impresoras,ip,' . $impresora->id,
+    ]);
 
-        $impresora->update($request->all());
-        return redirect()->route('impresoras.index')->with('success', 'Impresora actualizada correctamente.');
-    }
+    $impresora->update([
+        'nombre' => $request->nombre,
+        'marca' => $request->marca,
+        'modelo' => $request->modelo,
+        'area' => $request->area,
+        'ip' => $request->ip,
+        'en_linea' => $request->has('en_linea'),
+    ]);
+
+    return redirect()->route('impresoras.index')->with('success', 'Impresora actualizada correctamente.');
+}
+
 
     /**
      * Muestra los detalles de una impresora.
@@ -143,5 +163,18 @@ class ImpresoraController extends Controller
         $impresora->save();
 
         return response()->json(['estado' => $impresora->estado]);
+    }
+
+    /**
+     * Elimina una impresora de la base de datos.
+     *
+     * @param Impresora $impresora
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Impresora $impresora)
+    {
+        $impresora->delete();
+
+        return redirect()->route('impresoras.index')->with('success', 'Impresora eliminada correctamente.');
     }
 }

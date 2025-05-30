@@ -33,8 +33,11 @@ class EmpresaController extends Controller
     {
         $request->validate([
             'nombre' => 'required|max:50|unique:empresas,nombre',
+        ], [
+            'nombre.unique' => 'El nombre de la empresa ya está registrado.',
+            'nombre.required' => 'El nombre de la empresa es obligatorio.',
+            'nombre.max' => 'El nombre de la empresa no puede tener más de 50 caracteres.',
         ]);
-
         try {
             $empresa = Empresa::create($request->all());
 
@@ -66,6 +69,10 @@ class EmpresaController extends Controller
     {
         $request->validate([
             'nombre' => 'required|max:50|unique:empresas,nombre,' . $empresa->id,
+        ], [
+            'nombre.unique' => 'El nombre de la empresa ya está registrado.',
+            'nombre.required' => 'El nombre de la empresa es obligatorio.',
+            'nombre.max' => 'El nombre de la empresa no puede tener más de 50 caracteres.',
         ]);
 
         try {

@@ -137,18 +137,12 @@
     </li>
 
     <li class="nav-item {{ Request::routeIs('equipos.index') ? 'active' : '' }}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#ColpaseEquipos"
-            aria-expanded="true" aria-controls="ColpaseEquipos">
-            <i class="fas fa-desktop"></i>
+        <a class="nav-link" href="{{ route('equipos.index') }}">
+            <i class="fas fa-keyboard"></i>
             <span>Equipos</span>
         </a>
-        <div id="ColpaseEquipos" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('equipos.index') }}">Todos los equipos</a>
-                <a class="collapse-item" href="{{ route('equipos.baja') }}">Equipos Baja</a>
-            </div>
-        </div>
     </li>
+    
     <li class="nav-item {{ Request::routeIs('accesorios.index') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('accesorios.index') }}">
             <i class="fas fa-keyboard"></i>
@@ -161,7 +155,7 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Asignaciones
+        Acciones
     </div>
 
     <!-- Nav Items -->
@@ -198,7 +192,7 @@
     </div>
     <li class="nav-item {{ Request::routeIs('impresoras.index') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('impresoras.index') }}">
-            <i class="fas fa-laptop-house"></i>
+            <i class="fas fa-print"></i>
             <span>Test Impresoras</span>
         </a>
     </li>
@@ -206,28 +200,50 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Ajustes
+        Adicional
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
             aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-tools"></i>
-            <span>Configuracion</span>
+            <i class="fas fa-plus"></i>
+            <span>Agregar</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                @if (in_array(auth()->id(), [1]))
-                    <a class="collapse-item" href="{{ route('acciones.index') }}">Acciones</a>
-                @endif
-                <a class="collapse-item" href="{{ route('empresas.index') }}">Nueva Empresas</a>
-                <a class="collapse-item" href="{{ route('tiposequipos.index') }}">Nuevo Tipo de Equipo</a>
-                <a class="collapse-item" href="{{ route('marcas.index') }}">Nueva Marca de Equipo</a>
-                <a class="collapse-item" href="{{ route('marcasaccesorios.index') }}">Nueva Marca de Accesorio</a>
+                <a class="collapse-item" href="{{ route('empresas.index') }}">Empresas</a>
+                <a class="collapse-item" href="{{ route('tiposequipos.index') }}">Tipo de Equipo</a>
+                <a class="collapse-item" href="{{ route('marcas.index') }}">Marca de Equipo</a>
+                <a class="collapse-item" href="{{ route('marcasaccesorios.index') }}">Marca de Accesorio</a>
             </div>
         </div>
     </li>
+    @if (in_array(auth()->id(), [1]))
+        <div class="sidebar-heading">
+            Ajustes
+        </div>
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1"
+                aria-expanded="true" aria-controls="collapsePages1">
+                <i class="fas fa-cog"></i>
+                <span>Configuraciones</span>
+            </a>
+
+            <div id="collapsePages1" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('acciones.index') }}">Acciones</a>
+                    <a class="collapse-item" href="{{ route('backups.index') }}">Backup</a>
+                    <a class="collapse-item" href="{{ route('register') }}">Registrar Usuario</a>
+                </div>
+            </div>
+
+        </li>
+    @endif
+
+
+
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
