@@ -127,7 +127,9 @@ class PrestamoController extends Controller
             'devuelto' => $request->devuelto,
         ]);
 
-        // Registrar la acción si el estado "devuelto" cambió
+        // ⚠️ Recargar relaciones antes de usarlas
+        $prestamo->load(['equipo', 'empleado', 'usuario']);
+
         $accion = new Acciones();
         $accion->modulo = "Préstamos";
         $accion->descripcion = "Se actualizó el préstamo del equipo con número de serie: " . $prestamo->equipo->numero_serie;

@@ -115,9 +115,11 @@ Route::get('/api/equipos/{id}/estado', function ($id) {
 
 
 //Rutas para salidas de equipo
+// Rutas para salidas de equipo
 Route::resource('salidas', SalidaEquipoController::class);
-Route::get('/salidas/{id}', [SalidaEquipoController::class, 'show'])->name('salidas.show');
 Route::get('/salidas/{id}/generar-pdf', [SalidaEquipoController::class, 'generarPDF'])->name('ruta.generarPDF');
+Route::post('/salidas/pdf-multiple', [SalidaEquipoController::class, 'generarPDFMultiple'])
+    ->name('salidas.generarPDFMultiple');
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------//

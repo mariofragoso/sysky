@@ -127,6 +127,33 @@ class SalidaEquipoController extends Controller
 
         return redirect()->route('salidas.index')->with('success', 'Regreso registrado exitosamente.');
     }
+
+    public function generarPDFMultiple(Request $request)
+    {
+        $request->validate([
+            'salidas' => 'required|array',
+            'salidas.*' => 'exists:salidas_equipos,id',
+        ]);
+
+        $salidas = SalidaEquipo::with(['empleado', 'equipo.tipoEquipo', 'equipo.marca', 'usuarioResponsable'])
+            ->whereIn('id', $request->salidas)
+            ->get();
+
+        $pdf = FacadePdf::loadView('documentos.salidas_multiple', compact('salidas'));
+
+        return $pdf->stream('salidas_multiples.pdf');
+    }
+
+
+    public function generarPDF($id)
+    {
+        $salida = SalidaEquipo::with(['empleado', 'equipo', 'usuarioResponsable'])->findOrFail($id);
+
+        $pdf = FacadePdf::loadView('documentos.salida', compact('salida'));
+
+        return $pdf->stream('Pase_de_Salida_' . $salida->id . '.pdf');
+    }
+
     public function destroy($id)
     {
         $salida = SalidaEquipo::findOrFail($id);
@@ -151,15 +178,5 @@ class SalidaEquipoController extends Controller
         $salida->delete();
 
         return redirect()->route('salidas.index')->with('success', 'Salida eliminada exitosamente.');
-    }
-
-
-    public function generarPDF($id)
-    {
-        $salida = SalidaEquipo::with(['empleado', 'equipo', 'usuarioResponsable'])->findOrFail($id);
-
-        $pdf = FacadePdf::loadView('documentos.salida', compact('salida'));
-
-        return $pdf->stream('Pase_de_Salida_' . $salida->id . '.pdf');
     }
 }

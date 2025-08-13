@@ -14,7 +14,7 @@
             <input type="text" name="search" class="form-control" placeholder="Buscar por empleado, equipo o responsable"
                 value="{{ request('search') }}">
             <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Buscar</button>
+                <button type="submit" class="btn btn-outline-primary">Buscar</button>
             </div>
         </div>
     </form>
