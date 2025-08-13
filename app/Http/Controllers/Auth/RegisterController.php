@@ -37,8 +37,16 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware(function ($request, $next) {
+            if (!in_array(auth()->id(), [1])) {
+                abort(403, 'Acceso no autorizado');
+            }
+            return $next($request);
+        });
     }
+
+
+
 
     /**
      * Get a validator for an incoming registration request.
