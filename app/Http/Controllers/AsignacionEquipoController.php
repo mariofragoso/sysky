@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 use App\Exports\AsignacionesEquiposExport;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -36,7 +37,7 @@ class AsignacionEquipoController extends Controller
                     ->orWhere('ticket', 'like', "%{$search}%");
             })
             ->orderBy($sortField, $sortOrder)
-            ->paginate(10);
+            ->paginate(20);
 
 
         return view('asignacionesequipos.index', compact('asignacionesequipos', 'search', 'sortField', 'sortOrder'));
@@ -57,6 +58,81 @@ class AsignacionEquipoController extends Controller
         return view('asignacionesequipos.create', compact('empleados', 'equipos', 'empresas'));
     }
 
+    public function store(Request $request)
+    {
+        // 1. Validar y decodificar la entrada
+        $validated = $request->validate(['asignaciones' => 'required|json']);
+        $asignaciones = json_decode($validated['asignaciones'], true);
+
+        // Extraer todos los IDs de equipo para una sola consulta
+        $equipoIds = array_column($asignaciones, 'equipo_id');
+        $equipos = Equipo::whereIn('id', $equipoIds)->get()->keyBy('id'); // Una sola consulta para todos los equipos
+
+        // 2. Bucle de Validación PREVIA (sin tocar la base de datos)
+        $errors = [];
+        foreach ($asignaciones as $index => $asignacionData) {
+            $equipo = $equipos->get($asignacionData['equipo_id']);
+
+            if (!$equipo) {
+                $errors[] = "El equipo con ID {$asignacionData['equipo_id']} no fue encontrado (registro " . ($index + 1) . ").";
+                continue; // Salta al siguiente item
+            }
+            if ($equipo->estado === 'Asignado') {
+                $errors[] = "El equipo {$equipo->etiqueta_skytex} ya está asignado (registro " . ($index + 1) . ").";
+            }
+            if ($equipo->estado === 'Baja') {
+                $errors[] = "El equipo {$equipo->etiqueta_skytex} está dado de baja (registro " . ($index + 1) . ").";
+            }
+        }
+
+        // Si encontramos algún error en la validación, regresamos con todos los errores a la vez.
+        if (!empty($errors)) {
+            return redirect()->back()->withErrors($errors);
+        }
+
+        // 3. Transacción a la Base de Datos (Todo o nada)
+        DB::beginTransaction();
+        try {
+            $now = Carbon::now('America/Mexico_City');
+            $userId = Auth::id();
+            $accionesParaInsertar = [];
+
+            foreach ($asignaciones as $asignacionData) {
+                // Asignar el equipo
+                $asignacionData['usuario_responsable'] = $userId;
+                $asignacionData['created_at'] = $now;
+                $asignacionData['updated_at'] = $now;
+                AsignacionEquipo::create($asignacionData);
+
+                // Actualizar el estado del equipo
+                $equipo = $equipos->get($asignacionData['equipo_id']);
+                $equipo->update(['estado' => $asignacionData['estado']]);
+
+                // Preparar la acción para inserción masiva
+                $accionesParaInsertar[] = [
+                    'modulo' => 'Asignación de Equipo',
+                    'descripcion' => "Se creó la asignación del Equipo: " . $equipo->etiqueta_skytex,
+                    'usuario_responsable_id' => $userId,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
+            }
+
+            // Insertar todas las acciones en una sola consulta
+            Acciones::insert($accionesParaInsertar);
+
+            DB::commit(); // Si todo salió bien, confirmamos los cambios.
+
+        } catch (\Exception $e) {
+            DB::rollBack(); // Si algo falló, revertimos todos los cambios.
+            // Opcional: registrar el error $e->getMessage() en los logs
+            return redirect()->back()->withErrors(['error' => 'Ocurrió un error al procesar las asignaciones. Ninguna fue guardada.']);
+        }
+
+        return redirect()->route('asignacionesequipos.index')->with('success', 'Las asignaciones de equipos se han creado correctamente.');
+    }
+
+
     public function edit($id)
     {
         $asignacion = AsignacionEquipo::findOrFail($id);
@@ -69,113 +145,76 @@ class AsignacionEquipoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        // 1. Validación básica de Laravel
+        $validatedData = $request->validate([
             'empleado_id' => 'required|exists:empleados,id',
             'equipo_id' => 'required|exists:equipos,id',
             'fecha_asignacion' => 'required|date',
-            'ticket' => 'required|integer',
+            'ticket' => 'required|integer|max:9223372036854775807',
             'nota_descriptiva' => 'nullable|string',
             'empresa_id' => 'required|exists:empresas,id',
             'estado' => 'required|string|max:50',
-            //'fecha_regreso' => $request->estado == 'prestamo' ? 'required|date|after_or_equal:fecha_prestamo' : 'nullable',
-
-
         ]);
 
-        $asignacion = AsignacionEquipo::findOrFail($id);
-        $request['usuario_responsable'] = Auth::id(); // Establecer el usuario autenticado
-        $asignacion->update($request->all());
+        // =======================================================
+        // == INICIO DE VALIDACIONES DE LÓGICA DE NEGOCIO ==
+        // =======================================================
+        $asignacionActual = AsignacionEquipo::findOrFail($id);
+        $equipoSeleccionado = Equipo::findOrFail($validatedData['equipo_id']);
 
-        // Actualizar o crear préstamo según sea necesario
-        /* if ($request->estado == 'prestamo') {
-            Prestamo::updateOrCreate(
-                ['equipo_id' => $asignacion->equipo_id],
-                [
-                    'empleado_id' => $asignacion->empleado_id,
-                    'fecha_prestamo' => now(),
-                    'fecha_regreso' => $request->fecha_regreso,
-                    'usuario_responsable_id' => Auth::user()->id,
-                    'devuelto' => false,
-                ]
-            );
-        }*/
+        // Validar si el equipo está dado de baja
+        if ($equipoSeleccionado->estado === 'Baja') {
+            return redirect()->back()
+                ->withErrors(['equipo_id' => 'Este equipo está dado de baja y no puede ser asignado.'])
+                ->withInput();
+        }
 
-        // Actualizar el estado del equipo
-        $equipo = Equipo::findOrFail($request->equipo_id);
-        $equipo->update(['estado' => $request->estado]);
+        // Validar si el equipo ya está asignado a OTRA persona
+        // Esta condición solo se activa si el equipo está "Asignado" Y no es el mismo equipo que ya tenía esta asignación
+        if ($equipoSeleccionado->estado === 'Asignado' && $equipoSeleccionado->id != $asignacionActual->equipo_id) {
+            return redirect()->back()
+                ->withErrors(['equipo_id' => 'Este equipo ya se encuentra asignado. Por favor, seleccione otro.'])
+                ->withInput();
+        }
+        // =======================================================
+        // == FIN DE VALIDACIONES DE LÓGICA DE NEGOCIO ==
+        // =======================================================
 
+        try {
+            // Inicia una transacción para garantizar la integridad de los datos
+            DB::transaction(function () use ($validatedData, $asignacionActual,$equipoSeleccionado) {
 
-        // Registrar la acción
-        $accion = new Acciones();
-        $accion->modulo = "Asignacion de Equipo";
-        $accion->descripcion = "Se actualizó la asignación de equipo: " . $equipo->etiqueta_skytex . " para el empleado: " . $asignacion->empleado->nombre . " " . $asignacion->empleado->apellidoP . " " . $asignacion->empleado->apellidoM;
-        $accion->usuario_responsable_id = Auth::id();
-        $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
-        $accion->save();
+                // Si el equipo fue cambiado, poner el anterior como "No asignado"
+                if ($asignacionActual->equipo_id != $validatedData['equipo_id']) {
+                    $equipoAnterior = Equipo::find($asignacionActual->equipo_id);
+                    if ($equipoAnterior) {
+                        $equipoAnterior->update(['estado' => 'No asignado']);
+                    }
+                }
+
+                // 1. Actualiza la asignación con los nuevos datos
+                $asignacionActual->update($validatedData + ['usuario_responsable' => Auth::id()]);
+
+                // 2. Actualiza el estado del nuevo equipo seleccionado
+                $equipoSeleccionado->update(['estado' => $validatedData['estado']]);
+
+                // 3. Registra la acción
+                $asignacionActual->load('empleado'); // Recarga la relación para obtener el nombre actualizado
+
+                Acciones::create([
+                    'modulo' => "Asignacion de Equipo",
+                    'descripcion' => "Se actualizó la asignación del equipo: " . $equipoSeleccionado->etiqueta_skytex . " para el empleado: " . $asignacionActual->empleado->nombre . " " . $asignacionActual->empleado->apellidoP,
+                    'usuario_responsable_id' => Auth::id(),
+                ]);
+            });
+        } catch (\Exception $e) {
+            // Si algo falla, la transacción se revierte y mostramos un error
+            return redirect()->back()->withErrors(['error' => 'No se pudo actualizar la asignación. Error: ' . $e->getMessage()])->withInput();
+        }
 
         return redirect()->route('asignacionesequipos.index')
             ->with('success', 'Asignación de equipo actualizada correctamente');
     }
-
-    public function store(Request $request)
-    {
-        // Validar la entrada
-        $request->validate([
-            'asignaciones' => 'required|json',
-        ]);
-
-        // Decodificar las asignaciones recibidas
-        $asignaciones = json_decode($request->asignaciones, true);
-
-        foreach ($asignaciones as $asignacionData) {
-            // Buscar el equipo por ID
-            $equipo = Equipo::findOrFail($asignacionData['equipo_id']);
-
-            // Verificar si el equipo está asignado
-            if ($equipo->estado == 'Asignado') {
-                // Recuperar la asignación actual para obtener el usuario al que está asignado
-                $asignacionActual = AsignacionEquipo::where('equipo_id', $equipo->id)->latest()->first();
-
-                // Verificar si existe una asignación previa y obtener el usuario
-                if ($asignacionActual) {
-                    $usuarioAsignado = $asignacionActual->usuario->name;
-                    return redirect()->back()->withErrors([
-                        'El equipo ' . $equipo->etiqueta_skytex . ' ya está asignado'
-                    ]);
-                }
-
-                return redirect()->back()->withErrors([
-                    'El equipo ' . $equipo->etiqueta_skytex . ' ya está asignado.'
-                ]);
-            }
-
-            // Verificar si el equipo está dado de baja
-            if ($equipo->estado == 'Baja') {
-                return redirect()->back()->withErrors([
-                    'El equipo ' . $equipo->etiqueta_skytex . ' está dado de baja.'
-                ]);
-            }
-
-            // Asignar el equipo
-            $asignacionData['usuario_responsable'] = Auth::id(); // Establecer el usuario autenticado
-            AsignacionEquipo::create($asignacionData);
-
-            // Actualizar el estado del equipo a "Asignado"
-            $equipo->update(['estado' => $asignacionData['estado']]);
-
-            // Registrar la acción
-            $accion = new Acciones();
-            $accion->modulo = "Asignación de Equipo";
-            $accion->descripcion = "Se creó la asignación del Equipo: " . $equipo->etiqueta_skytex;
-            $accion->usuario_responsable_id = Auth::id();
-            $accion->created_at = Carbon::now('America/Mexico_City')->toDateTimeString();
-            $accion->save();
-        }
-
-        // Redirigir a la vista de índice con un mensaje de éxito
-        return redirect()->route('asignacionesequipos.index')->with('success', 'Las asignaciones de equipos se han creado correctamente.');
-    }
-
 
 
     public function show($id)
@@ -208,7 +247,7 @@ class AsignacionEquipoController extends Controller
         return redirect()->route('asignacionesequipos.index')
             ->with('success', 'Asignación de equipo eliminada correctamente');
     }
-    
+
     public function exportExcel()
     {
         return Excel::download(new AsignacionesEquiposExport, 'asignaciones_equipos.xlsx');

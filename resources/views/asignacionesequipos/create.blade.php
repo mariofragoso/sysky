@@ -26,8 +26,7 @@
                                 <select id="empleado_id" class="form-control" required>
                                     <option value="">Seleccione un empleado</option>
                                     @foreach ($empleados as $empleado)
-                                        <option value="{{ $empleado->id }}">{{ $empleado->nombre }}
-                                            {{ $empleado->apellidoP }} {{ $empleado->apellidoM }}</option>
+                                        <option value="{{ $empleado->id }}">{{ $empleado->nombre }} {{ $empleado->apellidoP }} {{ $empleado->apellidoM }}</option>
                                     @endforeach
                                 </select>
                             </div>
